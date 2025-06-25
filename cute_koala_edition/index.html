@@ -1553,6 +1553,457 @@
             color: #708090;
         }
 
+        /* Advanced Feature Buttons */
+        .advanced-buttons {
+            display: flex;
+            gap: 4px;
+            margin: 5px 0;
+            justify-content: center;
+        }
+
+        .advanced-button {
+            width: 35px;
+            height: 35px;
+            background: linear-gradient(45deg, #E6E6FA, #F0F8FF);
+            border: 2px solid #9370DB;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 3px 10px rgba(147,112,219,0.3);
+        }
+
+        .advanced-button:hover {
+            background: linear-gradient(45deg, #DDA0DD, #E6E6FA);
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(147,112,219,0.5);
+        }
+
+        /* Advanced Mini-Games Modal */
+        .advanced-mini-games-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(45deg, #F0F8FF, #E0F6FF);
+            border: 3px solid #4169E1;
+            border-radius: 20px;
+            padding: 15px;
+            z-index: 3000;
+            max-width: 400px;
+            max-height: 500px;
+            overflow-y: auto;
+            box-shadow: 0 10px 30px rgba(65,105,225,0.4);
+        }
+
+        .advanced-games-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            font-size: 14px;
+            font-weight: bold;
+            color: #4169E1;
+        }
+
+        .advanced-games-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .advanced-game-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            background: rgba(255,255,255,0.9);
+            border: 2px solid #87CEEB;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .advanced-game-item:hover {
+            background: rgba(135,206,235,0.3);
+            transform: scale(1.02);
+        }
+
+        .game-info {
+            flex: 1;
+        }
+
+        .game-title {
+            font-size: 12px;
+            font-weight: bold;
+            color: #4169E1;
+        }
+
+        .game-description {
+            font-size: 9px;
+            color: #6495ED;
+        }
+
+        .game-stats {
+            font-size: 8px;
+            color: #708090;
+        }
+
+        .game-play-btn {
+            padding: 6px 12px;
+            background: #4169E1;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 9px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .game-play-btn:hover {
+            background: #0000CD;
+            transform: scale(1.05);
+        }
+
+        /* Learning Analytics Modal */
+        .learning-analytics-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(45deg, #FFF8DC, #FFFACD);
+            border: 3px solid #DAA520;
+            border-radius: 20px;
+            padding: 15px;
+            z-index: 3000;
+            max-width: 450px;
+            max-height: 600px;
+            overflow-y: auto;
+            box-shadow: 0 10px 30px rgba(218,165,32,0.4);
+        }
+
+        .analytics-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            font-size: 14px;
+            font-weight: bold;
+            color: #B8860B;
+        }
+
+        .analytics-content {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .analytics-section {
+            background: rgba(255,255,255,0.8);
+            border: 2px solid #F0E68C;
+            border-radius: 12px;
+            padding: 10px;
+        }
+
+        .analytics-title {
+            font-size: 11px;
+            font-weight: bold;
+            color: #B8860B;
+            margin-bottom: 6px;
+        }
+
+        .analytics-stat {
+            display: flex;
+            justify-content: space-between;
+            font-size: 9px;
+            color: #DAA520;
+            margin: 3px 0;
+        }
+
+        .progress-chart {
+            width: 100%;
+            height: 8px;
+            background: rgba(218,165,32,0.3);
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 4px 0;
+        }
+
+        .progress-fill-analytics {
+            height: 100%;
+            background: linear-gradient(90deg, #DAA520, #FFD700);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        /* Music System Modal */
+        .music-system-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(45deg, #E6E6FA, #F8F8FF);
+            border: 3px solid #8A2BE2;
+            border-radius: 20px;
+            padding: 15px;
+            z-index: 3000;
+            max-width: 350px;
+            box-shadow: 0 10px 30px rgba(138,43,226,0.4);
+        }
+
+        .music-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            font-size: 14px;
+            font-weight: bold;
+            color: #8A2BE2;
+        }
+
+        .music-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .music-track {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px;
+            background: rgba(255,255,255,0.8);
+            border: 2px solid #DDA0DD;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .music-track:hover {
+            background: rgba(221,160,221,0.3);
+        }
+
+        .music-track.playing {
+            background: rgba(138,43,226,0.2);
+            border-color: #8A2BE2;
+        }
+
+        .track-info {
+            flex: 1;
+        }
+
+        .track-name {
+            font-size: 10px;
+            font-weight: bold;
+            color: #8A2BE2;
+        }
+
+        .track-mood {
+            font-size: 8px;
+            color: #9370DB;
+        }
+
+        .volume-control {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .volume-slider {
+            flex: 1;
+            height: 6px;
+            background: rgba(138,43,226,0.3);
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        /* Story Choices Modal */
+        .story-choices-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(45deg, #FFF0F5, #FFE4E1);
+            border: 3px solid #DC143C;
+            border-radius: 20px;
+            padding: 15px;
+            z-index: 3000;
+            max-width: 400px;
+            max-height: 500px;
+            overflow-y: auto;
+            box-shadow: 0 10px 30px rgba(220,20,60,0.4);
+        }
+
+        .story-choices-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            font-size: 14px;
+            font-weight: bold;
+            color: #DC143C;
+        }
+
+        .story-choices-content {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .story-scenario {
+            background: rgba(255,255,255,0.9);
+            border: 2px solid #FFB6C1;
+            border-radius: 12px;
+            padding: 12px;
+        }
+
+        .scenario-text {
+            font-size: 10px;
+            color: #DC143C;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+
+        .choice-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .choice-btn {
+            padding: 8px;
+            background: rgba(255,182,193,0.3);
+            border: 1px solid #FFB6C1;
+            border-radius: 8px;
+            font-size: 9px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: left;
+        }
+
+        .choice-btn:hover {
+            background: rgba(255,182,193,0.6);
+            transform: scale(1.02);
+        }
+
+        /* Enhanced Parental Modal */
+        .enhanced-parental-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(45deg, #F5F5DC, #FFF8DC);
+            border: 3px solid #8B4513;
+            border-radius: 20px;
+            padding: 15px;
+            z-index: 3000;
+            max-width: 500px;
+            max-height: 600px;
+            overflow-y: auto;
+            box-shadow: 0 10px 30px rgba(139,69,19,0.4);
+        }
+
+        .enhanced-parental-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            font-size: 14px;
+            font-weight: bold;
+            color: #8B4513;
+        }
+
+        .enhanced-parental-content {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .parental-section {
+            background: rgba(255,255,255,0.9);
+            border: 2px solid #DEB887;
+            border-radius: 12px;
+            padding: 12px;
+        }
+
+        .parental-title {
+            font-size: 12px;
+            font-weight: bold;
+            color: #8B4513;
+            margin-bottom: 8px;
+        }
+
+        .parental-stat {
+            display: flex;
+            justify-content: space-between;
+            font-size: 10px;
+            color: #A0522D;
+            margin: 4px 0;
+        }
+
+        .time-limit-control {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 6px 0;
+        }
+
+        .time-input {
+            width: 60px;
+            padding: 4px;
+            border: 1px solid #DEB887;
+            border-radius: 4px;
+            font-size: 9px;
+        }
+
+        /* Time-Based Event Notification */
+        .time-based-event-notification {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            background: linear-gradient(45deg, #FF6347, #FF4500);
+            border: 3px solid #DC143C;
+            border-radius: 15px;
+            padding: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 6px 20px rgba(220,20,60,0.4);
+            animation: timeEventSlideIn 0.5s ease-out;
+            z-index: 2000;
+            max-width: 250px;
+        }
+
+        .time-event-icon {
+            font-size: 24px;
+            animation: timeEventPulse 1s infinite;
+        }
+
+        .time-event-title {
+            font-size: 12px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .time-event-desc {
+            font-size: 10px;
+            color: #FFE4E1;
+        }
+
+        @keyframes timeEventSlideIn {
+            0% { transform: translateX(100%); opacity: 0; }
+            100% { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes timeEventPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
         @keyframes heartFloat {
             0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.7; }
             50% { transform: translateY(-15px) rotate(15deg); opacity: 1; }
@@ -1862,6 +2313,70 @@
                     <!-- Objects will be populated by JavaScript -->
                 </div>
             </div>
+            
+            <!-- Advanced Mini-Games Modal -->
+            <div id="advancedMiniGamesModal" class="advanced-mini-games-modal" style="display: none;">
+                <div class="advanced-games-header">
+                    <span>🎓 Advanced Learning Games</span>
+                    <button onclick="closeAdvancedMiniGames()" class="close-btn">❌</button>
+                </div>
+                <div id="advancedGamesList" class="advanced-games-list">
+                    <!-- Games will be populated by JavaScript -->
+                </div>
+            </div>
+            
+            <!-- Learning Analytics Modal -->
+            <div id="learningAnalyticsModal" class="learning-analytics-modal" style="display: none;">
+                <div class="analytics-header">
+                    <span>📊 Learning Progress & Analytics</span>
+                    <button onclick="closeLearningAnalytics()" class="close-btn">❌</button>
+                </div>
+                <div id="analyticsContent" class="analytics-content">
+                    <!-- Analytics will be populated by JavaScript -->
+                </div>
+            </div>
+            
+            <!-- Music System Modal -->
+            <div id="musicSystemModal" class="music-system-modal" style="display: none;">
+                <div class="music-header">
+                    <span>🎵 Music & Sound System</span>
+                    <button onclick="closeMusicSystem()" class="close-btn">❌</button>
+                </div>
+                <div id="musicControls" class="music-controls">
+                    <!-- Music controls will be populated by JavaScript -->
+                </div>
+            </div>
+            
+            <!-- Story Choices Modal -->
+            <div id="storyChoicesModal" class="story-choices-modal" style="display: none;">
+                <div class="story-choices-header">
+                    <span>📚 Story Adventures & Choices</span>
+                    <button onclick="closeStoryChoices()" class="close-btn">❌</button>
+                </div>
+                <div id="storyChoicesContent" class="story-choices-content">
+                    <!-- Story choices will be populated by JavaScript -->
+                </div>
+            </div>
+            
+            <!-- Enhanced Parental Dashboard Modal -->
+            <div id="enhancedParentalModal" class="enhanced-parental-modal" style="display: none;">
+                <div class="enhanced-parental-header">
+                    <span>👨‍👩‍👧‍👦 Advanced Parental Dashboard</span>
+                    <button onclick="closeEnhancedParental()" class="close-btn">❌</button>
+                </div>
+                <div id="enhancedParentalContent" class="enhanced-parental-content">
+                    <!-- Enhanced parental content will be populated by JavaScript -->
+                </div>
+            </div>
+            
+            <!-- Time-Based Event Notification -->
+            <div id="timeBasedEventNotification" class="time-based-event-notification" style="display: none;">
+                <div class="time-event-icon">🕐</div>
+                <div class="time-event-content">
+                    <div id="timeEventTitle" class="time-event-title"></div>
+                    <div id="timeEventDesc" class="time-event-desc"></div>
+                </div>
+            </div>
 
             <!-- Achievement Notifications -->
             <div id="achievementNotification" class="achievement-notification" style="display: none;">
@@ -1942,6 +2457,14 @@
                 <div class="special-button" onclick="openFriends()" title="Visit Friends">👫</div>
                 <div class="special-button" onclick="openPhotoMode()" title="Photo Time">📸</div>
                 <div class="special-button" onclick="changeWeather()" title="Change Weather">🌤️</div>
+            </div>
+            
+            <!-- Advanced Feature Buttons -->
+            <div class="advanced-buttons">
+                <div class="advanced-button" onclick="openAdvancedMiniGames()" title="Advanced Learning Games">🎓</div>
+                <div class="advanced-button" onclick="openLearningAnalytics()" title="Learning Progress">📊</div>
+                <div class="advanced-button" onclick="openMusicSystem()" title="Music & Sounds">🎵</div>
+                <div class="advanced-button" onclick="openStoryChoices()" title="Story Adventures">📚</div>
             </div>
 
             <!-- Cute Places -->
@@ -2190,6 +2713,57 @@
                 learningProgress: 0,
                 favoriteActivities: ['play', 'learn', 'hug'],
                 currentThought: 'I wonder what we\'ll discover today!'
+            },
+            learningAnalytics: {
+                totalPlayTime: 0,
+                sessionsCompleted: 0,
+                averageSessionLength: 0,
+                skillsLearned: [],
+                difficultyLevel: 1,
+                learningSpeed: 'normal',
+                strongSubjects: [],
+                needsImprovement: [],
+                parentalInsights: []
+            },
+            timeBasedEvents: {
+                morning: { active: false, lastTriggered: 0 },
+                afternoon: { active: false, lastTriggered: 0 },
+                evening: { active: false, lastTriggered: 0 },
+                night: { active: false, lastTriggered: 0 }
+            },
+            advancedMiniGames: {
+                mathAdventure: { level: 1, highScore: 0, completed: [] },
+                wordExplorer: { level: 1, highScore: 0, completed: [] },
+                scienceQuest: { level: 1, highScore: 0, completed: [] },
+                creativityStudio: { level: 1, highScore: 0, completed: [] },
+                logicPuzzles: { level: 1, highScore: 0, completed: [] }
+            },
+            storyChoices: {
+                currentBranch: 'main',
+                choicesMade: [],
+                unlockedEndings: [],
+                characterRelationships: {
+                    bella: 'friendly',
+                    charlie: 'neutral',
+                    danny: 'neutral',
+                    ellie: 'neutral'
+                }
+            },
+            musicSystem: {
+                currentTrack: 'peaceful_meadow',
+                volume: 0.7,
+                moodBasedMusic: true,
+                unlockedTracks: ['peaceful_meadow', 'playful_bounce'],
+                musicPreferences: []
+            },
+            parentalControls: {
+                sessionTimeLimit: 30, // minutes
+                currentSessionTime: 0,
+                dailyTimeLimit: 120, // minutes
+                dailyTimeUsed: 0,
+                educationalFocus: true,
+                allowSocialFeatures: false,
+                progressReports: []
             }
         };
 
@@ -4239,6 +4813,629 @@
         setTimeout(() => {
             initializeAdvancedSystems();
         }, 1500);
+
+        // ULTIMATE ADVANCED FEATURES
+
+        // Advanced Mini-Games System
+        function openAdvancedMiniGames() {
+            const modal = document.getElementById('advancedMiniGamesModal');
+            const gamesList = document.getElementById('advancedGamesList');
+            
+            const games = [
+                {
+                    id: 'mathAdventure',
+                    title: 'Math Adventure Quest',
+                    description: 'Solve math puzzles to help Koko explore magical lands!',
+                    level: cuteGameState.advancedMiniGames.mathAdventure.level,
+                    highScore: cuteGameState.advancedMiniGames.mathAdventure.highScore,
+                    emoji: '🧮'
+                },
+                {
+                    id: 'wordExplorer',
+                    title: 'Word Explorer Journey',
+                    description: 'Discover new words and build vocabulary with Koko!',
+                    level: cuteGameState.advancedMiniGames.wordExplorer.level,
+                    highScore: cuteGameState.advancedMiniGames.wordExplorer.highScore,
+                    emoji: '📝'
+                },
+                {
+                    id: 'scienceQuest',
+                    title: 'Science Discovery Quest',
+                    description: 'Conduct fun experiments and learn about the world!',
+                    level: cuteGameState.advancedMiniGames.scienceQuest.level,
+                    highScore: cuteGameState.advancedMiniGames.scienceQuest.highScore,
+                    emoji: '🔬'
+                },
+                {
+                    id: 'creativityStudio',
+                    title: 'Creativity Art Studio',
+                    description: 'Create beautiful art and express your imagination!',
+                    level: cuteGameState.advancedMiniGames.creativityStudio.level,
+                    highScore: cuteGameState.advancedMiniGames.creativityStudio.highScore,
+                    emoji: '🎨'
+                },
+                {
+                    id: 'logicPuzzles',
+                    title: 'Logic Puzzle Challenge',
+                    description: 'Solve brain teasers and develop critical thinking!',
+                    level: cuteGameState.advancedMiniGames.logicPuzzles.level,
+                    highScore: cuteGameState.advancedMiniGames.logicPuzzles.highScore,
+                    emoji: '🧩'
+                }
+            ];
+            
+            gamesList.innerHTML = '';
+            
+            games.forEach(game => {
+                const gameDiv = document.createElement('div');
+                gameDiv.className = 'advanced-game-item';
+                
+                gameDiv.innerHTML = `
+                    <div class="game-info">
+                        <div class="game-title">${game.emoji} ${game.title}</div>
+                        <div class="game-description">${game.description}</div>
+                        <div class="game-stats">Level: ${game.level} | High Score: ${game.highScore}</div>
+                    </div>
+                    <button class="game-play-btn" onclick="playAdvancedGame('${game.id}')">Play</button>
+                `;
+                
+                gamesList.appendChild(gameDiv);
+            });
+            
+            modal.style.display = 'block';
+            showCuteEffect('🎓 Advanced learning games opened!', 'sparkle-effect');
+        }
+
+        function closeAdvancedMiniGames() {
+            document.getElementById('advancedMiniGamesModal').style.display = 'none';
+        }
+
+        function playAdvancedGame(gameId) {
+            const game = cuteGameState.advancedMiniGames[gameId];
+            const score = Math.floor(Math.random() * 200) + 50 + (game.level * 10);
+            
+            if (score > game.highScore) {
+                game.highScore = score;
+                showCuteAchievement('New High Score!', `🏆 ${score} points in ${gameId}!`);
+            }
+            
+            // Level up based on performance
+            if (score > 150) {
+                game.level++;
+                showCuteEffect(`📈 Level up! Now level ${game.level}!`, 'sparkle-effect');
+            }
+            
+            // Award rewards
+            const rewards = Math.floor(score / 20);
+            cuteGameState.resources.stickers += rewards;
+            cuteGameState.player.xp += score;
+            
+            // Update learning analytics
+            updateLearningAnalytics(gameId, score);
+            
+            showCuteEffect(`🎮 Game complete! Score: ${score}`, 'sparkle-effect');
+            updateCuteDisplay();
+            openAdvancedMiniGames(); // Refresh the modal
+        }
+
+        // Learning Analytics System
+        function openLearningAnalytics() {
+            const modal = document.getElementById('learningAnalyticsModal');
+            const content = document.getElementById('analyticsContent');
+            const analytics = cuteGameState.learningAnalytics;
+            
+            content.innerHTML = `
+                <div class="analytics-section">
+                    <div class="analytics-title">📊 Play Statistics</div>
+                    <div class="analytics-stat">
+                        <span>Total Play Time:</span>
+                        <span>${Math.floor(analytics.totalPlayTime / 60)} minutes</span>
+                    </div>
+                    <div class="analytics-stat">
+                        <span>Sessions Completed:</span>
+                        <span>${analytics.sessionsCompleted}</span>
+                    </div>
+                    <div class="analytics-stat">
+                        <span>Average Session:</span>
+                        <span>${analytics.averageSessionLength} minutes</span>
+                    </div>
+                    <div class="analytics-stat">
+                        <span>Learning Speed:</span>
+                        <span>${analytics.learningSpeed}</span>
+                    </div>
+                </div>
+                
+                <div class="analytics-section">
+                    <div class="analytics-title">🎯 Skill Progress</div>
+                    <div class="analytics-stat">
+                        <span>Math Skills:</span>
+                        <span>Level ${cuteGameState.skillTrees.learning.level}</span>
+                    </div>
+                    <div class="progress-chart">
+                        <div class="progress-fill-analytics" style="width: ${cuteGameState.skillTrees.learning.level * 20}%"></div>
+                    </div>
+                    <div class="analytics-stat">
+                        <span>Creativity Skills:</span>
+                        <span>Level ${cuteGameState.skillTrees.creativity.level}</span>
+                    </div>
+                    <div class="progress-chart">
+                        <div class="progress-fill-analytics" style="width: ${cuteGameState.skillTrees.creativity.level * 20}%"></div>
+                    </div>
+                    <div class="analytics-stat">
+                        <span>Social Skills:</span>
+                        <span>Level ${cuteGameState.skillTrees.friendship.level}</span>
+                    </div>
+                    <div class="progress-chart">
+                        <div class="progress-fill-analytics" style="width: ${cuteGameState.skillTrees.friendship.level * 20}%"></div>
+                    </div>
+                </div>
+                
+                <div class="analytics-section">
+                    <div class="analytics-title">🌟 Achievements</div>
+                    <div class="analytics-stat">
+                        <span>Achievements Unlocked:</span>
+                        <span>${cuteGameState.unlockedAchievements.length}/10</span>
+                    </div>
+                    <div class="progress-chart">
+                        <div class="progress-fill-analytics" style="width: ${cuteGameState.unlockedAchievements.length * 10}%"></div>
+                    </div>
+                    <div class="analytics-stat">
+                        <span>Collections Completed:</span>
+                        <span>${getCompletedCollections()}/4</span>
+                    </div>
+                </div>
+                
+                <div class="analytics-section">
+                    <div class="analytics-title">📈 Learning Insights</div>
+                    <div class="analytics-stat">
+                        <span>Strong Subjects:</span>
+                        <span>${analytics.strongSubjects.join(', ') || 'Discovering...'}</span>
+                    </div>
+                    <div class="analytics-stat">
+                        <span>Areas to Improve:</span>
+                        <span>${analytics.needsImprovement.join(', ') || 'All good!'}</span>
+                    </div>
+                    <div class="analytics-stat">
+                        <span>Difficulty Level:</span>
+                        <span>Level ${analytics.difficultyLevel}</span>
+                    </div>
+                </div>
+            `;
+            
+            modal.style.display = 'block';
+            showCuteEffect('📊 Learning analytics opened!', 'sparkle-effect');
+        }
+
+        function closeLearningAnalytics() {
+            document.getElementById('learningAnalyticsModal').style.display = 'none';
+        }
+
+        function updateLearningAnalytics(gameType, score) {
+            const analytics = cuteGameState.learningAnalytics;
+            analytics.totalPlayTime += 5; // Assume 5 minutes per game
+            analytics.sessionsCompleted++;
+            analytics.averageSessionLength = Math.floor(analytics.totalPlayTime / analytics.sessionsCompleted);
+            
+            // Determine learning speed
+            if (score > 180) {
+                analytics.learningSpeed = 'fast';
+            } else if (score > 120) {
+                analytics.learningSpeed = 'normal';
+            } else {
+                analytics.learningSpeed = 'steady';
+            }
+            
+            // Track strong subjects
+            if (score > 150) {
+                const subject = gameType.replace(/([A-Z])/g, ' $1').toLowerCase();
+                if (!analytics.strongSubjects.includes(subject)) {
+                    analytics.strongSubjects.push(subject);
+                }
+            }
+            
+            // Adaptive difficulty
+            if (analytics.sessionsCompleted % 5 === 0 && analytics.learningSpeed === 'fast') {
+                analytics.difficultyLevel++;
+                showCuteEffect('🎯 Difficulty increased! You\'re doing great!', 'sparkle-effect');
+            }
+        }
+
+        function getCompletedCollections() {
+            return Object.values(cuteGameState.collections).filter(collection => 
+                collection.collected >= collection.total
+            ).length;
+        }
+
+        // Music System
+        function openMusicSystem() {
+            const modal = document.getElementById('musicSystemModal');
+            const controls = document.getElementById('musicControls');
+            const musicSystem = cuteGameState.musicSystem;
+            
+            const tracks = [
+                { id: 'peaceful_meadow', name: 'Peaceful Meadow', mood: 'Calm & Relaxing', emoji: '🌸' },
+                { id: 'playful_bounce', name: 'Playful Bounce', mood: 'Happy & Energetic', emoji: '🎈' },
+                { id: 'learning_melody', name: 'Learning Melody', mood: 'Focused & Curious', emoji: '📚' },
+                { id: 'friendship_song', name: 'Friendship Song', mood: 'Warm & Social', emoji: '👫' },
+                { id: 'adventure_theme', name: 'Adventure Theme', mood: 'Exciting & Bold', emoji: '🗺️' },
+                { id: 'sleepy_lullaby', name: 'Sleepy Lullaby', mood: 'Gentle & Soothing', emoji: '😴' }
+            ];
+            
+            controls.innerHTML = '';
+            
+            tracks.forEach(track => {
+                if (musicSystem.unlockedTracks.includes(track.id) || track.id === 'peaceful_meadow') {
+                    const trackDiv = document.createElement('div');
+                    trackDiv.className = `music-track ${musicSystem.currentTrack === track.id ? 'playing' : ''}`;
+                    
+                    trackDiv.innerHTML = `
+                        <div class="track-info">
+                            <div class="track-name">${track.emoji} ${track.name}</div>
+                            <div class="track-mood">${track.mood}</div>
+                        </div>
+                        <button onclick="playTrack('${track.id}')" style="padding: 4px 8px; background: #8A2BE2; color: white; border: none; border-radius: 4px; font-size: 8px;">
+                            ${musicSystem.currentTrack === track.id ? 'Playing' : 'Play'}
+                        </button>
+                    `;
+                    
+                    controls.appendChild(trackDiv);
+                }
+            });
+            
+            // Add volume control
+            const volumeDiv = document.createElement('div');
+            volumeDiv.className = 'volume-control';
+            volumeDiv.innerHTML = `
+                <span style="font-size: 10px; color: #8A2BE2;">🔊 Volume:</span>
+                <div class="volume-slider" onclick="adjustVolume(event)">
+                    <div style="width: ${musicSystem.volume * 100}%; height: 100%; background: #8A2BE2; border-radius: 3px;"></div>
+                </div>
+                <span style="font-size: 9px; color: #9370DB;">${Math.floor(musicSystem.volume * 100)}%</span>
+            `;
+            controls.appendChild(volumeDiv);
+            
+            modal.style.display = 'block';
+            showCuteEffect('🎵 Music system opened!', 'sparkle-effect');
+        }
+
+        function closeMusicSystem() {
+            document.getElementById('musicSystemModal').style.display = 'none';
+        }
+
+        function playTrack(trackId) {
+            cuteGameState.musicSystem.currentTrack = trackId;
+            showCuteEffect(`🎵 Now playing: ${trackId.replace('_', ' ')}!`, 'sparkle-effect');
+            openMusicSystem(); // Refresh the modal
+        }
+
+        function adjustVolume(event) {
+            const rect = event.currentTarget.getBoundingClientRect();
+            const x = event.clientX - rect.left;
+            const width = rect.width;
+            const volume = Math.max(0, Math.min(1, x / width));
+            cuteGameState.musicSystem.volume = volume;
+            openMusicSystem(); // Refresh the modal
+        }
+
+        // Story Choices System
+        function openStoryChoices() {
+            const modal = document.getElementById('storyChoicesModal');
+            const content = document.getElementById('storyChoicesContent');
+            
+            const scenarios = [
+                {
+                    text: "Koko finds a lost baby bird in the garden. What should Koko do?",
+                    choices: [
+                        { text: "Help the bird find its family", outcome: "kindness", relationship: "bella" },
+                        { text: "Build a cozy nest for the bird", outcome: "creativity", relationship: "charlie" },
+                        { text: "Ask friends for advice", outcome: "social", relationship: "danny" }
+                    ]
+                },
+                {
+                    text: "There's a big storm coming and all the animals need shelter. How can Koko help?",
+                    choices: [
+                        { text: "Share Koko's home with everyone", outcome: "generosity", relationship: "all" },
+                        { text: "Build emergency shelters together", outcome: "teamwork", relationship: "ellie" },
+                        { text: "Find the safest hiding spots", outcome: "wisdom", relationship: "bella" }
+                    ]
+                },
+                {
+                    text: "Koko discovers a magical book that can grant one wish. What should the wish be?",
+                    choices: [
+                        { text: "Wish for endless learning adventures", outcome: "knowledge", relationship: "charlie" },
+                        { text: "Wish for all friends to be happy", outcome: "friendship", relationship: "all" },
+                        { text: "Wish for the power to help others", outcome: "heroism", relationship: "ellie" }
+                    ]
+                }
+            ];
+            
+            const randomScenario = scenarios[Math.floor(Math.random() * scenarios.length)];
+            
+            content.innerHTML = `
+                <div class="story-scenario">
+                    <div class="scenario-text">${randomScenario.text}</div>
+                    <div class="choice-buttons">
+                        ${randomScenario.choices.map((choice, index) => 
+                            `<button class="choice-btn" onclick="makeStoryChoice(${index}, '${choice.outcome}', '${choice.relationship}')">${choice.text}</button>`
+                        ).join('')}
+                    </div>
+                </div>
+            `;
+            
+            modal.style.display = 'block';
+            showCuteEffect('📚 Story adventure opened!', 'sparkle-effect');
+        }
+
+        function closeStoryChoices() {
+            document.getElementById('storyChoicesModal').style.display = 'none';
+        }
+
+        function makeStoryChoice(choiceIndex, outcome, relationship) {
+            cuteGameState.storyChoices.choicesMade.push({ outcome, relationship });
+            
+            // Update relationships
+            if (relationship === 'all') {
+                cuteGameState.friends.forEach(friend => {
+                    friend.friendship = Math.min(100, friend.friendship + 5);
+                });
+            } else if (relationship !== 'none') {
+                const friend = cuteGameState.friends.find(f => f.name.toLowerCase().includes(relationship));
+                if (friend) {
+                    friend.friendship = Math.min(100, friend.friendship + 10);
+                }
+            }
+            
+            // Give rewards based on outcome
+            const rewards = {
+                kindness: { love: 20, hearts: 10 },
+                creativity: { stickers: 15, xp: 30 },
+                social: { hearts: 15, friendship: 10 },
+                generosity: { love: 25, hearts: 20 },
+                teamwork: { xp: 40, stickers: 20 },
+                wisdom: { xp: 50, skillPoints: 2 },
+                knowledge: { xp: 60, skillPoints: 3 },
+                friendship: { love: 30, hearts: 25 },
+                heroism: { xp: 45, love: 15 }
+            };
+            
+            const reward = rewards[outcome];
+            Object.keys(reward).forEach(resource => {
+                if (cuteGameState.player[resource] !== undefined) {
+                    cuteGameState.player[resource] += reward[resource];
+                } else if (cuteGameState.resources[resource] !== undefined) {
+                    cuteGameState.resources[resource] += reward[resource];
+                } else if (cuteGameState.skillTrees.learning[resource] !== undefined) {
+                    cuteGameState.skillTrees.learning[resource] += reward[resource];
+                }
+            });
+            
+            showCuteAchievement('Story Choice Made!', `🌟 You chose ${outcome}! Great decision!`);
+            updateCuteDisplay();
+            closeStoryChoices();
+        }
+
+        // Time-Based Events System
+        function checkTimeBasedEvents() {
+            const now = new Date();
+            const hour = now.getHours();
+            const timeOfDay = getTimeOfDay(hour);
+            
+            cuteGameState.timeOfDay = timeOfDay;
+            
+            const events = cuteGameState.timeBasedEvents;
+            const currentEvent = events[timeOfDay];
+            
+            if (!currentEvent.active && Date.now() - currentEvent.lastTriggered > 3600000) { // 1 hour cooldown
+                if (Math.random() < 0.1) { // 10% chance
+                    triggerTimeBasedEvent(timeOfDay);
+                }
+            }
+        }
+
+        function getTimeOfDay(hour) {
+            if (hour >= 6 && hour < 12) return 'morning';
+            if (hour >= 12 && hour < 18) return 'afternoon';
+            if (hour >= 18 && hour < 22) return 'evening';
+            return 'night';
+        }
+
+        function triggerTimeBasedEvent(timeOfDay) {
+            const events = {
+                morning: {
+                    title: 'Good Morning Sunshine!',
+                    description: 'Start your day with extra energy and happiness!',
+                    effect: () => {
+                        cuteGameState.stats.energy = Math.min(100, cuteGameState.stats.energy + 20);
+                        cuteGameState.stats.happiness = Math.min(100, cuteGameState.stats.happiness + 15);
+                    }
+                },
+                afternoon: {
+                    title: 'Afternoon Learning Boost!',
+                    description: 'Perfect time for learning - double XP for 10 minutes!',
+                    effect: () => {
+                        // This would enable double XP temporarily
+                        cuteGameState.player.xp += 50;
+                    }
+                },
+                evening: {
+                    title: 'Evening Friendship Time!',
+                    description: 'Friends are more active - bonus friendship points!',
+                    effect: () => {
+                        cuteGameState.friends.forEach(friend => {
+                            if (friend.unlocked) {
+                                friend.friendship = Math.min(100, friend.friendship + 5);
+                            }
+                        });
+                    }
+                },
+                night: {
+                    title: 'Peaceful Night Rest!',
+                    description: 'Time to rest and recharge for tomorrow!',
+                    effect: () => {
+                        cuteGameState.petCare.energy = Math.min(100, cuteGameState.petCare.energy + 30);
+                        cuteGameState.stats.health = Math.min(100, cuteGameState.stats.health + 10);
+                    }
+                }
+            };
+            
+            const event = events[timeOfDay];
+            showTimeBasedEvent(event.title, event.description);
+            event.effect();
+            
+            cuteGameState.timeBasedEvents[timeOfDay].active = true;
+            cuteGameState.timeBasedEvents[timeOfDay].lastTriggered = Date.now();
+            
+            updateCuteDisplay();
+        }
+
+        function showTimeBasedEvent(title, description) {
+            const notification = document.getElementById('timeBasedEventNotification');
+            document.getElementById('timeEventTitle').textContent = title;
+            document.getElementById('timeEventDesc').textContent = description;
+            
+            notification.style.display = 'flex';
+            
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 5000);
+        }
+
+        // Enhanced Parental Dashboard
+        function openEnhancedParental() {
+            const modal = document.getElementById('enhancedParentalModal');
+            const content = document.getElementById('enhancedParentalContent');
+            const controls = cuteGameState.parentalControls;
+            const analytics = cuteGameState.learningAnalytics;
+            
+            content.innerHTML = `
+                <div class="parental-section">
+                    <div class="parental-title">⏰ Time Management</div>
+                    <div class="parental-stat">
+                        <span>Current Session:</span>
+                        <span>${controls.currentSessionTime} / ${controls.sessionTimeLimit} minutes</span>
+                    </div>
+                    <div class="parental-stat">
+                        <span>Daily Usage:</span>
+                        <span>${controls.dailyTimeUsed} / ${controls.dailyTimeLimit} minutes</span>
+                    </div>
+                    <div class="time-limit-control">
+                        <span style="font-size: 10px;">Session Limit:</span>
+                        <input type="number" class="time-input" value="${controls.sessionTimeLimit}" onchange="updateSessionLimit(this.value)">
+                        <span style="font-size: 9px;">minutes</span>
+                    </div>
+                    <div class="time-limit-control">
+                        <span style="font-size: 10px;">Daily Limit:</span>
+                        <input type="number" class="time-input" value="${controls.dailyTimeLimit}" onchange="updateDailyLimit(this.value)">
+                        <span style="font-size: 9px;">minutes</span>
+                    </div>
+                </div>
+                
+                <div class="parental-section">
+                    <div class="parental-title">📊 Learning Progress</div>
+                    <div class="parental-stat">
+                        <span>Total Learning Time:</span>
+                        <span>${Math.floor(analytics.totalPlayTime / 60)} hours</span>
+                    </div>
+                    <div class="parental-stat">
+                        <span>Skills Developed:</span>
+                        <span>${analytics.skillsLearned.length} skills</span>
+                    </div>
+                    <div class="parental-stat">
+                        <span>Learning Speed:</span>
+                        <span>${analytics.learningSpeed}</span>
+                    </div>
+                    <div class="parental-stat">
+                        <span>Strong Areas:</span>
+                        <span>${analytics.strongSubjects.join(', ') || 'Discovering...'}</span>
+                    </div>
+                </div>
+                
+                <div class="parental-section">
+                    <div class="parental-title">🎯 Achievement Summary</div>
+                    <div class="parental-stat">
+                        <span>Achievements Unlocked:</span>
+                        <span>${cuteGameState.unlockedAchievements.length}/10</span>
+                    </div>
+                    <div class="parental-stat">
+                        <span>Quests Completed:</span>
+                        <span>${cuteGameState.story.completedQuests.length}</span>
+                    </div>
+                    <div class="parental-stat">
+                        <span>Friends Made:</span>
+                        <span>${cuteGameState.friends.filter(f => f.unlocked).length}/4</span>
+                    </div>
+                </div>
+                
+                <div class="parental-section">
+                    <div class="parental-title">⚙️ Settings</div>
+                    <div class="parental-stat">
+                        <span>Educational Focus:</span>
+                        <label><input type="checkbox" ${controls.educationalFocus ? 'checked' : ''} onchange="toggleEducationalFocus()"> Enabled</label>
+                    </div>
+                    <div class="parental-stat">
+                        <span>Social Features:</span>
+                        <label><input type="checkbox" ${controls.allowSocialFeatures ? 'checked' : ''} onchange="toggleSocialFeatures()"> Allowed</label>
+                    </div>
+                </div>
+            `;
+            
+            modal.style.display = 'block';
+            showCuteEffect('👨‍👩‍👧‍👦 Parental dashboard opened!', 'sparkle-effect');
+        }
+
+        function closeEnhancedParental() {
+            document.getElementById('enhancedParentalModal').style.display = 'none';
+        }
+
+        function updateSessionLimit(value) {
+            cuteGameState.parentalControls.sessionTimeLimit = parseInt(value);
+            showCuteEffect('⏰ Session limit updated!', 'sparkle-effect');
+        }
+
+        function updateDailyLimit(value) {
+            cuteGameState.parentalControls.dailyTimeLimit = parseInt(value);
+            showCuteEffect('📅 Daily limit updated!', 'sparkle-effect');
+        }
+
+        function toggleEducationalFocus() {
+            cuteGameState.parentalControls.educationalFocus = !cuteGameState.parentalControls.educationalFocus;
+            showCuteEffect('🎓 Educational focus toggled!', 'sparkle-effect');
+        }
+
+        function toggleSocialFeatures() {
+            cuteGameState.parentalControls.allowSocialFeatures = !cuteGameState.parentalControls.allowSocialFeatures;
+            showCuteEffect('👫 Social features toggled!', 'sparkle-effect');
+        }
+
+        // Override parent button to use enhanced dashboard
+        function openParentDashboard() {
+            openEnhancedParental();
+        }
+
+        // Initialize ultimate systems
+        function initializeUltimateSystems() {
+            // Check time-based events every 5 minutes
+            setInterval(checkTimeBasedEvents, 300000);
+            
+            // Track session time
+            setInterval(() => {
+                cuteGameState.parentalControls.currentSessionTime++;
+                cuteGameState.parentalControls.dailyTimeUsed++;
+                
+                // Check time limits
+                if (cuteGameState.parentalControls.currentSessionTime >= cuteGameState.parentalControls.sessionTimeLimit) {
+                    showTimeBasedEvent('Session Time Limit', 'Time for a break! Come back later to continue playing.');
+                }
+            }, 60000); // Every minute
+            
+            // Initial time-based event check
+            checkTimeBasedEvents();
+        }
+
+        // Initialize ultimate systems
+        setTimeout(() => {
+            initializeUltimateSystems();
+        }, 2000);
     </script>
 </body>
 </html>
