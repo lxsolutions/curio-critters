@@ -715,6 +715,401 @@
             color: #6495ED;
         }
 
+        /* Story Mode Styles */
+        .story-mode-panel {
+            margin-bottom: 15px;
+        }
+
+        .current-chapter {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px;
+            background: rgba(255,255,255,0.8);
+            border: 2px solid #8B4513;
+            border-radius: 10px;
+            margin-bottom: 6px;
+        }
+
+        .chapter-info {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex: 1;
+        }
+
+        .chapter-info span {
+            font-size: 16px;
+        }
+
+        .chapter-details {
+            flex: 1;
+        }
+
+        .chapter-title {
+            font-size: 9px;
+            font-weight: bold;
+            color: #8B4513;
+        }
+
+        .chapter-progress {
+            font-size: 7px;
+            color: #A0522D;
+        }
+
+        .story-btn {
+            padding: 4px 8px;
+            background: #8B4513;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 7px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .story-btn:hover {
+            background: #A0522D;
+            transform: scale(1.05);
+        }
+
+        .story-stats {
+            display: flex;
+            justify-content: space-between;
+            font-size: 7px;
+            color: #8B4513;
+        }
+
+        .story-stat {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+        }
+
+        /* Achievements Styles */
+        .achievements-panel {
+            margin-bottom: 15px;
+        }
+
+        .achievement-summary {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+
+        .achievement-count {
+            font-size: 10px;
+            font-weight: bold;
+            color: #DAA520;
+        }
+
+        .achievements-btn {
+            padding: 3px 6px;
+            background: #DAA520;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 7px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .achievements-btn:hover {
+            background: #B8860B;
+            transform: scale(1.05);
+        }
+
+        .recent-achievements {
+            background: rgba(255,255,255,0.6);
+            border-radius: 8px;
+            padding: 6px;
+        }
+
+        .recent-title {
+            font-size: 8px;
+            font-weight: bold;
+            color: #DAA520;
+            margin-bottom: 4px;
+        }
+
+        .recent-list {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .recent-achievement {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 7px;
+            color: #B8860B;
+        }
+
+        .no-achievements {
+            font-size: 7px;
+            color: #999;
+            font-style: italic;
+            text-align: center;
+        }
+
+        /* Story Mode Modal */
+        .story-mode-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(45deg, #F5DEB3, #DEB887);
+            border: 3px solid #8B4513;
+            border-radius: 20px;
+            padding: 20px;
+            z-index: 3000;
+            max-width: 600px;
+            max-height: 700px;
+            overflow-y: auto;
+            box-shadow: 0 15px 40px rgba(139,69,19,0.4);
+        }
+
+        .story-mode-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #8B4513;
+        }
+
+        .chapter-selection {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+
+        .chapter-card {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background: rgba(255,255,255,0.9);
+            border: 2px solid #DEB887;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .chapter-card:hover {
+            background: rgba(222,184,135,0.3);
+            transform: scale(1.02);
+        }
+
+        .chapter-card.locked {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .chapter-card.completed {
+            border-color: #32CD32;
+            background: rgba(50,205,50,0.1);
+        }
+
+        .chapter-emoji {
+            font-size: 48px;
+        }
+
+        .chapter-info-detailed {
+            flex: 1;
+        }
+
+        .chapter-title-large {
+            font-size: 16px;
+            font-weight: bold;
+            color: #8B4513;
+            margin-bottom: 5px;
+        }
+
+        .chapter-description {
+            font-size: 12px;
+            color: #A0522D;
+            margin-bottom: 8px;
+        }
+
+        .chapter-status {
+            font-size: 10px;
+            color: #DAA520;
+            font-weight: bold;
+        }
+
+        .story-scene {
+            background: rgba(255,255,255,0.9);
+            border-radius: 15px;
+            padding: 20px;
+        }
+
+        .scene-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #8B4513;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .scene-content {
+            font-size: 14px;
+            color: #654321;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .scene-choices {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .choice-button {
+            padding: 12px 20px;
+            background: linear-gradient(45deg, #DAA520, #FFD700);
+            color: #8B4513;
+            border: 2px solid #B8860B;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .choice-button:hover {
+            background: linear-gradient(45deg, #FFD700, #FFA500);
+            transform: scale(1.02);
+        }
+
+        /* Achievements Modal */
+        .achievements-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(45deg, #FFF8DC, #F0E68C);
+            border: 3px solid #DAA520;
+            border-radius: 20px;
+            padding: 20px;
+            z-index: 3000;
+            max-width: 700px;
+            max-height: 800px;
+            overflow-y: auto;
+            box-shadow: 0 15px 40px rgba(218,165,32,0.4);
+        }
+
+        .achievements-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #DAA520;
+        }
+
+        .category-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .category-tab {
+            padding: 8px 12px;
+            background: rgba(255,255,255,0.8);
+            border: 2px solid #DAA520;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 10px;
+            font-weight: bold;
+            color: #B8860B;
+        }
+
+        .category-tab:hover {
+            background: rgba(218,165,32,0.3);
+        }
+
+        .category-tab.active {
+            background: #DAA520;
+            color: white;
+        }
+
+        .achievement-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .achievement-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 15px;
+            background: rgba(255,255,255,0.9);
+            border: 2px solid #DDD;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .achievement-item.unlocked {
+            border-color: #32CD32;
+            background: rgba(50,205,50,0.1);
+        }
+
+        .achievement-item.locked {
+            opacity: 0.6;
+        }
+
+        .achievement-emoji {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .achievement-name {
+            font-size: 12px;
+            font-weight: bold;
+            color: #DAA520;
+            text-align: center;
+            margin-bottom: 5px;
+        }
+
+        .achievement-desc {
+            font-size: 9px;
+            color: #B8860B;
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        .achievement-progress {
+            width: 100%;
+            height: 6px;
+            background: rgba(200,200,200,0.3);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 5px;
+        }
+
+        .achievement-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #DAA520, #FFD700);
+            border-radius: 3px;
+            transition: width 0.3s ease;
+        }
+
+        .achievement-reward {
+            font-size: 8px;
+            color: #8B4513;
+            text-align: center;
+        }
+
         .game-screen {
             width: 100%;
             height: 100%;
@@ -3129,6 +3524,48 @@
                     <span id="explorationLevel" class="skill-level">Lv.1</span>
                 </div>
             </div>
+
+            <!-- Story Mode -->
+            <div class="panel-title">📖 Story Adventures</div>
+            <div class="story-mode-panel">
+                <div class="current-chapter">
+                    <div class="chapter-info">
+                        <span id="currentChapterEmoji">🌳</span>
+                        <div class="chapter-details">
+                            <div id="currentChapterTitle" class="chapter-title">Welcome to Eucalyptus Grove</div>
+                            <div id="currentChapterProgress" class="chapter-progress">Scene 1/3</div>
+                        </div>
+                    </div>
+                    <button class="story-btn" onclick="openStoryMode()">📚 Continue</button>
+                </div>
+                <div class="story-stats">
+                    <div class="story-stat">
+                        <span>Chapters:</span>
+                        <span id="chaptersCompleted">0/3</span>
+                    </div>
+                    <div class="story-stat">
+                        <span>Scenes:</span>
+                        <span id="scenesCompleted">0/9</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Achievements -->
+            <div class="panel-title">🏆 Achievements</div>
+            <div class="achievements-panel">
+                <div class="achievement-summary">
+                    <div class="achievement-count">
+                        <span id="achievementsUnlocked">0</span>/<span id="totalAchievements">25</span>
+                    </div>
+                    <button class="achievements-btn" onclick="openAchievements()">🏆 View All</button>
+                </div>
+                <div class="recent-achievements">
+                    <div class="recent-title">Recent:</div>
+                    <div id="recentAchievementsList" class="recent-list">
+                        <div class="no-achievements">Complete activities to earn achievements!</div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -3688,6 +4125,40 @@
                 </div>
                 <div id="growthActivityContent" class="growth-activity-content">
                     <!-- Growth activities will be populated by JavaScript -->
+                </div>
+            </div>
+            
+            <!-- Story Mode Modal -->
+            <div id="storyModeModal" class="story-mode-modal" style="display: none;">
+                <div class="story-mode-header">
+                    <span id="storyModeTitle">📖 Story Adventures</span>
+                    <button onclick="closeStoryMode()" class="close-btn">❌</button>
+                </div>
+                <div id="storyModeContent" class="story-mode-content">
+                    <div class="chapter-selection" id="chapterSelection">
+                        <!-- Chapter selection will be populated by JavaScript -->
+                    </div>
+                    <div class="story-scene" id="storyScene" style="display: none;">
+                        <!-- Current scene will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Achievements Modal -->
+            <div id="achievementsModal" class="achievements-modal" style="display: none;">
+                <div class="achievements-header">
+                    <span>🏆 Achievement Gallery</span>
+                    <button onclick="closeAchievements()" class="close-btn">❌</button>
+                </div>
+                <div class="achievements-content">
+                    <div class="achievement-categories">
+                        <div class="category-tabs" id="categoryTabs">
+                            <!-- Category tabs will be populated by JavaScript -->
+                        </div>
+                        <div class="achievement-grid" id="achievementGrid">
+                            <!-- Achievements will be populated by JavaScript -->
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -4422,6 +4893,119 @@
                 breedingPairs: [],
                 incubationTime: 24 * 60 * 60 * 1000, // 24 hours in milliseconds
                 activeBreeding: []
+            },
+            achievements: {
+                unlocked: [],
+                progress: {},
+                categories: {
+                    learning: {
+                        name: 'Learning Master',
+                        emoji: '📚',
+                        achievements: [
+                            { id: 'first_lesson', name: 'First Steps', desc: 'Complete your first educational activity', emoji: '👶', reward: { stickers: 10, hearts: 5 } },
+                            { id: 'math_whiz', name: 'Math Whiz', desc: 'Complete 10 math activities', emoji: '🧮', target: 10, reward: { stickers: 50, hearts: 25 } },
+                            { id: 'science_explorer', name: 'Science Explorer', desc: 'Complete 10 science activities', emoji: '🔬', target: 10, reward: { stickers: 50, hearts: 25 } },
+                            { id: 'reading_champion', name: 'Reading Champion', desc: 'Complete 10 reading activities', emoji: '📖', target: 10, reward: { stickers: 50, hearts: 25 } },
+                            { id: 'creative_genius', name: 'Creative Genius', desc: 'Complete 10 creative activities', emoji: '🎨', target: 10, reward: { stickers: 50, hearts: 25 } },
+                            { id: 'knowledge_master', name: 'Knowledge Master', desc: 'Complete 100 educational activities', emoji: '🎓', target: 100, reward: { stickers: 200, hearts: 100, specialCritter: 'scholar' } }
+                        ]
+                    },
+                    collection: {
+                        name: 'Critter Collector',
+                        emoji: '🐾',
+                        achievements: [
+                            { id: 'first_friend', name: 'First Friend', desc: 'Unlock your second critter', emoji: '👫', reward: { stickers: 25, hearts: 15 } },
+                            { id: 'growing_family', name: 'Growing Family', desc: 'Collect 3 critters', emoji: '👨‍👩‍👧', target: 3, reward: { stickers: 75, hearts: 50 } },
+                            { id: 'critter_squad', name: 'Critter Squad', desc: 'Collect 5 critters', emoji: '👥', target: 5, reward: { stickers: 150, hearts: 100 } },
+                            { id: 'legendary_collector', name: 'Legendary Collector', desc: 'Collect all 8 basic critters', emoji: '🏆', target: 8, reward: { stickers: 500, hearts: 300, specialCritter: 'rainbow' } },
+                            { id: 'evolution_master', name: 'Evolution Master', desc: 'Evolve a critter to legendary stage', emoji: '✨', reward: { stickers: 200, hearts: 150 } },
+                            { id: 'breeding_pioneer', name: 'Breeding Pioneer', desc: 'Successfully breed your first hybrid critter', emoji: '🧬', reward: { stickers: 300, hearts: 200 } }
+                        ]
+                    },
+                    exploration: {
+                        name: 'World Explorer',
+                        emoji: '🗺️',
+                        achievements: [
+                            { id: 'first_steps', name: 'First Steps', desc: 'Take 100 steps', emoji: '👣', target: 100, reward: { stickers: 20, hearts: 10 } },
+                            { id: 'wanderer', name: 'Wanderer', desc: 'Take 1000 steps', emoji: '🚶', target: 1000, reward: { stickers: 100, hearts: 50 } },
+                            { id: 'explorer', name: 'Explorer', desc: 'Visit all 6 locations', emoji: '🧭', target: 6, reward: { stickers: 150, hearts: 75 } },
+                            { id: 'treasure_hunter', name: 'Treasure Hunter', desc: 'Interact with 50 objects', emoji: '💎', target: 50, reward: { stickers: 200, hearts: 100 } },
+                            { id: 'social_butterfly', name: 'Social Butterfly', desc: 'Talk to all NPCs', emoji: '🦋', target: 5, reward: { stickers: 100, hearts: 75 } },
+                            { id: 'world_master', name: 'World Master', desc: 'Discover all secrets in every location', emoji: '🌍', reward: { stickers: 500, hearts: 300, specialLocation: 'secret_garden' } }
+                        ]
+                    },
+                    social: {
+                        name: 'Social Star',
+                        emoji: '⭐',
+                        achievements: [
+                            { id: 'friendly_hello', name: 'Friendly Hello', desc: 'Greet 5 NPCs', emoji: '👋', target: 5, reward: { stickers: 30, hearts: 20 } },
+                            { id: 'helper', name: 'Helper', desc: 'Help friends 10 times', emoji: '🤝', target: 10, reward: { stickers: 100, hearts: 75 } },
+                            { id: 'party_planner', name: 'Party Planner', desc: 'Organize a critter party', emoji: '🎉', reward: { stickers: 200, hearts: 150 } },
+                            { id: 'friendship_master', name: 'Friendship Master', desc: 'Max friendship with all NPCs', emoji: '💕', reward: { stickers: 300, hearts: 200, specialCritter: 'cupid' } }
+                        ]
+                    },
+                    special: {
+                        name: 'Special Moments',
+                        emoji: '🌟',
+                        achievements: [
+                            { id: 'daily_player', name: 'Daily Player', desc: 'Play for 7 consecutive days', emoji: '📅', target: 7, reward: { stickers: 100, hearts: 100 } },
+                            { id: 'speed_learner', name: 'Speed Learner', desc: 'Complete 5 activities in 5 minutes', emoji: '⚡', target: 5, reward: { stickers: 150, hearts: 100 } },
+                            { id: 'perfectionist', name: 'Perfectionist', desc: 'Get perfect scores on 20 activities', emoji: '💯', target: 20, reward: { stickers: 250, hearts: 200 } },
+                            { id: 'night_owl', name: 'Night Owl', desc: 'Play during evening hours', emoji: '🦉', reward: { stickers: 50, hearts: 30 } },
+                            { id: 'early_bird', name: 'Early Bird', desc: 'Play during morning hours', emoji: '🐦', reward: { stickers: 50, hearts: 30 } },
+                            { id: 'ultimate_master', name: 'Ultimate Master', desc: 'Unlock all achievements', emoji: '👑', reward: { stickers: 1000, hearts: 1000, specialCritter: 'cosmic', specialLocation: 'rainbow_realm' } }
+                        ]
+                    }
+                }
+            },
+            storyMode: {
+                currentChapter: 1,
+                unlockedChapters: [1],
+                completedChapters: [],
+                chapters: {
+                    1: {
+                        id: 1,
+                        title: 'Welcome to Eucalyptus Grove',
+                        description: 'Koko arrives in a magical world full of learning adventures!',
+                        emoji: '🌳',
+                        scenes: [
+                            { id: 1, title: 'A New Beginning', content: 'Welcome to Eucalyptus Grove, where learning is the greatest adventure!', choices: ['Start exploring!', 'Learn about the world'], rewards: { stickers: 10 } },
+                            { id: 2, title: 'Meeting Friends', content: 'You discover other critters who love to learn just like you!', choices: ['Make friends', 'Explore alone'], rewards: { hearts: 15 } },
+                            { id: 3, title: 'First Lesson', content: 'Time for your first educational adventure!', choices: ['Math challenge', 'Reading adventure'], rewards: { xp: 50 } }
+                        ],
+                        unlockRequirement: null,
+                        rewards: { stickers: 100, hearts: 50, newCritter: 'bella' }
+                    },
+                    2: {
+                        id: 2,
+                        title: 'The Mystery of the Missing Colors',
+                        description: 'Help restore color to the world through creative learning!',
+                        emoji: '🌈',
+                        scenes: [
+                            { id: 1, title: 'A Gray World', content: 'Oh no! All the colors have disappeared from Eucalyptus Grove!', choices: ['Investigate', 'Ask for help'], rewards: { stickers: 15 } },
+                            { id: 2, title: 'The Color Crystals', content: 'You discover that learning activities can restore the magical color crystals!', choices: ['Start collecting', 'Learn more'], rewards: { hearts: 20 } },
+                            { id: 3, title: 'Rainbow Restoration', content: 'With enough learning, you bring back all the beautiful colors!', choices: ['Celebrate', 'Help others'], rewards: { xp: 100 } }
+                        ],
+                        unlockRequirement: 'Complete Chapter 1',
+                        rewards: { stickers: 200, hearts: 100, newLocation: 'rainbow_valley' }
+                    },
+                    3: {
+                        id: 3,
+                        title: 'The Great Knowledge Quest',
+                        description: 'Embark on an epic journey to find the legendary Wisdom Tree!',
+                        emoji: '🌲',
+                        scenes: [
+                            { id: 1, title: 'The Ancient Map', content: 'You find a mysterious map leading to the Wisdom Tree!', choices: ['Follow the map', 'Study it first'], rewards: { stickers: 20 } },
+                            { id: 2, title: 'Trials of Learning', content: 'The path is guarded by educational challenges!', choices: ['Accept the challenge', 'Find another way'], rewards: { hearts: 25 } },
+                            { id: 3, title: 'The Wisdom Tree', content: 'You reach the magnificent tree that grants ultimate knowledge!', choices: ['Make a wish', 'Share with friends'], rewards: { xp: 200 } }
+                        ],
+                        unlockRequirement: 'Collect 3 critters',
+                        rewards: { stickers: 500, hearts: 300, newCritter: 'luna', specialAbility: 'wisdom_boost' }
+                    }
+                },
+                currentScene: { chapter: 1, scene: 1 },
+                choices: [],
+                storyProgress: {}
             }
         };
 
@@ -8026,6 +8610,409 @@
         setTimeout(() => {
             initializeCritterCollection();
         }, 3500);
+
+        // ACHIEVEMENT SYSTEM
+
+        function checkAchievements() {
+            const achievements = cuteGameState.achievements;
+            
+            Object.values(achievements.categories).forEach(category => {
+                category.achievements.forEach(achievement => {
+                    if (!achievements.unlocked.includes(achievement.id)) {
+                        checkAchievementProgress(achievement);
+                    }
+                });
+            });
+        }
+
+        function checkAchievementProgress(achievement) {
+            let progress = 0;
+            let completed = false;
+            
+            // Check different achievement types
+            switch (achievement.id) {
+                case 'first_lesson':
+                    completed = cuteGameState.player.xp > 0;
+                    break;
+                case 'math_whiz':
+                    progress = cuteGameState.skillTrees.learning.points;
+                    completed = progress >= achievement.target;
+                    break;
+                case 'first_friend':
+                    completed = cuteGameState.critterCollection.totalCritters >= 2;
+                    break;
+                case 'growing_family':
+                    progress = cuteGameState.critterCollection.totalCritters;
+                    completed = progress >= achievement.target;
+                    break;
+                case 'first_steps':
+                    progress = cuteGameState.explorationRewards.stepsWalked;
+                    completed = progress >= achievement.target;
+                    break;
+                case 'wanderer':
+                    progress = cuteGameState.explorationRewards.stepsWalked;
+                    completed = progress >= achievement.target;
+                    break;
+                case 'explorer':
+                    progress = cuteGameState.explorationRewards.locationsVisited;
+                    completed = progress >= achievement.target;
+                    break;
+                case 'treasure_hunter':
+                    progress = cuteGameState.explorationRewards.objectsInteracted;
+                    completed = progress >= achievement.target;
+                    break;
+                case 'social_butterfly':
+                    progress = cuteGameState.explorationRewards.npcsMetCount;
+                    completed = progress >= achievement.target;
+                    break;
+                case 'evolution_master':
+                    completed = Object.values(cuteGameState.critterCollection.critters).some(c => c.stage === 'legendary');
+                    break;
+                case 'daily_player':
+                    // Check if played for consecutive days (simplified)
+                    completed = cuteGameState.player.level >= 5;
+                    break;
+                case 'early_bird':
+                    const hour = new Date().getHours();
+                    completed = hour >= 6 && hour <= 10;
+                    break;
+                case 'night_owl':
+                    const nightHour = new Date().getHours();
+                    completed = nightHour >= 20 || nightHour <= 6;
+                    break;
+            }
+            
+            // Update progress
+            cuteGameState.achievements.progress[achievement.id] = progress;
+            
+            // Unlock achievement if completed
+            if (completed && !cuteGameState.achievements.unlocked.includes(achievement.id)) {
+                unlockAchievement(achievement);
+            }
+        }
+
+        function unlockAchievement(achievement) {
+            cuteGameState.achievements.unlocked.push(achievement.id);
+            
+            // Award rewards
+            if (achievement.reward.stickers) {
+                cuteGameState.resources.stickers += achievement.reward.stickers;
+            }
+            if (achievement.reward.hearts) {
+                cuteGameState.resources.hearts += achievement.reward.hearts;
+            }
+            if (achievement.reward.xp) {
+                cuteGameState.player.xp += achievement.reward.xp;
+            }
+            
+            // Show achievement notification
+            showAchievementUnlocked(achievement);
+            
+            // Update displays
+            updateAchievementDisplay();
+            updateCuteDisplay();
+            
+            // Check for special rewards
+            if (achievement.reward.specialCritter) {
+                unlockSpecialCritter(achievement.reward.specialCritter);
+            }
+            if (achievement.reward.specialLocation) {
+                unlockSpecialLocation(achievement.reward.specialLocation);
+            }
+        }
+
+        function showAchievementUnlocked(achievement) {
+            showCuteAchievement('Achievement Unlocked!', `${achievement.emoji} ${achievement.name}: ${achievement.desc}`);
+            
+            // Add to recent achievements
+            addRecentAchievement(achievement);
+        }
+
+        function addRecentAchievement(achievement) {
+            const recentList = document.getElementById('recentAchievementsList');
+            
+            // Remove "no achievements" message
+            const noAchievements = recentList.querySelector('.no-achievements');
+            if (noAchievements) {
+                noAchievements.remove();
+            }
+            
+            // Add new achievement
+            const achievementElement = document.createElement('div');
+            achievementElement.className = 'recent-achievement';
+            achievementElement.innerHTML = `
+                <span>${achievement.emoji}</span>
+                <span>${achievement.name}</span>
+            `;
+            
+            recentList.insertBefore(achievementElement, recentList.firstChild);
+            
+            // Keep only last 3 achievements
+            while (recentList.children.length > 3) {
+                recentList.removeChild(recentList.lastChild);
+            }
+        }
+
+        function updateAchievementDisplay() {
+            const totalAchievements = Object.values(cuteGameState.achievements.categories)
+                .reduce((total, category) => total + category.achievements.length, 0);
+            
+            document.getElementById('achievementsUnlocked').textContent = cuteGameState.achievements.unlocked.length;
+            document.getElementById('totalAchievements').textContent = totalAchievements;
+        }
+
+        function openAchievements() {
+            const modal = document.getElementById('achievementsModal');
+            populateAchievementCategories();
+            showAchievementCategory('learning');
+            modal.style.display = 'block';
+            showCuteEffect('🏆 Achievement gallery opened!', 'sparkle-effect');
+        }
+
+        function closeAchievements() {
+            document.getElementById('achievementsModal').style.display = 'none';
+        }
+
+        function populateAchievementCategories() {
+            const tabsContainer = document.getElementById('categoryTabs');
+            tabsContainer.innerHTML = '';
+            
+            Object.entries(cuteGameState.achievements.categories).forEach(([categoryId, category]) => {
+                const tab = document.createElement('div');
+                tab.className = 'category-tab';
+                tab.innerHTML = `${category.emoji} ${category.name}`;
+                tab.onclick = () => showAchievementCategory(categoryId);
+                tabsContainer.appendChild(tab);
+            });
+        }
+
+        function showAchievementCategory(categoryId) {
+            // Update active tab
+            document.querySelectorAll('.category-tab').forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Populate achievement grid
+            const grid = document.getElementById('achievementGrid');
+            const category = cuteGameState.achievements.categories[categoryId];
+            grid.innerHTML = '';
+            
+            category.achievements.forEach(achievement => {
+                const item = document.createElement('div');
+                const isUnlocked = cuteGameState.achievements.unlocked.includes(achievement.id);
+                const progress = cuteGameState.achievements.progress[achievement.id] || 0;
+                const progressPercent = achievement.target ? Math.min(100, (progress / achievement.target) * 100) : (isUnlocked ? 100 : 0);
+                
+                item.className = `achievement-item ${isUnlocked ? 'unlocked' : 'locked'}`;
+                item.innerHTML = `
+                    <div class="achievement-emoji">${achievement.emoji}</div>
+                    <div class="achievement-name">${achievement.name}</div>
+                    <div class="achievement-desc">${achievement.desc}</div>
+                    <div class="achievement-progress">
+                        <div class="achievement-progress-fill" style="width: ${progressPercent}%"></div>
+                    </div>
+                    <div class="achievement-reward">
+                        ${achievement.reward.stickers ? `${achievement.reward.stickers} 🎁` : ''}
+                        ${achievement.reward.hearts ? `${achievement.reward.hearts} 💕` : ''}
+                        ${achievement.reward.specialCritter ? `Special Critter!` : ''}
+                    </div>
+                `;
+                
+                grid.appendChild(item);
+            });
+        }
+
+        // STORY MODE SYSTEM
+
+        function openStoryMode() {
+            const modal = document.getElementById('storyModeModal');
+            showChapterSelection();
+            modal.style.display = 'block';
+            showCuteEffect('📖 Story mode opened!', 'sparkle-effect');
+        }
+
+        function closeStoryMode() {
+            document.getElementById('storyModeModal').style.display = 'none';
+        }
+
+        function showChapterSelection() {
+            const chapterSelection = document.getElementById('chapterSelection');
+            const storyScene = document.getElementById('storyScene');
+            
+            chapterSelection.style.display = 'block';
+            storyScene.style.display = 'none';
+            
+            chapterSelection.innerHTML = '';
+            
+            Object.values(cuteGameState.storyMode.chapters).forEach(chapter => {
+                const isUnlocked = cuteGameState.storyMode.unlockedChapters.includes(chapter.id);
+                const isCompleted = cuteGameState.storyMode.completedChapters.includes(chapter.id);
+                
+                const card = document.createElement('div');
+                card.className = `chapter-card ${isCompleted ? 'completed' : ''} ${!isUnlocked ? 'locked' : ''}`;
+                
+                let statusText = '';
+                if (isCompleted) {
+                    statusText = '✅ Completed';
+                } else if (isUnlocked) {
+                    statusText = '🔓 Available';
+                } else {
+                    statusText = `🔒 ${chapter.unlockRequirement}`;
+                }
+                
+                card.innerHTML = `
+                    <div class="chapter-emoji">${chapter.emoji}</div>
+                    <div class="chapter-info-detailed">
+                        <div class="chapter-title-large">${chapter.title}</div>
+                        <div class="chapter-description">${chapter.description}</div>
+                        <div class="chapter-status">${statusText}</div>
+                    </div>
+                `;
+                
+                if (isUnlocked) {
+                    card.onclick = () => startChapter(chapter.id);
+                }
+                
+                chapterSelection.appendChild(card);
+            });
+        }
+
+        function startChapter(chapterId) {
+            cuteGameState.storyMode.currentChapter = chapterId;
+            cuteGameState.storyMode.currentScene = { chapter: chapterId, scene: 1 };
+            showCurrentScene();
+        }
+
+        function showCurrentScene() {
+            const chapterSelection = document.getElementById('chapterSelection');
+            const storyScene = document.getElementById('storyScene');
+            
+            chapterSelection.style.display = 'none';
+            storyScene.style.display = 'block';
+            
+            const currentChapter = cuteGameState.storyMode.chapters[cuteGameState.storyMode.currentScene.chapter];
+            const currentSceneData = currentChapter.scenes[cuteGameState.storyMode.currentScene.scene - 1];
+            
+            storyScene.innerHTML = `
+                <div class="scene-title">${currentSceneData.title}</div>
+                <div class="scene-content">${currentSceneData.content}</div>
+                <div class="scene-choices">
+                    ${currentSceneData.choices.map((choice, index) => 
+                        `<button class="choice-button" onclick="makeChoice(${index})">${choice}</button>`
+                    ).join('')}
+                </div>
+            `;
+        }
+
+        function makeChoice(choiceIndex) {
+            const currentChapter = cuteGameState.storyMode.chapters[cuteGameState.storyMode.currentScene.chapter];
+            const currentSceneData = currentChapter.scenes[cuteGameState.storyMode.currentScene.scene - 1];
+            
+            // Award scene rewards
+            if (currentSceneData.rewards) {
+                Object.entries(currentSceneData.rewards).forEach(([resource, amount]) => {
+                    if (cuteGameState.resources[resource]) {
+                        cuteGameState.resources[resource] += amount;
+                    } else if (cuteGameState.player[resource]) {
+                        cuteGameState.player[resource] += amount;
+                    }
+                });
+            }
+            
+            // Progress to next scene or complete chapter
+            if (cuteGameState.storyMode.currentScene.scene < currentChapter.scenes.length) {
+                cuteGameState.storyMode.currentScene.scene++;
+                showCurrentScene();
+            } else {
+                completeChapter();
+            }
+            
+            updateCuteDisplay();
+        }
+
+        function completeChapter() {
+            const chapterId = cuteGameState.storyMode.currentScene.chapter;
+            const chapter = cuteGameState.storyMode.chapters[chapterId];
+            
+            // Mark chapter as completed
+            if (!cuteGameState.storyMode.completedChapters.includes(chapterId)) {
+                cuteGameState.storyMode.completedChapters.push(chapterId);
+            }
+            
+            // Award chapter rewards
+            if (chapter.rewards) {
+                Object.entries(chapter.rewards).forEach(([resource, amount]) => {
+                    if (resource === 'newCritter') {
+                        unlockCritter(amount);
+                    } else if (resource === 'newLocation') {
+                        unlockLocation(amount);
+                    } else if (cuteGameState.resources[resource]) {
+                        cuteGameState.resources[resource] += amount;
+                    } else if (cuteGameState.player[resource]) {
+                        cuteGameState.player[resource] += amount;
+                    }
+                });
+            }
+            
+            // Unlock next chapter
+            const nextChapterId = chapterId + 1;
+            if (cuteGameState.storyMode.chapters[nextChapterId] && 
+                !cuteGameState.storyMode.unlockedChapters.includes(nextChapterId)) {
+                cuteGameState.storyMode.unlockedChapters.push(nextChapterId);
+            }
+            
+            showCuteAchievement('Chapter Complete!', `📖 ${chapter.title} completed!`);
+            updateStoryDisplay();
+            showChapterSelection();
+        }
+
+        function updateStoryDisplay() {
+            const currentChapter = cuteGameState.storyMode.chapters[cuteGameState.storyMode.currentChapter];
+            
+            document.getElementById('currentChapterEmoji').textContent = currentChapter.emoji;
+            document.getElementById('currentChapterTitle').textContent = currentChapter.title;
+            document.getElementById('currentChapterProgress').textContent = 
+                `Scene ${cuteGameState.storyMode.currentScene.scene}/${currentChapter.scenes.length}`;
+            
+            document.getElementById('chaptersCompleted').textContent = 
+                `${cuteGameState.storyMode.completedChapters.length}/${Object.keys(cuteGameState.storyMode.chapters).length}`;
+            
+            const totalScenes = Object.values(cuteGameState.storyMode.chapters)
+                .reduce((total, chapter) => total + chapter.scenes.length, 0);
+            const completedScenes = cuteGameState.storyMode.completedChapters
+                .reduce((total, chapterId) => total + cuteGameState.storyMode.chapters[chapterId].scenes.length, 0);
+            
+            document.getElementById('scenesCompleted').textContent = `${completedScenes}/${totalScenes}`;
+        }
+
+        // Enhanced activity system to check achievements and story progress
+        const originalCompleteEducationalChallenge2 = completeEducationalChallenge;
+        completeEducationalChallenge = function(challengeType) {
+            originalCompleteEducationalChallenge2(challengeType);
+            checkAchievements();
+        };
+
+        const originalAwardCritterGrowth = awardCritterGrowth;
+        awardCritterGrowth = function(activityType, points) {
+            originalAwardCritterGrowth(activityType, points);
+            checkAchievements();
+        };
+
+        // Initialize Achievement and Story systems
+        function initializeAchievementAndStory() {
+            updateAchievementDisplay();
+            updateStoryDisplay();
+            checkAchievements();
+            
+            // Check time-based achievements
+            setInterval(() => {
+                checkAchievements();
+            }, 60000); // Check every minute
+        }
+
+        // Initialize systems
+        setTimeout(() => {
+            initializeAchievementAndStory();
+        }, 4000);
     </script>
 </body>
 </html>
