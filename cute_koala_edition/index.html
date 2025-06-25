@@ -1224,6 +1224,335 @@
             50% { transform: rotate(5deg) scale(1.1); }
         }
 
+        /* Quest System */
+        .quest-title {
+            font-size: 7px;
+            font-weight: bold;
+            color: #8B008B;
+            margin-bottom: 3px;
+        }
+
+        .quest-tasks {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .quest-task {
+            font-size: 5px;
+            color: #9370DB;
+            display: flex;
+            justify-content: space-between;
+            padding: 1px 3px;
+            background: rgba(221,160,221,0.1);
+            border-radius: 4px;
+        }
+
+        .quest-task.completed {
+            background: rgba(144,238,144,0.3);
+            color: #228B22;
+        }
+
+        /* Skill Trees Panel */
+        .skill-trees-panel {
+            background: rgba(255,255,255,0.9);
+            border: 2px solid #9370DB;
+            border-radius: 12px;
+            padding: 6px;
+            margin: 5px 0;
+        }
+
+        .skill-trees-header {
+            font-size: 8px;
+            font-weight: bold;
+            color: #8B008B;
+            text-align: center;
+            margin-bottom: 4px;
+        }
+
+        .skill-categories {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4px;
+        }
+
+        .skill-category {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 4px;
+            background: rgba(147,112,219,0.2);
+            border: 1px solid #9370DB;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .skill-category:hover {
+            background: rgba(147,112,219,0.4);
+            transform: scale(1.05);
+        }
+
+        .skill-emoji {
+            font-size: 14px;
+            margin-bottom: 2px;
+        }
+
+        .skill-level {
+            font-size: 6px;
+            font-weight: bold;
+            color: #8B008B;
+        }
+
+        /* Koko's Thoughts Panel */
+        .koko-thoughts-panel {
+            background: rgba(255,255,255,0.9);
+            border: 2px solid #FFB6C1;
+            border-radius: 12px;
+            padding: 6px;
+            margin: 5px 0;
+        }
+
+        .thoughts-header {
+            font-size: 8px;
+            font-weight: bold;
+            color: #FF1493;
+            text-align: center;
+            margin-bottom: 4px;
+        }
+
+        .koko-thought {
+            font-size: 6px;
+            color: #FF69B4;
+            text-align: center;
+            font-style: italic;
+            margin-bottom: 3px;
+            min-height: 12px;
+        }
+
+        .mood-indicator {
+            font-size: 6px;
+            color: #FF1493;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        /* Seasonal Events Panel */
+        .seasonal-event-panel {
+            background: linear-gradient(45deg, #FFD700, #FFA500);
+            border: 3px solid #FF8C00;
+            border-radius: 15px;
+            padding: 8px;
+            margin: 5px 0;
+            box-shadow: 0 4px 12px rgba(255,140,0,0.4);
+            animation: seasonalGlow 2s infinite ease-in-out;
+        }
+
+        .seasonal-header {
+            font-size: 10px;
+            font-weight: bold;
+            color: #8B4513;
+            text-align: center;
+            margin-bottom: 4px;
+        }
+
+        .seasonal-name {
+            font-size: 8px;
+            font-weight: bold;
+            color: #A0522D;
+            text-align: center;
+        }
+
+        .seasonal-desc {
+            font-size: 6px;
+            color: #8B4513;
+            text-align: center;
+            margin: 2px 0;
+        }
+
+        .seasonal-timer {
+            font-size: 6px;
+            color: #A0522D;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        @keyframes seasonalGlow {
+            0%, 100% { box-shadow: 0 4px 12px rgba(255,140,0,0.4); }
+            50% { box-shadow: 0 6px 20px rgba(255,140,0,0.8); }
+        }
+
+        /* Skill Tree Modal */
+        .skill-tree-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(45deg, #E6E6FA, #F0F8FF);
+            border: 3px solid #9370DB;
+            border-radius: 20px;
+            padding: 15px;
+            z-index: 3000;
+            max-width: 350px;
+            max-height: 400px;
+            overflow-y: auto;
+            box-shadow: 0 10px 30px rgba(147,112,219,0.4);
+        }
+
+        .skill-tree-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            font-size: 14px;
+            font-weight: bold;
+            color: #8B008B;
+        }
+
+        .skill-points-display {
+            font-size: 12px;
+            color: #9370DB;
+            text-align: center;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .skill-tree-content {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .skill-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px;
+            background: rgba(255,255,255,0.8);
+            border: 2px solid #DDA0DD;
+            border-radius: 12px;
+            transition: all 0.3s;
+        }
+
+        .skill-item.unlocked {
+            background: rgba(144,238,144,0.3);
+            border-color: #90EE90;
+        }
+
+        .skill-item.affordable {
+            background: rgba(255,255,0,0.2);
+            border-color: #FFD700;
+            cursor: pointer;
+        }
+
+        .skill-item.affordable:hover {
+            background: rgba(255,255,0,0.4);
+            transform: scale(1.02);
+        }
+
+        .skill-info {
+            flex: 1;
+        }
+
+        .skill-name {
+            font-size: 10px;
+            font-weight: bold;
+            color: #8B008B;
+        }
+
+        .skill-cost {
+            font-size: 8px;
+            color: #9370DB;
+        }
+
+        .skill-unlock-btn {
+            padding: 4px 8px;
+            background: #9370DB;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .skill-unlock-btn:hover {
+            background: #8B008B;
+            transform: scale(1.05);
+        }
+
+        /* Interactive Objects Modal */
+        .interactive-objects-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(45deg, #F0F8FF, #E0F6FF);
+            border: 3px solid #4682B4;
+            border-radius: 20px;
+            padding: 15px;
+            z-index: 3000;
+            max-width: 300px;
+            box-shadow: 0 10px 30px rgba(70,130,180,0.4);
+        }
+
+        .interactive-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            font-size: 14px;
+            font-weight: bold;
+            color: #4682B4;
+        }
+
+        .interactive-objects-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .interactive-object {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px;
+            background: rgba(255,255,255,0.8);
+            border: 2px solid #87CEEB;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .interactive-object:hover {
+            background: rgba(135,206,235,0.3);
+            transform: scale(1.02);
+        }
+
+        .interactive-object.locked {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .object-emoji {
+            font-size: 24px;
+        }
+
+        .object-info {
+            flex: 1;
+        }
+
+        .object-name {
+            font-size: 10px;
+            font-weight: bold;
+            color: #4682B4;
+        }
+
+        .object-clicks {
+            font-size: 8px;
+            color: #708090;
+        }
+
         @keyframes heartFloat {
             0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.7; }
             50% { transform: translateY(-15px) rotate(15deg); opacity: 1; }
@@ -1418,10 +1747,50 @@
                             <div id="storyProgressBar" class="progress-fill" style="width: 25%"></div>
                         </div>
                     </div>
-                    <div id="activeQuest" class="active-quest" style="display: none;">
-                        <span id="questText">Find 3 new toys!</span>
-                        <span id="questProgress">1/3</span>
+                    <div id="activeQuest" class="active-quest">
+                        <div id="questTitle" class="quest-title">Welcome to Eucalyptus Grove!</div>
+                        <div id="questTasks" class="quest-tasks">
+                            <!-- Tasks will be populated by JavaScript -->
+                        </div>
                     </div>
+                </div>
+                
+                <!-- Skill Trees Panel -->
+                <div class="skill-trees-panel">
+                    <div class="skill-trees-header">🌟 Skills</div>
+                    <div class="skill-categories">
+                        <div class="skill-category" onclick="showSkillTree('learning')">
+                            <span class="skill-emoji">🧠</span>
+                            <span id="learningLevel" class="skill-level">Lv.1</span>
+                        </div>
+                        <div class="skill-category" onclick="showSkillTree('creativity')">
+                            <span class="skill-emoji">🎨</span>
+                            <span id="creativityLevel" class="skill-level">Lv.1</span>
+                        </div>
+                        <div class="skill-category" onclick="showSkillTree('friendship')">
+                            <span class="skill-emoji">💕</span>
+                            <span id="friendshipLevel" class="skill-level">Lv.1</span>
+                        </div>
+                        <div class="skill-category" onclick="showSkillTree('exploration')">
+                            <span class="skill-emoji">🗺️</span>
+                            <span id="explorationLevel" class="skill-level">Lv.1</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Koko's AI Thoughts -->
+                <div class="koko-thoughts-panel">
+                    <div class="thoughts-header">💭 Koko's Thoughts</div>
+                    <div id="kokoThought" class="koko-thought">I wonder what we'll discover today!</div>
+                    <div id="kokoMoodIndicator" class="mood-indicator">😊 Happy & Playful</div>
+                </div>
+                
+                <!-- Seasonal Events -->
+                <div id="seasonalEventPanel" class="seasonal-event-panel" style="display: none;">
+                    <div class="seasonal-header">🎉 Special Event!</div>
+                    <div id="seasonalEventName" class="seasonal-name"></div>
+                    <div id="seasonalEventDesc" class="seasonal-desc"></div>
+                    <div id="seasonalEventTimer" class="seasonal-timer"></div>
                 </div>
             </div>
 
@@ -1465,6 +1834,32 @@
                 </div>
                 <div id="photoPreview" class="photo-preview">
                     <div id="photoKoko" class="photo-koko">🐨</div>
+                </div>
+            </div>
+            
+            <!-- Skill Tree Modal -->
+            <div id="skillTreeModal" class="skill-tree-modal" style="display: none;">
+                <div class="skill-tree-header">
+                    <span id="skillTreeTitle">🧠 Learning Skills</span>
+                    <button onclick="closeSkillTree()" class="close-btn">❌</button>
+                </div>
+                <div class="skill-points-display">
+                    <span>Skill Points: </span>
+                    <span id="availableSkillPoints">0</span>
+                </div>
+                <div id="skillTreeContent" class="skill-tree-content">
+                    <!-- Skills will be populated by JavaScript -->
+                </div>
+            </div>
+            
+            <!-- Interactive Objects Modal -->
+            <div id="interactiveObjectsModal" class="interactive-objects-modal" style="display: none;">
+                <div class="interactive-header">
+                    <span id="interactiveTitle">🛝 Playground Objects</span>
+                    <button onclick="closeInteractiveObjects()" class="close-btn">❌</button>
+                </div>
+                <div id="interactiveObjectsList" class="interactive-objects-list">
+                    <!-- Objects will be populated by JavaScript -->
                 </div>
             </div>
 
@@ -1694,7 +2089,18 @@
                 currentChapter: 1,
                 unlockedChapters: [1],
                 completedQuests: [],
-                activeQuest: null
+                activeQuest: {
+                    id: 'welcome_quest',
+                    title: 'Welcome to Eucalyptus Grove!',
+                    description: 'Help Koko settle into their new home',
+                    tasks: [
+                        { id: 'click_koko', description: 'Click Koko 5 times', progress: 0, target: 5, completed: false },
+                        { id: 'visit_playground', description: 'Visit the playground', progress: 0, target: 1, completed: false },
+                        { id: 'feed_koko', description: 'Feed Koko once', progress: 0, target: 1, completed: false }
+                    ],
+                    rewards: { xp: 100, stickers: 50, hearts: 25 },
+                    completed: false
+                }
             },
             friends: [
                 { name: 'Bella Bunny', emoji: '🐰', friendship: 50, unlocked: true },
@@ -1703,13 +2109,87 @@
                 { name: 'Ellie Elephant', emoji: '🐘', friendship: 0, unlocked: false }
             ],
             timeOfDay: 'morning',
-            seasonalEvents: [],
+            seasonalEvents: [
+                { id: 'spring_festival', name: 'Spring Flower Festival', active: false, duration: 7 },
+                { id: 'summer_beach', name: 'Summer Beach Party', active: false, duration: 5 },
+                { id: 'autumn_harvest', name: 'Autumn Harvest Celebration', active: false, duration: 6 },
+                { id: 'winter_wonderland', name: 'Winter Wonderland', active: false, duration: 8 }
+            ],
             photoAlbum: [],
             skillTrees: {
-                learning: { level: 1, points: 0, unlocked: ['basic_math'] },
-                creativity: { level: 1, points: 0, unlocked: ['color_mixing'] },
-                friendship: { level: 1, points: 0, unlocked: ['basic_care'] },
-                exploration: { level: 1, points: 0, unlocked: ['playground'] }
+                learning: { 
+                    level: 1, 
+                    points: 0, 
+                    unlocked: ['basic_math'],
+                    skills: {
+                        basic_math: { name: 'Basic Math', cost: 0, unlocked: true },
+                        advanced_math: { name: 'Advanced Math', cost: 10, unlocked: false },
+                        science_explorer: { name: 'Science Explorer', cost: 15, unlocked: false },
+                        reading_master: { name: 'Reading Master', cost: 12, unlocked: false },
+                        genius_mode: { name: 'Genius Mode', cost: 25, unlocked: false }
+                    }
+                },
+                creativity: { 
+                    level: 1, 
+                    points: 0, 
+                    unlocked: ['color_mixing'],
+                    skills: {
+                        color_mixing: { name: 'Color Mixing', cost: 0, unlocked: true },
+                        art_master: { name: 'Art Master', cost: 8, unlocked: false },
+                        music_composer: { name: 'Music Composer', cost: 12, unlocked: false },
+                        story_teller: { name: 'Story Teller', cost: 10, unlocked: false },
+                        creative_genius: { name: 'Creative Genius', cost: 20, unlocked: false }
+                    }
+                },
+                friendship: { 
+                    level: 1, 
+                    points: 0, 
+                    unlocked: ['basic_care'],
+                    skills: {
+                        basic_care: { name: 'Basic Care', cost: 0, unlocked: true },
+                        friend_magnet: { name: 'Friend Magnet', cost: 6, unlocked: false },
+                        empathy_expert: { name: 'Empathy Expert', cost: 9, unlocked: false },
+                        social_butterfly: { name: 'Social Butterfly', cost: 14, unlocked: false },
+                        friendship_guru: { name: 'Friendship Guru', cost: 18, unlocked: false }
+                    }
+                },
+                exploration: { 
+                    level: 1, 
+                    points: 0, 
+                    unlocked: ['playground'],
+                    skills: {
+                        playground: { name: 'Playground Explorer', cost: 0, unlocked: true },
+                        nature_scout: { name: 'Nature Scout', cost: 7, unlocked: false },
+                        treasure_hunter: { name: 'Treasure Hunter', cost: 11, unlocked: false },
+                        world_traveler: { name: 'World Traveler', cost: 16, unlocked: false },
+                        master_explorer: { name: 'Master Explorer', cost: 22, unlocked: false }
+                    }
+                }
+            },
+            interactiveObjects: {
+                playground: [
+                    { id: 'swing', emoji: '🪀', name: 'Magic Swing', clicks: 0, unlocked: true },
+                    { id: 'slide', emoji: '🛝', name: 'Rainbow Slide', clicks: 0, unlocked: true },
+                    { id: 'seesaw', emoji: '⚖️', name: 'Friendship Seesaw', clicks: 0, unlocked: false }
+                ],
+                garden: [
+                    { id: 'flowers', emoji: '🌸', name: 'Singing Flowers', clicks: 0, unlocked: true },
+                    { id: 'fountain', emoji: '⛲', name: 'Wishing Fountain', clicks: 0, unlocked: false },
+                    { id: 'butterfly', emoji: '🦋', name: 'Dancing Butterfly', clicks: 0, unlocked: false }
+                ],
+                library: [
+                    { id: 'books', emoji: '📚', name: 'Magical Books', clicks: 0, unlocked: true },
+                    { id: 'globe', emoji: '🌍', name: 'Adventure Globe', clicks: 0, unlocked: false },
+                    { id: 'telescope', emoji: '🔭', name: 'Star Telescope', clicks: 0, unlocked: false }
+                ]
+            },
+            kokoAI: {
+                mood: 'happy',
+                personality: 'playful',
+                responses: [],
+                learningProgress: 0,
+                favoriteActivities: ['play', 'learn', 'hug'],
+                currentThought: 'I wonder what we\'ll discover today!'
             }
         };
 
@@ -3319,6 +3799,446 @@
 
         // Initialize pet care display
         updatePetCareDisplay();
+
+        // ADVANCED GAME SYSTEMS
+
+        // Quest System
+        function updateQuestProgress(taskType, amount = 1) {
+            const quest = cuteGameState.story.activeQuest;
+            if (!quest || quest.completed) return;
+            
+            quest.tasks.forEach(task => {
+                if (task.id.includes(taskType) && !task.completed) {
+                    task.progress = Math.min(task.progress + amount, task.target);
+                    if (task.progress >= task.target) {
+                        task.completed = true;
+                        showCuteEffect(`✅ ${task.description} completed!`, 'sparkle-effect');
+                    }
+                }
+            });
+            
+            updateQuestDisplay();
+            
+            // Check if quest is complete
+            if (quest.tasks.every(task => task.completed)) {
+                completeQuest();
+            }
+        }
+
+        function updateQuestDisplay() {
+            const quest = cuteGameState.story.activeQuest;
+            if (!quest) return;
+            
+            document.getElementById('questTitle').textContent = quest.title;
+            const tasksContainer = document.getElementById('questTasks');
+            tasksContainer.innerHTML = '';
+            
+            quest.tasks.forEach(task => {
+                const taskDiv = document.createElement('div');
+                taskDiv.className = `quest-task ${task.completed ? 'completed' : ''}`;
+                taskDiv.innerHTML = `
+                    <span>${task.description}</span>
+                    <span>${task.progress}/${task.target}</span>
+                `;
+                tasksContainer.appendChild(taskDiv);
+            });
+        }
+
+        function completeQuest() {
+            const quest = cuteGameState.story.activeQuest;
+            quest.completed = true;
+            cuteGameState.story.completedQuests.push(quest.id);
+            
+            // Give rewards
+            Object.keys(quest.rewards).forEach(resource => {
+                if (cuteGameState.resources[resource] !== undefined) {
+                    cuteGameState.resources[resource] += quest.rewards[resource];
+                } else if (cuteGameState.player[resource] !== undefined) {
+                    cuteGameState.player[resource] += quest.rewards[resource];
+                }
+            });
+            
+            showCuteAchievement('Quest Complete!', `🎉 ${quest.title} completed! Great job!`);
+            
+            // Start next quest
+            setTimeout(() => {
+                startNextQuest();
+            }, 2000);
+            
+            updateCuteDisplay();
+        }
+
+        function startNextQuest() {
+            const nextQuests = [
+                {
+                    id: 'friendship_quest',
+                    title: 'Making Friends',
+                    description: 'Build friendships with other animals',
+                    tasks: [
+                        { id: 'visit_friends', description: 'Visit the friends panel', progress: 0, target: 1, completed: false },
+                        { id: 'interact_friend', description: 'Interact with Bella Bunny', progress: 0, target: 3, completed: false },
+                        { id: 'unlock_friend', description: 'Unlock a new friend', progress: 0, target: 1, completed: false }
+                    ],
+                    rewards: { xp: 150, stickers: 75, hearts: 40 },
+                    completed: false
+                },
+                {
+                    id: 'learning_quest',
+                    title: 'Knowledge Seeker',
+                    description: 'Expand your learning skills',
+                    tasks: [
+                        { id: 'complete_challenge', description: 'Complete 3 educational challenges', progress: 0, target: 3, completed: false },
+                        { id: 'unlock_skill', description: 'Unlock a new skill', progress: 0, target: 1, completed: false },
+                        { id: 'visit_library', description: 'Visit the library', progress: 0, target: 1, completed: false }
+                    ],
+                    rewards: { xp: 200, stickers: 100, skillPoints: 5 },
+                    completed: false
+                }
+            ];
+            
+            const nextQuest = nextQuests[cuteGameState.story.completedQuests.length % nextQuests.length];
+            cuteGameState.story.activeQuest = nextQuest;
+            updateQuestDisplay();
+            showCuteEffect('📖 New quest available!', 'sparkle-effect');
+        }
+
+        // Skill Tree System
+        function showSkillTree(category) {
+            const skillTree = cuteGameState.skillTrees[category];
+            const modal = document.getElementById('skillTreeModal');
+            const title = document.getElementById('skillTreeTitle');
+            const pointsDisplay = document.getElementById('availableSkillPoints');
+            const content = document.getElementById('skillTreeContent');
+            
+            const categoryEmojis = {
+                learning: '🧠',
+                creativity: '🎨',
+                friendship: '💕',
+                exploration: '🗺️'
+            };
+            
+            title.textContent = `${categoryEmojis[category]} ${category.charAt(0).toUpperCase() + category.slice(1)} Skills`;
+            pointsDisplay.textContent = skillTree.points;
+            
+            content.innerHTML = '';
+            
+            Object.keys(skillTree.skills).forEach(skillId => {
+                const skill = skillTree.skills[skillId];
+                const skillDiv = document.createElement('div');
+                skillDiv.className = 'skill-item';
+                
+                if (skill.unlocked) {
+                    skillDiv.classList.add('unlocked');
+                } else if (skillTree.points >= skill.cost) {
+                    skillDiv.classList.add('affordable');
+                }
+                
+                skillDiv.innerHTML = `
+                    <div class="skill-info">
+                        <div class="skill-name">${skill.name}</div>
+                        <div class="skill-cost">${skill.unlocked ? 'Unlocked' : `Cost: ${skill.cost} points`}</div>
+                    </div>
+                    ${!skill.unlocked && skillTree.points >= skill.cost ? 
+                        `<button class="skill-unlock-btn" onclick="unlockSkill('${category}', '${skillId}')">Unlock</button>` : ''}
+                `;
+                
+                content.appendChild(skillDiv);
+            });
+            
+            modal.style.display = 'block';
+            showCuteEffect(`🌟 ${category} skill tree opened!`, 'sparkle-effect');
+        }
+
+        function closeSkillTree() {
+            document.getElementById('skillTreeModal').style.display = 'none';
+        }
+
+        function unlockSkill(category, skillId) {
+            const skillTree = cuteGameState.skillTrees[category];
+            const skill = skillTree.skills[skillId];
+            
+            if (skillTree.points >= skill.cost && !skill.unlocked) {
+                skillTree.points -= skill.cost;
+                skill.unlocked = true;
+                skillTree.unlocked.push(skillId);
+                skillTree.level++;
+                
+                showCuteAchievement('Skill Unlocked!', `🌟 ${skill.name} unlocked!`);
+                updateSkillTreeDisplay();
+                showSkillTree(category); // Refresh the modal
+                
+                // Update quest progress
+                updateQuestProgress('unlock_skill');
+                
+                // Unlock new abilities based on skills
+                unlockSkillAbilities(category, skillId);
+            }
+        }
+
+        function unlockSkillAbilities(category, skillId) {
+            // Unlock new customization items, friends, or interactive objects based on skills
+            if (skillId === 'friend_magnet') {
+                cuteGameState.friends.forEach(friend => {
+                    if (!friend.unlocked && Math.random() < 0.5) {
+                        friend.unlocked = true;
+                        showCuteEffect(`👫 ${friend.name} wants to be friends!`, 'love-effect');
+                    }
+                });
+            }
+            
+            if (skillId === 'nature_scout') {
+                // Unlock new interactive objects
+                Object.values(cuteGameState.interactiveObjects).forEach(locationObjects => {
+                    locationObjects.forEach(obj => {
+                        if (!obj.unlocked && Math.random() < 0.3) {
+                            obj.unlocked = true;
+                            showCuteEffect(`🔓 ${obj.name} unlocked!`, 'sparkle-effect');
+                        }
+                    });
+                });
+            }
+        }
+
+        function updateSkillTreeDisplay() {
+            document.getElementById('learningLevel').textContent = `Lv.${cuteGameState.skillTrees.learning.level}`;
+            document.getElementById('creativityLevel').textContent = `Lv.${cuteGameState.skillTrees.creativity.level}`;
+            document.getElementById('friendshipLevel').textContent = `Lv.${cuteGameState.skillTrees.friendship.level}`;
+            document.getElementById('explorationLevel').textContent = `Lv.${cuteGameState.skillTrees.exploration.level}`;
+        }
+
+        // Interactive Objects System
+        function showInteractiveObjects(location) {
+            const objects = cuteGameState.interactiveObjects[location];
+            const modal = document.getElementById('interactiveObjectsModal');
+            const title = document.getElementById('interactiveTitle');
+            const list = document.getElementById('interactiveObjectsList');
+            
+            const locationEmojis = {
+                playground: '🛝',
+                garden: '🌸',
+                library: '📚'
+            };
+            
+            title.textContent = `${locationEmojis[location]} ${location.charAt(0).toUpperCase() + location.slice(1)} Objects`;
+            
+            list.innerHTML = '';
+            
+            objects.forEach(obj => {
+                const objDiv = document.createElement('div');
+                objDiv.className = `interactive-object ${!obj.unlocked ? 'locked' : ''}`;
+                
+                objDiv.innerHTML = `
+                    <div class="object-emoji">${obj.emoji}</div>
+                    <div class="object-info">
+                        <div class="object-name">${obj.name}</div>
+                        <div class="object-clicks">Clicked: ${obj.clicks} times</div>
+                    </div>
+                `;
+                
+                if (obj.unlocked) {
+                    objDiv.onclick = () => interactWithObject(obj);
+                }
+                
+                list.appendChild(objDiv);
+            });
+            
+            modal.style.display = 'block';
+            showCuteEffect(`🔍 Exploring ${location}!`, 'sparkle-effect');
+        }
+
+        function closeInteractiveObjects() {
+            document.getElementById('interactiveObjectsModal').style.display = 'none';
+        }
+
+        function interactWithObject(obj) {
+            obj.clicks++;
+            
+            const interactions = {
+                swing: ['🪀 Wheee! Koko loves swinging!', '🌟 The swing sparkles with magic!'],
+                slide: ['🛝 Sliding down the rainbow!', '🌈 Colors dance around Koko!'],
+                flowers: ['🌸 The flowers sing a beautiful melody!', '🎵 Musical notes float in the air!'],
+                books: ['📚 Koko discovers amazing stories!', '✨ Knowledge fills the air!']
+            };
+            
+            const messages = interactions[obj.id] || ['✨ Something magical happens!'];
+            const message = messages[Math.floor(Math.random() * messages.length)];
+            
+            showCuteEffect(message, 'sparkle-effect');
+            
+            // Give rewards based on object type
+            const rewards = {
+                swing: { happiness: 5, stickers: 3 },
+                slide: { happiness: 8, hearts: 2 },
+                flowers: { love: 10, stickers: 5 },
+                books: { xp: 15, skillPoints: 1 }
+            };
+            
+            const reward = rewards[obj.id];
+            if (reward) {
+                Object.keys(reward).forEach(resource => {
+                    if (cuteGameState.stats[resource] !== undefined) {
+                        cuteGameState.stats[resource] = Math.min(100, cuteGameState.stats[resource] + reward[resource]);
+                    } else if (cuteGameState.resources[resource] !== undefined) {
+                        cuteGameState.resources[resource] += reward[resource];
+                    } else if (cuteGameState.player[resource] !== undefined) {
+                        cuteGameState.player[resource] += reward[resource];
+                    } else if (cuteGameState.skillTrees.learning[resource] !== undefined) {
+                        cuteGameState.skillTrees.learning[resource] += reward[resource];
+                    }
+                });
+            }
+            
+            updateCuteDisplay();
+            showInteractiveObjects(Object.keys(cuteGameState.interactiveObjects).find(loc => 
+                cuteGameState.interactiveObjects[loc].includes(obj)
+            ));
+        }
+
+        // Advanced AI System
+        function updateKokoAI() {
+            const ai = cuteGameState.kokoAI;
+            const stats = cuteGameState.stats;
+            
+            // Update mood based on stats
+            if (stats.happiness > 80 && stats.health > 80) {
+                ai.mood = 'ecstatic';
+            } else if (stats.happiness > 60) {
+                ai.mood = 'happy';
+            } else if (stats.happiness > 40) {
+                ai.mood = 'content';
+            } else {
+                ai.mood = 'sad';
+            }
+            
+            // Generate dynamic thoughts
+            const thoughts = {
+                ecstatic: [
+                    'I feel amazing! Let\'s have more adventures!',
+                    'This is the best day ever! 🌟',
+                    'I love learning and playing with you!',
+                    'Everything is so wonderful and magical!'
+                ],
+                happy: [
+                    'I\'m having so much fun today!',
+                    'What should we explore next?',
+                    'I love spending time with you!',
+                    'Learning is such an adventure!'
+                ],
+                content: [
+                    'Today is a good day for learning.',
+                    'I wonder what we\'ll discover.',
+                    'Shall we try something new?',
+                    'I\'m ready for our next activity!'
+                ],
+                sad: [
+                    'I could use some cheering up...',
+                    'Maybe we could play together?',
+                    'I\'m feeling a bit lonely.',
+                    'Some hugs would be nice.'
+                ]
+            };
+            
+            if (Math.random() < 0.1) { // 10% chance to update thought
+                const moodThoughts = thoughts[ai.mood];
+                ai.currentThought = moodThoughts[Math.floor(Math.random() * moodThoughts.length)];
+                updateKokoThoughtsDisplay();
+            }
+        }
+
+        function updateKokoThoughtsDisplay() {
+            const ai = cuteGameState.kokoAI;
+            document.getElementById('kokoThought').textContent = ai.currentThought;
+            
+            const moodEmojis = {
+                ecstatic: '🤩 Ecstatic & Energetic',
+                happy: '😊 Happy & Playful',
+                content: '😌 Content & Curious',
+                sad: '😢 Sad & Lonely'
+            };
+            
+            document.getElementById('kokoMoodIndicator').textContent = moodEmojis[ai.mood];
+        }
+
+        // Seasonal Events System
+        function triggerSeasonalEvent() {
+            const events = cuteGameState.seasonalEvents;
+            const availableEvents = events.filter(event => !event.active);
+            
+            if (availableEvents.length > 0 && Math.random() < 0.05) { // 5% chance
+                const event = availableEvents[Math.floor(Math.random() * availableEvents.length)];
+                event.active = true;
+                event.startTime = Date.now();
+                
+                showSeasonalEvent(event);
+            }
+        }
+
+        function showSeasonalEvent(event) {
+            const panel = document.getElementById('seasonalEventPanel');
+            document.getElementById('seasonalEventName').textContent = event.name;
+            document.getElementById('seasonalEventDesc').textContent = `Special rewards and activities available!`;
+            document.getElementById('seasonalEventTimer').textContent = `${event.duration} days remaining`;
+            
+            panel.style.display = 'block';
+            
+            showCuteAchievement('Seasonal Event!', `🎉 ${event.name} has begun!`);
+            
+            // Hide after 10 seconds
+            setTimeout(() => {
+                panel.style.display = 'none';
+            }, 10000);
+        }
+
+        // Enhanced interaction system
+        function enhancedInteractWithKoko() {
+            // Update quest progress
+            updateQuestProgress('click_koko');
+            
+            // Update AI
+            updateKokoAI();
+            
+            // Award skill points occasionally
+            if (Math.random() < 0.1) {
+                const categories = Object.keys(cuteGameState.skillTrees);
+                const randomCategory = categories[Math.floor(Math.random() * categories.length)];
+                cuteGameState.skillTrees[randomCategory].points++;
+                showCuteEffect(`🌟 +1 ${randomCategory} skill point!`, 'sparkle-effect');
+                updateSkillTreeDisplay();
+            }
+            
+            // Trigger seasonal events
+            triggerSeasonalEvent();
+        }
+
+        // Override the original interaction function
+        const originalInteract = interactWithKoko;
+        interactWithKoko = function() {
+            originalInteract();
+            enhancedInteractWithKoko();
+        };
+
+        // Initialize advanced systems
+        function initializeAdvancedSystems() {
+            updateQuestDisplay();
+            updateSkillTreeDisplay();
+            updateKokoThoughtsDisplay();
+            
+            // Add interactive object buttons to places
+            const places = document.querySelectorAll('.place-button');
+            places.forEach(place => {
+                const location = place.id.replace('Place', '');
+                if (cuteGameState.interactiveObjects[location]) {
+                    place.addEventListener('dblclick', () => {
+                        showInteractiveObjects(location);
+                    });
+                }
+            });
+        }
+
+        // Initialize advanced systems
+        setTimeout(() => {
+            initializeAdvancedSystems();
+        }, 1500);
     </script>
 </body>
 </html>
