@@ -702,6 +702,154 @@
             font-size: 18px;
         }
 
+        /* Daily Challenge Panel */
+        .daily-challenge-panel {
+            background: rgba(255,255,255,0.95);
+            border: 3px solid #FFB6C1;
+            border-radius: 15px;
+            padding: 8px;
+            margin: 5px 0;
+            box-shadow: 0 4px 12px rgba(255,182,193,0.4);
+        }
+
+        .daily-challenge-header {
+            font-size: 10px;
+            font-weight: bold;
+            color: #FF1493;
+            text-align: center;
+            margin-bottom: 4px;
+        }
+
+        .daily-challenge-name {
+            font-size: 8px;
+            font-weight: bold;
+            color: #FF69B4;
+            text-align: center;
+        }
+
+        .daily-challenge-desc {
+            font-size: 6px;
+            color: #FF1493;
+            text-align: center;
+            margin: 2px 0;
+        }
+
+        .daily-challenge-progress {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 6px;
+        }
+
+        .progress-bar {
+            flex: 1;
+            height: 8px;
+            background: rgba(255,182,193,0.3);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #FFB6C1, #FF69B4);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        /* Collections Panel */
+        .collections-panel {
+            background: rgba(255,255,255,0.9);
+            border: 2px solid #FFB6C1;
+            border-radius: 12px;
+            padding: 6px;
+            margin: 5px 0;
+        }
+
+        .collections-header {
+            font-size: 8px;
+            font-weight: bold;
+            color: #FF1493;
+            text-align: center;
+            margin-bottom: 4px;
+        }
+
+        .collections-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4px;
+        }
+
+        .collection-item {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            padding: 3px;
+            background: rgba(255,182,193,0.2);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 1px solid #FFB6C1;
+        }
+
+        .collection-item:hover {
+            background: rgba(255,182,193,0.4);
+            transform: scale(1.05);
+        }
+
+        .collection-emoji {
+            font-size: 12px;
+        }
+
+        .collection-count {
+            font-size: 6px;
+            font-weight: bold;
+            color: #FF69B4;
+        }
+
+        /* Achievement Notification */
+        .achievement-notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(45deg, #FFD700, #FFA500);
+            border: 3px solid #FF8C00;
+            border-radius: 15px;
+            padding: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 6px 20px rgba(255,140,0,0.4);
+            animation: achievementSlideIn 0.5s ease-out;
+            z-index: 2000;
+            max-width: 250px;
+        }
+
+        .achievement-icon {
+            font-size: 24px;
+            animation: achievementBounce 1s infinite;
+        }
+
+        .achievement-title {
+            font-size: 12px;
+            font-weight: bold;
+            color: #8B4513;
+        }
+
+        .achievement-desc {
+            font-size: 10px;
+            color: #A0522D;
+        }
+
+        @keyframes achievementSlideIn {
+            0% { transform: translateX(100%); opacity: 0; }
+            100% { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes achievementBounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
         @keyframes heartFloat {
             0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.7; }
             50% { transform: translateY(-15px) rotate(15deg); opacity: 1; }
@@ -818,6 +966,51 @@
                     <div class="stat-mini" title="Love">
                         <div class="stat-fill-mini love-fill" id="loveFill" style="width: 85%"></div>
                     </div>
+                </div>
+                
+                <!-- Daily Challenge Display -->
+                <div id="dailyChallengePanel" class="daily-challenge-panel" style="display: none;">
+                    <div class="daily-challenge-header">🌟 Daily Challenge</div>
+                    <div id="dailyChallengeName" class="daily-challenge-name"></div>
+                    <div id="dailyChallengeDesc" class="daily-challenge-desc"></div>
+                    <div class="daily-challenge-progress">
+                        <div id="dailyChallengeBar" class="progress-bar">
+                            <div id="dailyChallengeProgress" class="progress-fill"></div>
+                        </div>
+                        <span id="dailyChallengeText">0/0</span>
+                    </div>
+                </div>
+                
+                <!-- Collections Display -->
+                <div class="collections-panel">
+                    <div class="collections-header">📚 Collections</div>
+                    <div class="collections-grid">
+                        <div class="collection-item" onclick="showCollection('stickers')">
+                            <span class="collection-emoji">🌟</span>
+                            <span id="stickerCollection" class="collection-count">5/20</span>
+                        </div>
+                        <div class="collection-item" onclick="showCollection('emotions')">
+                            <span class="collection-emoji">😊</span>
+                            <span id="emotionCollection" class="collection-count">3/10</span>
+                        </div>
+                        <div class="collection-item" onclick="showCollection('places')">
+                            <span class="collection-emoji">🏠</span>
+                            <span id="placeCollection" class="collection-count">6/8</span>
+                        </div>
+                        <div class="collection-item" onclick="showCollection('toys')">
+                            <span class="collection-emoji">🧸</span>
+                            <span id="toyCollection" class="collection-count">8/15</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Achievement Notifications -->
+            <div id="achievementNotification" class="achievement-notification" style="display: none;">
+                <div class="achievement-icon">🏆</div>
+                <div class="achievement-content">
+                    <div id="achievementTitle" class="achievement-title"></div>
+                    <div id="achievementDesc" class="achievement-desc"></div>
                 </div>
             </div>
 
@@ -987,7 +1180,27 @@
             specialEvents: [],
             achievements: [],
             dailyStreak: 1,
-            totalPlayTime: 0
+            totalPlayTime: 0,
+            unlockedAchievements: [],
+            dailyChallenge: null,
+            lastDailyReset: 0,
+            collections: {
+                stickers: { collected: 5, total: 20 },
+                emotions: { collected: 3, total: 10 },
+                places: { collected: 6, total: 8 },
+                toys: { collected: 8, total: 15 }
+            },
+            kokoCustomization: {
+                hat: null,
+                accessory: null,
+                background: "default"
+            },
+            miniGameScores: {
+                memoryMatch: 0,
+                colorMixer: 0,
+                rhythmGame: 0,
+                puzzleSolver: 0
+            }
         };
 
         // Cute Educational Content
@@ -1110,9 +1323,154 @@
             ]
         };
 
+        // Achievement System
+        const achievementSystem = {
+            achievements: [
+                { id: 'first_click', name: 'First Friend', description: 'Click Koko for the first time!', emoji: '👋', unlocked: false, reward: { stickers: 10 } },
+                { id: 'combo_master', name: 'Combo Master', description: 'Get a 5x combo!', emoji: '🔥', unlocked: false, reward: { hearts: 20 } },
+                { id: 'learning_star', name: 'Learning Star', description: 'Complete 5 educational challenges!', emoji: '⭐', unlocked: false, reward: { toys: 5 } },
+                { id: 'daily_player', name: 'Daily Player', description: 'Play for 7 days in a row!', emoji: '📅', unlocked: false, reward: { stickers: 50 } },
+                { id: 'toy_collector', name: 'Toy Collector', description: 'Collect 50 toys!', emoji: '🧸', unlocked: false, reward: { treats: 30 } },
+                { id: 'love_master', name: 'Love Master', description: 'Reach 1000 love points!', emoji: '💕', unlocked: false, reward: { hearts: 100 } },
+                { id: 'rainbow_finder', name: 'Rainbow Finder', description: 'Trigger a Rainbow Shower event!', emoji: '🌈', unlocked: false, reward: { stickers: 25 } },
+                { id: 'emotion_expert', name: 'Emotion Expert', description: 'Make Koko ecstatic 10 times!', emoji: '😍', unlocked: false, reward: { love: 200 } },
+                { id: 'mini_game_pro', name: 'Mini-Game Pro', description: 'Score 100+ in any mini-game!', emoji: '🎮', unlocked: false, reward: { toys: 10 } },
+                { id: 'collection_master', name: 'Collection Master', description: 'Complete any collection!', emoji: '🏆', unlocked: false, reward: { stickers: 100, hearts: 50, treats: 25 } }
+            ],
+            
+            checkAchievement: function(id, condition) {
+                const achievement = this.achievements.find(a => a.id === id);
+                if (achievement && !achievement.unlocked && condition) {
+                    achievement.unlocked = true;
+                    cuteGameState.unlockedAchievements.push(achievement);
+                    showAchievementUnlock(achievement);
+                    this.giveReward(achievement.reward);
+                }
+            },
+            
+            giveReward: function(reward) {
+                Object.keys(reward).forEach(resource => {
+                    if (cuteGameState.resources[resource] !== undefined) {
+                        cuteGameState.resources[resource] += reward[resource];
+                    } else if (cuteGameState.player[resource] !== undefined) {
+                        cuteGameState.player[resource] += reward[resource];
+                    }
+                });
+            }
+        };
+
+        // Daily Challenge System
+        const dailyChallengeSystem = {
+            challenges: [
+                { id: 'click_master', name: 'Click Master', description: 'Click Koko 50 times today!', target: 50, progress: 0, reward: { stickers: 30, hearts: 15 } },
+                { id: 'learning_day', name: 'Learning Day', description: 'Complete 3 educational challenges!', target: 3, progress: 0, reward: { toys: 8, treats: 20 } },
+                { id: 'combo_champion', name: 'Combo Champion', description: 'Get a 10x combo!', target: 10, progress: 0, reward: { stickers: 50, love: 100 } },
+                { id: 'toy_hunter', name: 'Toy Hunter', description: 'Find 15 toys today!', target: 15, progress: 0, reward: { hearts: 25, treats: 15 } },
+                { id: 'mood_booster', name: 'Mood Booster', description: 'Keep Koko happy for 30 interactions!', target: 30, progress: 0, reward: { love: 150, stickers: 40 } },
+                { id: 'explorer', name: 'Explorer', description: 'Visit all 6 locations!', target: 6, progress: 0, reward: { toys: 12, hearts: 30 } },
+                { id: 'special_finder', name: 'Special Finder', description: 'Trigger 3 special events!', target: 3, progress: 0, reward: { stickers: 75, treats: 25 } }
+            ],
+            
+            generateDaily: function() {
+                const today = new Date().toDateString();
+                if (cuteGameState.lastDailyReset !== today) {
+                    cuteGameState.lastDailyReset = today;
+                    cuteGameState.dailyChallenge = this.challenges[Math.floor(Math.random() * this.challenges.length)];
+                    cuteGameState.dailyChallenge.progress = 0;
+                    showDailyChallenge();
+                }
+            },
+            
+            updateProgress: function(type, amount = 1) {
+                if (!cuteGameState.dailyChallenge) return;
+                
+                const challenge = cuteGameState.dailyChallenge;
+                if (challenge.id.includes(type)) {
+                    challenge.progress = Math.min(challenge.progress + amount, challenge.target);
+                    updateDailyChallengeDisplay();
+                    
+                    if (challenge.progress >= challenge.target) {
+                        this.completeDaily();
+                    }
+                }
+            },
+            
+            completeDaily: function() {
+                const challenge = cuteGameState.dailyChallenge;
+                showCuteAchievement('Daily Challenge Complete!', `🎉 ${challenge.name} completed! Amazing work!`);
+                achievementSystem.giveReward(challenge.reward);
+                cuteGameState.dailyStreak++;
+                cuteGameState.dailyChallenge = null;
+                
+                // Check daily streak achievement
+                achievementSystem.checkAchievement('daily_player', cuteGameState.dailyStreak >= 7);
+            }
+        };
+
+        // Mini-Game System
+        const miniGameSystem = {
+            currentGame: null,
+            
+            startMemoryMatch: function() {
+                this.currentGame = 'memory';
+                showMiniGame('Memory Match', 'Remember the pattern!', this.memoryMatchGame);
+            },
+            
+            startColorMixer: function() {
+                this.currentGame = 'color';
+                showMiniGame('Color Mixer', 'Mix colors to match the target!', this.colorMixerGame);
+            },
+            
+            startRhythmGame: function() {
+                this.currentGame = 'rhythm';
+                showMiniGame('Rhythm Master', 'Follow the beat!', this.rhythmGame);
+            },
+            
+            memoryMatchGame: function() {
+                const patterns = ['🌟', '💖', '🍪', '🧸', '🎈', '🌈'];
+                let sequence = [];
+                let playerSequence = [];
+                let level = 1;
+                let score = 0;
+                
+                function nextLevel() {
+                    sequence.push(patterns[Math.floor(Math.random() * patterns.length)]);
+                    showSequence();
+                }
+                
+                function showSequence() {
+                    // Visual sequence display logic would go here
+                    showCuteEffect(`Level ${level}: Watch the pattern!`, 'sparkle-effect');
+                }
+                
+                nextLevel();
+                return { score: score, complete: false };
+            },
+            
+            colorMixerGame: function() {
+                const colors = { red: '🔴', blue: '🔵', yellow: '🟡' };
+                const targets = ['🟠', '🟢', '🟣']; // orange, green, purple
+                let score = 0;
+                
+                showCuteEffect('Mix red + yellow = orange!', 'happy-effect');
+                return { score: score, complete: false };
+            },
+            
+            rhythmGame: function() {
+                const beats = ['👏', '🎵', '🎶', '🎤'];
+                let score = 0;
+                
+                showCuteEffect('Clap to the beat!', 'sparkle-effect');
+                return { score: score, complete: false };
+            }
+        };
+
         // Interact with Koko
         function interactWithKoko() {
             const koala = document.getElementById('cuteKoala');
+            
+            // Check first click achievement
+            achievementSystem.checkAchievement('first_click', cuteGameState.comboCount === 0);
             
             // Enhanced bounce animation with random variations
             const animations = ['koalaBounce 1s ease', 'koalaWiggle 1s ease', 'koalaSpin 1s ease'];
@@ -1131,10 +1489,20 @@
             cuteGameState.comboCount++;
             cuteGameState.lastInteraction = Date.now();
             
+            // Update daily challenge progress
+            dailyChallengeSystem.updateProgress('click');
+            
+            // Check combo achievements
+            achievementSystem.checkAchievement('combo_master', cuteGameState.comboCount >= 5);
+            
             // Update resources
             cuteGameState.player.xp += xpGain;
             cuteGameState.player.love += loveGain;
             cuteGameState.resources.stickers += stickerGain;
+            
+            // Check resource achievements
+            achievementSystem.checkAchievement('love_master', cuteGameState.player.love >= 1000);
+            achievementSystem.checkAchievement('toy_collector', getTotalToys() >= 50);
             
             // Show enhanced floating effects
             if (cuteGameState.comboCount > 1) {
@@ -1147,6 +1515,7 @@
             // Random special events
             if (Math.random() < 0.15) {
                 triggerSpecialEvent();
+                dailyChallengeSystem.updateProgress('special');
             }
             
             // Random toy drops with better chances
@@ -1155,6 +1524,12 @@
                 randomToy.quantity += 1;
                 showCuteEffect(`Found ${randomToy.emoji}!`, "cute-effect");
                 playToyFoundSound();
+                dailyChallengeSystem.updateProgress('toy');
+            }
+            
+            // Random mini-game triggers
+            if (Math.random() < 0.08) {
+                setTimeout(() => triggerRandomMiniGame(), 1000);
             }
             
             // Check for level up
@@ -1169,11 +1544,21 @@
             
             // Update Koko's mood based on interaction
             updateKokoMood();
+            
+            // Check emotion achievement
+            if (cuteGameState.koala.mood === 'ecstatic') {
+                cuteGameState.koala.ecstaticCount = (cuteGameState.koala.ecstaticCount || 0) + 1;
+                achievementSystem.checkAchievement('emotion_expert', cuteGameState.koala.ecstaticCount >= 10);
+            }
+            
             updateCuteDisplay();
             createEnhancedHeartEffect();
             
             // Play interaction sound
             playInteractionSound();
+            
+            // Update collections randomly
+            updateCollections();
         }
 
         // Level up system
@@ -1795,8 +2180,271 @@
         `;
         document.head.appendChild(style);
 
+        // New Supporting Functions
+
+        // Get total toys count
+        function getTotalToys() {
+            return cuteGameState.toyBox.reduce((total, toy) => total + toy.quantity, 0);
+        }
+
+        // Show achievement unlock
+        function showAchievementUnlock(achievement) {
+            const notification = document.getElementById('achievementNotification');
+            const title = document.getElementById('achievementTitle');
+            const desc = document.getElementById('achievementDesc');
+            
+            title.textContent = `${achievement.emoji} ${achievement.name}`;
+            desc.textContent = achievement.description;
+            
+            notification.style.display = 'flex';
+            
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 4000);
+            
+            showCuteEffect('🏆 ACHIEVEMENT!', 'sparkle-effect');
+        }
+
+        // Show daily challenge
+        function showDailyChallenge() {
+            const panel = document.getElementById('dailyChallengePanel');
+            const challenge = cuteGameState.dailyChallenge;
+            
+            if (challenge) {
+                document.getElementById('dailyChallengeName').textContent = challenge.name;
+                document.getElementById('dailyChallengeDesc').textContent = challenge.description;
+                updateDailyChallengeDisplay();
+                panel.style.display = 'block';
+                
+                showCuteEffect('🌟 New Daily Challenge!', 'sparkle-effect');
+            }
+        }
+
+        // Update daily challenge display
+        function updateDailyChallengeDisplay() {
+            const challenge = cuteGameState.dailyChallenge;
+            if (!challenge) return;
+            
+            const progress = Math.min(challenge.progress / challenge.target * 100, 100);
+            document.getElementById('dailyChallengeProgress').style.width = progress + '%';
+            document.getElementById('dailyChallengeText').textContent = `${challenge.progress}/${challenge.target}`;
+        }
+
+        // Update collections
+        function updateCollections() {
+            if (Math.random() < 0.1) {
+                const collections = Object.keys(cuteGameState.collections);
+                const randomCollection = collections[Math.floor(Math.random() * collections.length)];
+                const collection = cuteGameState.collections[randomCollection];
+                
+                if (collection.collected < collection.total) {
+                    collection.collected++;
+                    showCuteEffect(`📚 New ${randomCollection} collected!`, 'happy-effect');
+                    updateCollectionDisplay();
+                    
+                    // Check collection completion
+                    if (collection.collected >= collection.total) {
+                        achievementSystem.checkAchievement('collection_master', true);
+                        showCuteEffect(`🏆 ${randomCollection} collection complete!`, 'sparkle-effect');
+                    }
+                }
+            }
+        }
+
+        // Update collection display
+        function updateCollectionDisplay() {
+            document.getElementById('stickerCollection').textContent = 
+                `${cuteGameState.collections.stickers.collected}/${cuteGameState.collections.stickers.total}`;
+            document.getElementById('emotionCollection').textContent = 
+                `${cuteGameState.collections.emotions.collected}/${cuteGameState.collections.emotions.total}`;
+            document.getElementById('placeCollection').textContent = 
+                `${cuteGameState.collections.places.collected}/${cuteGameState.collections.places.total}`;
+            document.getElementById('toyCollection').textContent = 
+                `${cuteGameState.collections.toys.collected}/${cuteGameState.collections.toys.total}`;
+        }
+
+        // Show collection details
+        function showCollection(type) {
+            const collection = cuteGameState.collections[type];
+            const percentage = Math.round(collection.collected / collection.total * 100);
+            showCuteAchievement(`${type.charAt(0).toUpperCase() + type.slice(1)} Collection`, 
+                `${collection.collected}/${collection.total} collected (${percentage}%)`);
+        }
+
+        // Trigger random mini-game
+        function triggerRandomMiniGame() {
+            const games = ['memory', 'color', 'rhythm'];
+            const randomGame = games[Math.floor(Math.random() * games.length)];
+            
+            switch(randomGame) {
+                case 'memory':
+                    miniGameSystem.startMemoryMatch();
+                    break;
+                case 'color':
+                    miniGameSystem.startColorMixer();
+                    break;
+                case 'rhythm':
+                    miniGameSystem.startRhythmGame();
+                    break;
+            }
+        }
+
+        // Show mini-game
+        function showMiniGame(title, description, gameFunction) {
+            showCuteAchievement(`🎮 ${title}`, description);
+            
+            // Simulate mini-game completion
+            setTimeout(() => {
+                const result = gameFunction();
+                const score = Math.floor(Math.random() * 150) + 50; // Random score 50-200
+                
+                cuteGameState.miniGameScores[miniGameSystem.currentGame] = Math.max(
+                    cuteGameState.miniGameScores[miniGameSystem.currentGame], score
+                );
+                
+                showCuteEffect(`🎮 Score: ${score}!`, 'sparkle-effect');
+                
+                // Check mini-game achievement
+                achievementSystem.checkAchievement('mini_game_pro', score >= 100);
+                
+                // Reward based on score
+                const reward = Math.floor(score / 10);
+                cuteGameState.resources.stickers += reward;
+                showCuteEffect(`+${reward} Stickers!`, 'happy-effect');
+                
+                updateCuteDisplay();
+            }, 3000);
+        }
+
+        // Enhanced special events
+        function triggerSpecialEvent() {
+            const events = [
+                {
+                    name: "Rainbow Shower",
+                    message: "🌈 A magical rainbow appears! Everything sparkles!",
+                    effect: () => {
+                        cuteGameState.resources.stickers += 50;
+                        cuteGameState.resources.hearts += 10;
+                        createRainbowEffect();
+                        achievementSystem.checkAchievement('rainbow_finder', true);
+                    }
+                },
+                {
+                    name: "Toy Explosion",
+                    message: "🎁 Toy explosion! Koko found lots of toys!",
+                    effect: () => {
+                        cuteGameState.toyBox.forEach(toy => toy.quantity += Math.floor(Math.random() * 3) + 1);
+                        createToyExplosion();
+                        dailyChallengeSystem.updateProgress('toy', 5);
+                    }
+                },
+                {
+                    name: "Love Burst",
+                    message: "💕 Love burst! Koko feels extra loved!",
+                    effect: () => {
+                        cuteGameState.player.love += 100;
+                        cuteGameState.stats.happiness = 100;
+                        createLoveBurst();
+                    }
+                },
+                {
+                    name: "Super Learning",
+                    message: "🧠 Brain boost! Learning is super fun right now!",
+                    effect: () => {
+                        setTimeout(() => showCuteChallenge(), 1000);
+                        cuteGameState.player.xp += 200;
+                    }
+                },
+                {
+                    name: "Collection Bonus",
+                    message: "📚 Collection bonus! Found rare items!",
+                    effect: () => {
+                        Object.keys(cuteGameState.collections).forEach(type => {
+                            const collection = cuteGameState.collections[type];
+                            if (collection.collected < collection.total && Math.random() < 0.5) {
+                                collection.collected++;
+                            }
+                        });
+                        updateCollectionDisplay();
+                    }
+                },
+                {
+                    name: "Achievement Rain",
+                    message: "🏆 Achievement rain! Multiple rewards!",
+                    effect: () => {
+                        cuteGameState.resources.stickers += 75;
+                        cuteGameState.resources.hearts += 25;
+                        cuteGameState.resources.treats += 15;
+                        createAchievementRain();
+                    }
+                }
+            ];
+            
+            const event = events[Math.floor(Math.random() * events.length)];
+            showCuteAchievement(event.name, event.message);
+            event.effect();
+        }
+
+        // Create achievement rain effect
+        function createAchievementRain() {
+            const gameScreen = document.querySelector('.game-screen');
+            const achievements = ['🏆', '🌟', '💎', '👑', '🎖️', '🥇', '⭐', '💫'];
+            
+            for (let i = 0; i < 20; i++) {
+                const achievement = document.createElement('div');
+                achievement.style.position = 'absolute';
+                achievement.style.fontSize = '20px';
+                achievement.style.left = Math.random() * 100 + '%';
+                achievement.style.top = '-20px';
+                achievement.style.pointerEvents = 'none';
+                achievement.style.zIndex = '1000';
+                achievement.style.animation = 'achievementFall 3s ease-in forwards';
+                
+                achievement.textContent = achievements[Math.floor(Math.random() * achievements.length)];
+                
+                gameScreen.appendChild(achievement);
+                
+                setTimeout(() => {
+                    if (achievement.parentNode) {
+                        achievement.parentNode.removeChild(achievement);
+                    }
+                }, 3000);
+            }
+        }
+
+        // Initialize all systems
+        function initializeNewSystems() {
+            dailyChallengeSystem.generateDaily();
+            updateCollectionDisplay();
+            
+            // Check for existing achievements
+            achievementSystem.checkAchievement('love_master', cuteGameState.player.love >= 1000);
+            achievementSystem.checkAchievement('toy_collector', getTotalToys() >= 50);
+        }
+
+        // Add achievement fall animation
+        const newStyle = document.createElement('style');
+        newStyle.textContent += `
+            @keyframes achievementFall {
+                0% { 
+                    transform: translateY(-20px) rotate(0deg);
+                    opacity: 1;
+                }
+                100% { 
+                    transform: translateY(400px) rotate(360deg);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(newStyle);
+
         // Start the cute game
         initializeCuteGame();
+        
+        // Initialize new systems
+        setTimeout(() => {
+            initializeNewSystems();
+        }, 1000);
     </script>
 </body>
 </html>
