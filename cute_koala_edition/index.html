@@ -2004,6 +2004,303 @@
             50% { transform: scale(1.2); }
         }
 
+        /* Game World and Movement System */
+        .game-world {
+            position: relative;
+            width: 500px;
+            height: 400px;
+            background: linear-gradient(45deg, #87CEEB, #E0F6FF);
+            border: 3px solid #4682B4;
+            border-radius: 20px;
+            overflow: hidden;
+            margin: 10px auto;
+            box-shadow: 0 8px 25px rgba(70,130,180,0.4);
+        }
+
+        .location-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            transition: all 0.5s ease;
+        }
+
+        .location-objects {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .location-npcs {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .world-object {
+            position: absolute;
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            pointer-events: all;
+            z-index: 10;
+        }
+
+        .world-object:hover {
+            transform: scale(1.2);
+            filter: drop-shadow(0 0 10px rgba(255,255,0,0.8));
+        }
+
+        .world-npc {
+            position: absolute;
+            font-size: 28px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            pointer-events: all;
+            z-index: 15;
+            animation: npcFloat 3s infinite ease-in-out;
+        }
+
+        .world-npc:hover {
+            transform: scale(1.3);
+            filter: drop-shadow(0 0 15px rgba(255,182,193,0.8));
+        }
+
+        @keyframes npcFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .moveable {
+            position: absolute;
+            transition: all 0.2s ease;
+            z-index: 20;
+        }
+
+        .koala-container.moveable {
+            left: 250px;
+            top: 200px;
+        }
+
+        .location-exits {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .location-exit {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background: rgba(255,255,255,0.8);
+            border: 3px solid #FFD700;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            pointer-events: all;
+            z-index: 25;
+            animation: exitPulse 2s infinite ease-in-out;
+        }
+
+        .location-exit:hover {
+            background: rgba(255,215,0,0.9);
+            transform: scale(1.2);
+            box-shadow: 0 0 20px rgba(255,215,0,0.8);
+        }
+
+        @keyframes exitPulse {
+            0%, 100% { box-shadow: 0 0 10px rgba(255,215,0,0.5); }
+            50% { box-shadow: 0 0 25px rgba(255,215,0,0.9); }
+        }
+
+        /* Movement Controls */
+        .movement-controls {
+            background: rgba(255,255,255,0.9);
+            border: 2px solid #4682B4;
+            border-radius: 15px;
+            padding: 10px;
+            margin: 10px auto;
+            max-width: 300px;
+            text-align: center;
+        }
+
+        .movement-instructions {
+            font-size: 10px;
+            color: #4682B4;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .movement-buttons {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .move-row {
+            display: flex;
+            gap: 5px;
+        }
+
+        .move-btn {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(45deg, #87CEEB, #B0E0E6);
+            border: 2px solid #4682B4;
+            border-radius: 10px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            user-select: none;
+        }
+
+        .move-btn:hover {
+            background: linear-gradient(45deg, #4682B4, #5F9EA0);
+            transform: scale(1.1);
+        }
+
+        .move-btn:active {
+            background: linear-gradient(45deg, #2F4F4F, #4682B4);
+            transform: scale(0.95);
+        }
+
+        /* Mini Map */
+        .mini-map {
+            background: rgba(255,255,255,0.9);
+            border: 2px solid #8B4513;
+            border-radius: 12px;
+            padding: 8px;
+            margin: 10px auto;
+            max-width: 250px;
+        }
+
+        .mini-map-header {
+            font-size: 10px;
+            font-weight: bold;
+            color: #8B4513;
+            text-align: center;
+            margin-bottom: 6px;
+        }
+
+        .mini-map-content {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 4px;
+            margin-bottom: 6px;
+        }
+
+        .map-location {
+            width: 30px;
+            height: 30px;
+            background: rgba(139,69,19,0.2);
+            border: 1px solid #8B4513;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .map-location.current {
+            background: rgba(255,215,0,0.8);
+            border-color: #FFD700;
+            box-shadow: 0 0 10px rgba(255,215,0,0.6);
+        }
+
+        .map-location.unlocked {
+            background: rgba(144,238,144,0.6);
+            border-color: #90EE90;
+        }
+
+        .map-location.locked {
+            background: rgba(128,128,128,0.4);
+            border-color: #808080;
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        .map-location:hover:not(.locked) {
+            transform: scale(1.1);
+            background: rgba(255,215,0,0.6);
+        }
+
+        .current-location {
+            font-size: 8px;
+            color: #8B4513;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        /* Movement Animations */
+        @keyframes walkUp {
+            0%, 100% { transform: translateY(0px) rotate(-2deg); }
+            50% { transform: translateY(-2px) rotate(2deg); }
+        }
+
+        @keyframes walkDown {
+            0%, 100% { transform: translateY(0px) rotate(2deg); }
+            50% { transform: translateY(2px) rotate(-2deg); }
+        }
+
+        @keyframes walkLeft {
+            0%, 100% { transform: translateX(0px) rotate(-5deg); }
+            50% { transform: translateX(-2px) rotate(5deg); }
+        }
+
+        @keyframes walkRight {
+            0%, 100% { transform: translateX(0px) rotate(5deg); }
+            50% { transform: translateX(2px) rotate(-5deg); }
+        }
+
+        .moving-up { animation: walkUp 0.3s infinite; }
+        .moving-down { animation: walkDown 0.3s infinite; }
+        .moving-left { animation: walkLeft 0.3s infinite; }
+        .moving-right { animation: walkRight 0.3s infinite; }
+
+        /* Location Backgrounds */
+        .bg-home {
+            background: linear-gradient(45deg, #FFF8DC, #FFFACD);
+        }
+
+        .bg-playground {
+            background: linear-gradient(45deg, #98FB98, #90EE90);
+        }
+
+        .bg-garden {
+            background: linear-gradient(45deg, #FFB6C1, #FFC0CB);
+        }
+
+        .bg-library {
+            background: linear-gradient(45deg, #DDA0DD, #E6E6FA);
+        }
+
+        .bg-park {
+            background: linear-gradient(45deg, #228B22, #32CD32);
+        }
+
+        .bg-school {
+            background: linear-gradient(45deg, #F0E68C, #FFFFE0);
+        }
+
         @keyframes heartFloat {
             0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.7; }
             50% { transform: translateY(-15px) rotate(15deg); opacity: 1; }
@@ -2400,10 +2697,20 @@
                 </div>
             </div>
 
-            <!-- Adorable Koala Display -->
-            <div class="koala-area">
-                <div class="koala-container">
-                    <div class="koala-status" id="koalaStatus">Koko is super happy! 🌈</div>
+            <!-- Game World Container -->
+            <div id="gameWorld" class="game-world">
+                <!-- Current Location Background -->
+                <div id="locationBackground" class="location-background"></div>
+                
+                <!-- Interactive Objects in Current Location -->
+                <div id="locationObjects" class="location-objects"></div>
+                
+                <!-- NPCs in Current Location -->
+                <div id="locationNPCs" class="location-npcs"></div>
+                
+                <!-- Cute Koala Character (Moveable) -->
+                <div class="koala-container moveable" id="koalaContainer">
+                    <div class="koala-status" id="koalaStatus">Koko is exploring! 🌈</div>
                     <div class="cute-koala" id="cuteKoala" onclick="interactWithKoko()">🐨</div>
                     <div class="koala-eyes">
                         <div class="sparkle-eye">✨</div>
@@ -2414,6 +2721,35 @@
                         <div class="love-fill" id="loveFillBar" style="width: 67%"></div>
                     </div>
                     <div class="love-text" id="loveText">Love: 670 / 1000 💕</div>
+                </div>
+                
+                <!-- Location Exits/Portals -->
+                <div id="locationExits" class="location-exits"></div>
+            </div>
+            
+            <!-- Movement Controls -->
+            <div class="movement-controls">
+                <div class="movement-instructions">
+                    <span>🎮 Use WASD or Arrow Keys to move Koko around!</span>
+                </div>
+                <div class="movement-buttons">
+                    <button class="move-btn" onmousedown="startMoving('up')" onmouseup="stopMoving('up')">⬆️</button>
+                    <div class="move-row">
+                        <button class="move-btn" onmousedown="startMoving('left')" onmouseup="stopMoving('left')">⬅️</button>
+                        <button class="move-btn" onmousedown="startMoving('down')" onmouseup="stopMoving('down')">⬇️</button>
+                        <button class="move-btn" onmousedown="startMoving('right')" onmouseup="stopMoving('right')">➡️</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Mini Map -->
+            <div class="mini-map">
+                <div class="mini-map-header">🗺️ World Map</div>
+                <div id="miniMapContent" class="mini-map-content">
+                    <!-- Map will be populated by JavaScript -->
+                </div>
+                <div class="current-location">
+                    📍 <span id="currentLocationName">Cozy Home</span>
                 </div>
             </div>
 
@@ -2764,6 +3100,123 @@
                 educationalFocus: true,
                 allowSocialFeatures: false,
                 progressReports: []
+            },
+            movement: {
+                x: 250, // Koko's current X position
+                y: 200, // Koko's current Y position
+                speed: 3, // Movement speed
+                direction: 'down', // Current facing direction
+                isMoving: false,
+                targetX: null,
+                targetY: null,
+                currentLocation: 'home',
+                unlockedLocations: ['home', 'playground', 'garden']
+            },
+            worldMap: {
+                home: {
+                    name: 'Cozy Home',
+                    emoji: '🏠',
+                    x: 250,
+                    y: 200,
+                    connections: ['playground', 'garden', 'library'],
+                    objects: [
+                        { id: 'bed', x: 100, y: 150, emoji: '🛏️', name: 'Cozy Bed', action: 'sleep' },
+                        { id: 'kitchen', x: 400, y: 180, emoji: '🍳', name: 'Kitchen', action: 'cook' },
+                        { id: 'bookshelf', x: 200, y: 100, emoji: '📚', name: 'Bookshelf', action: 'read' }
+                    ],
+                    npcs: [],
+                    discovered: true
+                },
+                playground: {
+                    name: 'Fun Playground',
+                    emoji: '🛝',
+                    x: 150,
+                    y: 300,
+                    connections: ['home', 'park', 'school'],
+                    objects: [
+                        { id: 'swing', x: 120, y: 250, emoji: '🪀', name: 'Magic Swing', action: 'swing' },
+                        { id: 'slide', x: 300, y: 280, emoji: '🛝', name: 'Rainbow Slide', action: 'slide' },
+                        { id: 'sandbox', x: 200, y: 350, emoji: '🏖️', name: 'Sandbox', action: 'dig' }
+                    ],
+                    npcs: [
+                        { id: 'bella', x: 180, y: 200, emoji: '🐰', name: 'Bella Bunny' }
+                    ],
+                    discovered: true
+                },
+                garden: {
+                    name: 'Magical Garden',
+                    emoji: '🌸',
+                    x: 350,
+                    y: 150,
+                    connections: ['home', 'forest', 'pond'],
+                    objects: [
+                        { id: 'flowers', x: 200, y: 180, emoji: '🌸', name: 'Singing Flowers', action: 'smell' },
+                        { id: 'fountain', x: 300, y: 120, emoji: '⛲', name: 'Wishing Fountain', action: 'wish' },
+                        { id: 'tree', x: 150, y: 250, emoji: '🌳', name: 'Wisdom Tree', action: 'climb' }
+                    ],
+                    npcs: [
+                        { id: 'butterfly', x: 250, y: 160, emoji: '🦋', name: 'Dancing Butterfly' }
+                    ],
+                    discovered: true
+                },
+                library: {
+                    name: 'Knowledge Library',
+                    emoji: '📚',
+                    x: 400,
+                    y: 100,
+                    connections: ['home', 'school', 'museum'],
+                    objects: [
+                        { id: 'books', x: 180, y: 150, emoji: '📚', name: 'Magical Books', action: 'study' },
+                        { id: 'globe', x: 320, y: 180, emoji: '🌍', name: 'Adventure Globe', action: 'explore' },
+                        { id: 'telescope', x: 250, y: 100, emoji: '🔭', name: 'Star Telescope', action: 'observe' }
+                    ],
+                    npcs: [
+                        { id: 'owl', x: 200, y: 120, emoji: '🦉', name: 'Wise Owl' }
+                    ],
+                    discovered: false
+                },
+                park: {
+                    name: 'Nature Park',
+                    emoji: '🌲',
+                    x: 100,
+                    y: 400,
+                    connections: ['playground', 'forest', 'lake'],
+                    objects: [
+                        { id: 'picnic', x: 200, y: 300, emoji: '🧺', name: 'Picnic Spot', action: 'eat' },
+                        { id: 'trail', x: 150, y: 350, emoji: '🥾', name: 'Nature Trail', action: 'hike' }
+                    ],
+                    npcs: [
+                        { id: 'squirrel', x: 180, y: 280, emoji: '🐿️', name: 'Chatty Squirrel' }
+                    ],
+                    discovered: false
+                },
+                school: {
+                    name: 'Learning School',
+                    emoji: '🏫',
+                    x: 500,
+                    y: 200,
+                    connections: ['playground', 'library', 'town'],
+                    objects: [
+                        { id: 'blackboard', x: 200, y: 150, emoji: '📋', name: 'Smart Board', action: 'learn' },
+                        { id: 'desk', x: 250, y: 200, emoji: '🪑', name: 'Study Desk', action: 'write' },
+                        { id: 'computer', x: 300, y: 180, emoji: '💻', name: 'Learning Computer', action: 'code' }
+                    ],
+                    npcs: [
+                        { id: 'teacher', x: 220, y: 160, emoji: '👩‍🏫', name: 'Ms. Wise' }
+                    ],
+                    discovered: false
+                }
+            },
+            movementKeys: {
+                w: false, a: false, s: false, d: false,
+                ArrowUp: false, ArrowLeft: false, ArrowDown: false, ArrowRight: false
+            },
+            discoveries: [],
+            explorationRewards: {
+                stepsWalked: 0,
+                locationsVisited: 0,
+                objectsInteracted: 0,
+                npcsMetCount: 0
             }
         };
 
@@ -5436,6 +5889,490 @@
         setTimeout(() => {
             initializeUltimateSystems();
         }, 2000);
+
+        // MOVEMENT AND EXPLORATION SYSTEM
+
+        // Movement Controls
+        function startMoving(direction) {
+            cuteGameState.movement.isMoving = true;
+            cuteGameState.movement.direction = direction;
+            
+            const koalaContainer = document.getElementById('koalaContainer');
+            koalaContainer.classList.add(`moving-${direction}`);
+            
+            // Start movement interval
+            if (!cuteGameState.movementInterval) {
+                cuteGameState.movementInterval = setInterval(updateMovement, 50);
+            }
+        }
+
+        function stopMoving(direction) {
+            cuteGameState.movement.isMoving = false;
+            
+            const koalaContainer = document.getElementById('koalaContainer');
+            koalaContainer.classList.remove(`moving-${direction}`);
+            
+            // Stop movement interval
+            if (cuteGameState.movementInterval) {
+                clearInterval(cuteGameState.movementInterval);
+                cuteGameState.movementInterval = null;
+            }
+        }
+
+        function updateMovement() {
+            if (!cuteGameState.movement.isMoving) return;
+            
+            const movement = cuteGameState.movement;
+            const speed = movement.speed;
+            let newX = movement.x;
+            let newY = movement.y;
+            
+            // Calculate new position based on direction
+            switch (movement.direction) {
+                case 'up':
+                    newY = Math.max(50, movement.y - speed);
+                    break;
+                case 'down':
+                    newY = Math.min(350, movement.y + speed);
+                    break;
+                case 'left':
+                    newX = Math.max(50, movement.x - speed);
+                    break;
+                case 'right':
+                    newX = Math.min(450, movement.x + speed);
+                    break;
+            }
+            
+            // Update position
+            movement.x = newX;
+            movement.y = newY;
+            
+            // Update visual position
+            const koalaContainer = document.getElementById('koalaContainer');
+            koalaContainer.style.left = newX + 'px';
+            koalaContainer.style.top = newY + 'px';
+            
+            // Track steps for rewards
+            cuteGameState.explorationRewards.stepsWalked++;
+            
+            // Check for interactions with objects and NPCs
+            checkProximityInteractions();
+            
+            // Check for location exits
+            checkLocationExits();
+            
+            // Award exploration rewards
+            if (cuteGameState.explorationRewards.stepsWalked % 100 === 0) {
+                awardExplorationReward();
+            }
+        }
+
+        // Keyboard Controls
+        function setupKeyboardControls() {
+            document.addEventListener('keydown', (event) => {
+                const key = event.key.toLowerCase();
+                if (['w', 'a', 's', 'd', 'arrowup', 'arrowleft', 'arrowdown', 'arrowright'].includes(key)) {
+                    event.preventDefault();
+                    
+                    if (!cuteGameState.movementKeys[key]) {
+                        cuteGameState.movementKeys[key] = true;
+                        
+                        const directionMap = {
+                            'w': 'up', 'arrowup': 'up',
+                            's': 'down', 'arrowdown': 'down',
+                            'a': 'left', 'arrowleft': 'left',
+                            'd': 'right', 'arrowright': 'right'
+                        };
+                        
+                        startMoving(directionMap[key]);
+                    }
+                }
+            });
+            
+            document.addEventListener('keyup', (event) => {
+                const key = event.key.toLowerCase();
+                if (['w', 'a', 's', 'd', 'arrowup', 'arrowleft', 'arrowdown', 'arrowright'].includes(key)) {
+                    cuteGameState.movementKeys[key] = false;
+                    
+                    const directionMap = {
+                        'w': 'up', 'arrowup': 'up',
+                        's': 'down', 'arrowdown': 'down',
+                        'a': 'left', 'arrowleft': 'left',
+                        'd': 'right', 'arrowright': 'right'
+                    };
+                    
+                    stopMoving(directionMap[key]);
+                }
+            });
+        }
+
+        // Location System
+        function loadLocation(locationId) {
+            const location = cuteGameState.worldMap[locationId];
+            if (!location) return;
+            
+            cuteGameState.movement.currentLocation = locationId;
+            
+            // Update background
+            const background = document.getElementById('locationBackground');
+            background.className = `location-background bg-${locationId}`;
+            
+            // Load objects
+            loadLocationObjects(location);
+            
+            // Load NPCs
+            loadLocationNPCs(location);
+            
+            // Load exits
+            loadLocationExits(location);
+            
+            // Update mini-map
+            updateMiniMap();
+            
+            // Update location name
+            document.getElementById('currentLocationName').textContent = location.name;
+            
+            // Mark as discovered
+            if (!location.discovered) {
+                location.discovered = true;
+                showCuteAchievement('New Location!', `🗺️ Discovered ${location.name}!`);
+                cuteGameState.explorationRewards.locationsVisited++;
+            }
+            
+            // Reset Koko's position to center
+            cuteGameState.movement.x = 250;
+            cuteGameState.movement.y = 200;
+            const koalaContainer = document.getElementById('koalaContainer');
+            koalaContainer.style.left = '250px';
+            koalaContainer.style.top = '200px';
+            
+            showCuteEffect(`🏃‍♀️ Arrived at ${location.name}!`, 'sparkle-effect');
+        }
+
+        function loadLocationObjects(location) {
+            const container = document.getElementById('locationObjects');
+            container.innerHTML = '';
+            
+            location.objects.forEach(obj => {
+                const objElement = document.createElement('div');
+                objElement.className = 'world-object';
+                objElement.style.left = obj.x + 'px';
+                objElement.style.top = obj.y + 'px';
+                objElement.textContent = obj.emoji;
+                objElement.title = obj.name;
+                objElement.onclick = () => interactWithWorldObject(obj);
+                container.appendChild(objElement);
+            });
+        }
+
+        function loadLocationNPCs(location) {
+            const container = document.getElementById('locationNPCs');
+            container.innerHTML = '';
+            
+            location.npcs.forEach(npc => {
+                const npcElement = document.createElement('div');
+                npcElement.className = 'world-npc';
+                npcElement.style.left = npc.x + 'px';
+                npcElement.style.top = npc.y + 'px';
+                npcElement.textContent = npc.emoji;
+                npcElement.title = npc.name;
+                npcElement.onclick = () => interactWithNPC(npc);
+                container.appendChild(npcElement);
+            });
+        }
+
+        function loadLocationExits(location) {
+            const container = document.getElementById('locationExits');
+            container.innerHTML = '';
+            
+            const exitPositions = {
+                0: { x: 20, y: 20 },    // Top-left
+                1: { x: 220, y: 10 },   // Top-center
+                2: { x: 420, y: 20 },   // Top-right
+                3: { x: 10, y: 180 },   // Middle-left
+                4: { x: 430, y: 180 },  // Middle-right
+                5: { x: 20, y: 340 },   // Bottom-left
+                6: { x: 220, y: 350 },  // Bottom-center
+                7: { x: 420, y: 340 }   // Bottom-right
+            };
+            
+            location.connections.forEach((connectionId, index) => {
+                const connectedLocation = cuteGameState.worldMap[connectionId];
+                if (!connectedLocation) return;
+                
+                const exitElement = document.createElement('div');
+                exitElement.className = 'location-exit';
+                const pos = exitPositions[index] || { x: 100 + index * 80, y: 50 };
+                exitElement.style.left = pos.x + 'px';
+                exitElement.style.top = pos.y + 'px';
+                exitElement.textContent = connectedLocation.emoji;
+                exitElement.title = `Go to ${connectedLocation.name}`;
+                exitElement.onclick = () => {
+                    if (cuteGameState.movement.unlockedLocations.includes(connectionId)) {
+                        loadLocation(connectionId);
+                    } else {
+                        showCuteEffect('🔒 Location locked! Complete more quests to unlock.', 'sparkle-effect');
+                    }
+                };
+                container.appendChild(exitElement);
+            });
+        }
+
+        function updateMiniMap() {
+            const container = document.getElementById('miniMapContent');
+            container.innerHTML = '';
+            
+            const locationOrder = ['library', 'school', 'park', 'home', 'playground', 'garden'];
+            
+            locationOrder.forEach(locationId => {
+                const location = cuteGameState.worldMap[locationId];
+                if (!location) return;
+                
+                const mapElement = document.createElement('div');
+                mapElement.className = 'map-location';
+                
+                if (cuteGameState.movement.currentLocation === locationId) {
+                    mapElement.classList.add('current');
+                } else if (cuteGameState.movement.unlockedLocations.includes(locationId)) {
+                    mapElement.classList.add('unlocked');
+                } else {
+                    mapElement.classList.add('locked');
+                }
+                
+                mapElement.textContent = location.emoji;
+                mapElement.title = location.name;
+                
+                if (cuteGameState.movement.unlockedLocations.includes(locationId)) {
+                    mapElement.onclick = () => loadLocation(locationId);
+                }
+                
+                container.appendChild(mapElement);
+            });
+        }
+
+        // Interaction Systems
+        function interactWithWorldObject(obj) {
+            const distance = getDistance(
+                cuteGameState.movement.x, cuteGameState.movement.y,
+                obj.x, obj.y
+            );
+            
+            if (distance > 80) {
+                showCuteEffect('🚶‍♀️ Get closer to interact!', 'sparkle-effect');
+                return;
+            }
+            
+            const actions = {
+                sleep: () => {
+                    cuteGameState.petCare.energy = Math.min(100, cuteGameState.petCare.energy + 30);
+                    showCuteEffect('😴 Koko had a refreshing nap!', 'love-effect');
+                },
+                cook: () => {
+                    cuteGameState.petCare.hunger = Math.min(100, cuteGameState.petCare.hunger + 25);
+                    showCuteEffect('🍳 Koko cooked something delicious!', 'sparkle-effect');
+                },
+                read: () => {
+                    cuteGameState.player.xp += 20;
+                    cuteGameState.skillTrees.learning.points += 1;
+                    showCuteEffect('📚 Koko learned something new!', 'sparkle-effect');
+                },
+                swing: () => {
+                    cuteGameState.stats.happiness = Math.min(100, cuteGameState.stats.happiness + 15);
+                    showCuteEffect('🪀 Wheee! Koko loves swinging!', 'love-effect');
+                },
+                slide: () => {
+                    cuteGameState.stats.happiness = Math.min(100, cuteGameState.stats.happiness + 20);
+                    showCuteEffect('🛝 Sliding down the rainbow!', 'sparkle-effect');
+                },
+                dig: () => {
+                    const treasures = ['🏆', '💎', '🪙', '⭐', '🎁'];
+                    const treasure = treasures[Math.floor(Math.random() * treasures.length)];
+                    cuteGameState.resources.stickers += 5;
+                    showCuteEffect(`🏖️ Koko found a treasure! ${treasure}`, 'sparkle-effect');
+                },
+                smell: () => {
+                    cuteGameState.stats.love = Math.min(100, cuteGameState.stats.love + 10);
+                    showCuteEffect('🌸 The flowers smell wonderful!', 'love-effect');
+                },
+                wish: () => {
+                    cuteGameState.resources.hearts += 10;
+                    showCuteEffect('⛲ Koko made a wish! Dreams come true!', 'sparkle-effect');
+                },
+                climb: () => {
+                    cuteGameState.skillTrees.exploration.points += 2;
+                    showCuteEffect('🌳 Koko climbed high and saw amazing views!', 'sparkle-effect');
+                }
+            };
+            
+            const action = actions[obj.action];
+            if (action) {
+                action();
+                cuteGameState.explorationRewards.objectsInteracted++;
+                updateCuteDisplay();
+                
+                // Update quest progress
+                updateQuestProgress('interact_object');
+            }
+        }
+
+        function interactWithNPC(npc) {
+            const distance = getDistance(
+                cuteGameState.movement.x, cuteGameState.movement.y,
+                npc.x, npc.y
+            );
+            
+            if (distance > 60) {
+                showCuteEffect('🚶‍♀️ Get closer to talk!', 'sparkle-effect');
+                return;
+            }
+            
+            const dialogues = {
+                bella: [
+                    "Hi Koko! Want to play together? 🐰",
+                    "I love hopping around the playground! 🪀",
+                    "Have you seen the magical flowers in the garden? 🌸"
+                ],
+                butterfly: [
+                    "Flutter flutter! The garden is so beautiful! 🦋",
+                    "I know where the sweetest nectar is! 🌺",
+                    "Want to dance with me among the flowers? 💃"
+                ],
+                owl: [
+                    "Hoot hoot! Welcome to the library! 🦉",
+                    "Knowledge is the greatest treasure! 📚",
+                    "Have you read any good books lately? 🔍"
+                ],
+                squirrel: [
+                    "Chitter chatter! I love collecting acorns! 🐿️",
+                    "The park has the best hiding spots! 🌰",
+                    "Want to go on a nature adventure? 🥾"
+                ],
+                teacher: [
+                    "Hello there! Ready to learn something new? 👩‍🏫",
+                    "Education is the key to success! 🎓",
+                    "What subject interests you most? 📝"
+                ]
+            };
+            
+            const npcDialogues = dialogues[npc.id] || ["Hello there! Nice to meet you! 😊"];
+            const dialogue = npcDialogues[Math.floor(Math.random() * npcDialogues.length)];
+            
+            showCuteEffect(`${npc.name}: ${dialogue}`, 'love-effect');
+            
+            // Award friendship points
+            const friend = cuteGameState.friends.find(f => f.name.toLowerCase().includes(npc.id));
+            if (friend) {
+                friend.friendship = Math.min(100, friend.friendship + 5);
+            }
+            
+            cuteGameState.explorationRewards.npcsMetCount++;
+            updateCuteDisplay();
+            
+            // Update quest progress
+            updateQuestProgress('interact_friend');
+        }
+
+        function checkProximityInteractions() {
+            // Auto-highlight nearby objects and NPCs
+            const currentLocation = cuteGameState.worldMap[cuteGameState.movement.currentLocation];
+            
+            // Check objects
+            currentLocation.objects.forEach(obj => {
+                const distance = getDistance(
+                    cuteGameState.movement.x, cuteGameState.movement.y,
+                    obj.x, obj.y
+                );
+                
+                const objElement = document.querySelector(`[title="${obj.name}"]`);
+                if (objElement) {
+                    if (distance <= 80) {
+                        objElement.style.filter = 'drop-shadow(0 0 15px rgba(255,255,0,1))';
+                    } else {
+                        objElement.style.filter = '';
+                    }
+                }
+            });
+            
+            // Check NPCs
+            currentLocation.npcs.forEach(npc => {
+                const distance = getDistance(
+                    cuteGameState.movement.x, cuteGameState.movement.y,
+                    npc.x, npc.y
+                );
+                
+                const npcElement = document.querySelector(`[title="${npc.name}"]`);
+                if (npcElement) {
+                    if (distance <= 60) {
+                        npcElement.style.filter = 'drop-shadow(0 0 20px rgba(255,182,193,1))';
+                    } else {
+                        npcElement.style.filter = '';
+                    }
+                }
+            });
+        }
+
+        function checkLocationExits() {
+            // Auto-travel when walking into exits
+            const exits = document.querySelectorAll('.location-exit');
+            exits.forEach(exit => {
+                const exitRect = exit.getBoundingClientRect();
+                const koalaRect = document.getElementById('koalaContainer').getBoundingClientRect();
+                
+                if (isColliding(koalaRect, exitRect)) {
+                    exit.click();
+                }
+            });
+        }
+
+        function getDistance(x1, y1, x2, y2) {
+            return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+        }
+
+        function isColliding(rect1, rect2) {
+            return !(rect1.right < rect2.left || 
+                     rect1.left > rect2.right || 
+                     rect1.bottom < rect2.top || 
+                     rect1.top > rect2.bottom);
+        }
+
+        function awardExplorationReward() {
+            const rewards = [
+                { type: 'stickers', amount: 3, message: '🎁 Found stickers while exploring!' },
+                { type: 'hearts', amount: 2, message: '💕 Exploration fills the heart!' },
+                { type: 'xp', amount: 10, message: '⭐ Adventure experience gained!' },
+                { type: 'skillPoints', amount: 1, message: '🌟 Exploration skill point earned!' }
+            ];
+            
+            const reward = rewards[Math.floor(Math.random() * rewards.length)];
+            
+            if (reward.type === 'skillPoints') {
+                cuteGameState.skillTrees.exploration.points += reward.amount;
+            } else if (cuteGameState.resources[reward.type]) {
+                cuteGameState.resources[reward.type] += reward.amount;
+            } else if (cuteGameState.player[reward.type]) {
+                cuteGameState.player[reward.type] += reward.amount;
+            }
+            
+            showCuteEffect(reward.message, 'sparkle-effect');
+            updateCuteDisplay();
+        }
+
+        // Initialize Movement System
+        function initializeMovementSystem() {
+            setupKeyboardControls();
+            loadLocation('home');
+            updateMiniMap();
+            
+            // Update quest progress for visiting playground
+            setTimeout(() => {
+                updateQuestProgress('visit_playground');
+            }, 1000);
+        }
+
+        // Initialize movement system
+        setTimeout(() => {
+            initializeMovementSystem();
+        }, 2500);
     </script>
 </body>
 </html>
