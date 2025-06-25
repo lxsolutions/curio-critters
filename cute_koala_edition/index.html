@@ -378,6 +378,343 @@
             font-weight: bold;
         }
 
+        /* Critter Collection Styles */
+        .critter-collection {
+            margin-bottom: 15px;
+        }
+
+        .collection-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            font-size: 9px;
+            font-weight: bold;
+            color: #8B008B;
+        }
+
+        .collection-btn {
+            padding: 3px 6px;
+            background: #9370DB;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 7px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .collection-btn:hover {
+            background: #8B008B;
+            transform: scale(1.05);
+        }
+
+        .active-critter-display {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px;
+            background: rgba(255,255,255,0.8);
+            border: 2px solid #9370DB;
+            border-radius: 10px;
+            margin-bottom: 8px;
+        }
+
+        .critter-avatar {
+            font-size: 24px;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(147,112,219,0.2);
+            border-radius: 50%;
+        }
+
+        .critter-info {
+            flex: 1;
+        }
+
+        .critter-name {
+            font-size: 10px;
+            font-weight: bold;
+            color: #8B008B;
+        }
+
+        .critter-level {
+            font-size: 8px;
+            color: #9370DB;
+        }
+
+        .critter-specialization {
+            font-size: 7px;
+            color: #DDA0DD;
+            font-style: italic;
+        }
+
+        .switch-critter-btn {
+            padding: 4px;
+            background: rgba(147,112,219,0.3);
+            border: 1px solid #9370DB;
+            border-radius: 50%;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .switch-critter-btn:hover {
+            background: rgba(147,112,219,0.6);
+            transform: scale(1.1);
+        }
+
+        .critter-growth-display {
+            margin-bottom: 8px;
+        }
+
+        .growth-title {
+            font-size: 8px;
+            font-weight: bold;
+            color: #8B008B;
+            margin-bottom: 4px;
+        }
+
+        .growth-bars {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .growth-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+        }
+
+        .growth-bar {
+            flex: 1;
+            height: 6px;
+            background: rgba(200,200,200,0.3);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .growth-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #32CD32, #90EE90);
+            border-radius: 3px;
+            transition: width 0.3s ease;
+        }
+
+        .unlock-progress {
+            margin-bottom: 8px;
+        }
+
+        .unlock-title {
+            font-size: 8px;
+            font-weight: bold;
+            color: #8B008B;
+            margin-bottom: 4px;
+        }
+
+        .next-critter {
+            font-size: 7px;
+            color: #9370DB;
+        }
+
+        .unlock-bar {
+            width: 100%;
+            height: 4px;
+            background: rgba(200,200,200,0.3);
+            border-radius: 2px;
+            overflow: hidden;
+            margin-top: 2px;
+        }
+
+        .unlock-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #FFD700, #FFA500);
+            border-radius: 2px;
+            transition: width 0.3s ease;
+        }
+
+        /* Critter Collection Modal */
+        .critter-collection-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(45deg, #F0F8FF, #E6E6FA);
+            border: 3px solid #9370DB;
+            border-radius: 20px;
+            padding: 15px;
+            z-index: 3000;
+            max-width: 500px;
+            max-height: 600px;
+            overflow-y: auto;
+            box-shadow: 0 10px 30px rgba(147,112,219,0.4);
+        }
+
+        .critter-collection-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #8B008B;
+        }
+
+        .collection-stats {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 15px;
+            padding: 10px;
+            background: rgba(255,255,255,0.8);
+            border-radius: 10px;
+        }
+
+        .stat {
+            font-size: 10px;
+            color: #9370DB;
+            font-weight: bold;
+        }
+
+        .critter-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        .critter-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 10px;
+            background: rgba(255,255,255,0.9);
+            border: 2px solid #DDA0DD;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .critter-card:hover {
+            background: rgba(221,160,221,0.3);
+            transform: scale(1.05);
+        }
+
+        .critter-card.locked {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .critter-card.discovered {
+            border-color: #FFD700;
+            background: rgba(255,215,0,0.1);
+        }
+
+        .critter-card.owned {
+            border-color: #32CD32;
+            background: rgba(50,205,50,0.1);
+        }
+
+        .critter-card-emoji {
+            font-size: 32px;
+            margin-bottom: 5px;
+        }
+
+        .critter-card-name {
+            font-size: 9px;
+            font-weight: bold;
+            color: #8B008B;
+            text-align: center;
+        }
+
+        .critter-card-type {
+            font-size: 7px;
+            color: #9370DB;
+            text-align: center;
+        }
+
+        .critter-card-status {
+            font-size: 6px;
+            color: #DDA0DD;
+            text-align: center;
+            margin-top: 3px;
+        }
+
+        /* Critter Switcher Modal */
+        .critter-switcher-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(45deg, #E6E6FA, #F0F8FF);
+            border: 3px solid #4169E1;
+            border-radius: 20px;
+            padding: 15px;
+            z-index: 3000;
+            max-width: 400px;
+            box-shadow: 0 10px 30px rgba(65,105,225,0.4);
+        }
+
+        .critter-switcher-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            font-size: 14px;
+            font-weight: bold;
+            color: #4169E1;
+        }
+
+        .owned-critters-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .owned-critter-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            background: rgba(255,255,255,0.9);
+            border: 2px solid #87CEEB;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .owned-critter-item:hover {
+            background: rgba(135,206,235,0.3);
+            transform: scale(1.02);
+        }
+
+        .owned-critter-item.active {
+            border-color: #4169E1;
+            background: rgba(65,105,225,0.2);
+        }
+
+        .owned-critter-emoji {
+            font-size: 24px;
+        }
+
+        .owned-critter-details {
+            flex: 1;
+        }
+
+        .owned-critter-name {
+            font-size: 12px;
+            font-weight: bold;
+            color: #4169E1;
+        }
+
+        .owned-critter-stats {
+            font-size: 9px;
+            color: #6495ED;
+        }
+
         .game-screen {
             width: 100%;
             height: 100%;
@@ -2876,18 +3213,53 @@
                 <div id="weatherEffect" class="weather-effect"></div>
             </div>
 
-            <!-- Friends List -->
-            <div class="panel-title">👫 Friends</div>
-            <div class="friends-list">
-                <div class="friend-item">
-                    <span>🐰 Bella Bunny</span>
-                    <div class="friendship-bar">
-                        <div class="friendship-fill" style="width: 50%"></div>
+            <!-- Critter Collection -->
+            <div class="panel-title">🐾 My Critters</div>
+            <div class="critter-collection">
+                <div class="collection-header">
+                    <span id="critterCount">1/12</span>
+                    <button class="collection-btn" onclick="openCritterCollection()">📋 View All</button>
+                </div>
+                <div class="active-critter-display">
+                    <div class="critter-avatar" id="activeCritterAvatar">🐨</div>
+                    <div class="critter-info">
+                        <div class="critter-name" id="activeCritterName">Koko</div>
+                        <div class="critter-level" id="activeCritterLevel">Level 8 Adult</div>
+                        <div class="critter-specialization" id="activeCritterSpec">Explorer</div>
+                    </div>
+                    <button class="switch-critter-btn" onclick="openCritterSwitcher()">🔄</button>
+                </div>
+                <div class="critter-growth-display">
+                    <div class="growth-title">Growth Progress</div>
+                    <div class="growth-bars">
+                        <div class="growth-item">
+                            <span>📚</span>
+                            <div class="growth-bar">
+                                <div class="growth-fill" id="mathGrowth" style="width: 45%"></div>
+                            </div>
+                        </div>
+                        <div class="growth-item">
+                            <span>🔬</span>
+                            <div class="growth-bar">
+                                <div class="growth-fill" id="scienceGrowth" style="width: 30%"></div>
+                            </div>
+                        </div>
+                        <div class="growth-item">
+                            <span>🎨</span>
+                            <div class="growth-bar">
+                                <div class="growth-fill" id="creativityGrowth" style="width: 40%"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="friend-item locked">
-                    <span>🐱 Charlie Cat</span>
-                    <span class="locked-text">🔒 Locked</span>
+                <div class="unlock-progress">
+                    <div class="unlock-title">Next Critter</div>
+                    <div id="nextCritterInfo" class="next-critter">
+                        <span>🐰 Bella - Complete friendship quest</span>
+                        <div class="unlock-bar">
+                            <div class="unlock-fill" style="width: 0%"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -3256,6 +3628,66 @@
                 <div class="time-event-content">
                     <div id="timeEventTitle" class="time-event-title"></div>
                     <div id="timeEventDesc" class="time-event-desc"></div>
+                </div>
+            </div>
+            
+            <!-- Critter Collection Modal -->
+            <div id="critterCollectionModal" class="critter-collection-modal" style="display: none;">
+                <div class="critter-collection-header">
+                    <span>🐾 Critter Collection</span>
+                    <button onclick="closeCritterCollection()" class="close-btn">❌</button>
+                </div>
+                <div class="collection-stats">
+                    <div class="stat">Collected: <span id="collectedCount">1</span>/8</div>
+                    <div class="stat">Discovered: <span id="discoveredCount">1</span>/8</div>
+                    <div class="stat">Breeding Unlocked: <span id="breedingStatus">No</span></div>
+                </div>
+                <div id="critterGrid" class="critter-grid">
+                    <!-- Critters will be populated by JavaScript -->
+                </div>
+            </div>
+            
+            <!-- Critter Switcher Modal -->
+            <div id="critterSwitcherModal" class="critter-switcher-modal" style="display: none;">
+                <div class="critter-switcher-header">
+                    <span>🔄 Switch Active Critter</span>
+                    <button onclick="closeCritterSwitcher()" class="close-btn">❌</button>
+                </div>
+                <div id="ownedCrittersList" class="owned-critters-list">
+                    <!-- Owned critters will be populated by JavaScript -->
+                </div>
+            </div>
+            
+            <!-- Critter Details Modal -->
+            <div id="critterDetailsModal" class="critter-details-modal" style="display: none;">
+                <div class="critter-details-header">
+                    <span id="critterDetailsTitle">🐨 Koko Details</span>
+                    <button onclick="closeCritterDetails()" class="close-btn">❌</button>
+                </div>
+                <div id="critterDetailsContent" class="critter-details-content">
+                    <!-- Critter details will be populated by JavaScript -->
+                </div>
+            </div>
+            
+            <!-- Breeding Lab Modal -->
+            <div id="breedingLabModal" class="breeding-lab-modal" style="display: none;">
+                <div class="breeding-lab-header">
+                    <span>🧬 Breeding Laboratory</span>
+                    <button onclick="closeBreedingLab()" class="close-btn">❌</button>
+                </div>
+                <div id="breedingLabContent" class="breeding-lab-content">
+                    <!-- Breeding content will be populated by JavaScript -->
+                </div>
+            </div>
+            
+            <!-- Growth Activity Modal -->
+            <div id="growthActivityModal" class="growth-activity-modal" style="display: none;">
+                <div class="growth-activity-header">
+                    <span>📈 Growth Activities</span>
+                    <button onclick="closeGrowthActivity()" class="close-btn">❌</button>
+                </div>
+                <div id="growthActivityContent" class="growth-activity-content">
+                    <!-- Growth activities will be populated by JavaScript -->
                 </div>
             </div>
 
@@ -3801,6 +4233,195 @@
                 locationsVisited: 0,
                 objectsInteracted: 0,
                 npcsMetCount: 0
+            },
+            critterCollection: {
+                activeCritter: 'koko',
+                totalCritters: 1,
+                maxCapacity: 12,
+                critters: {
+                    koko: {
+                        id: 'koko',
+                        name: 'Koko',
+                        type: 'koala',
+                        emoji: '🐨',
+                        stage: 'adult',
+                        level: 8,
+                        experience: 2840,
+                        specialization: 'exploration',
+                        personality: 'playful',
+                        happiness: 85,
+                        health: 92,
+                        energy: 78,
+                        love: 67,
+                        intelligence: 75,
+                        creativity: 60,
+                        social: 70,
+                        strength: 55,
+                        discovered: true,
+                        unlocked: true,
+                        habitat: 'home',
+                        favoriteActivities: ['explore', 'learn', 'play'],
+                        growthPoints: {
+                            math: 45,
+                            science: 30,
+                            reading: 55,
+                            creativity: 40,
+                            social: 50,
+                            physical: 35
+                        },
+                        evolutionStage: 2,
+                        maxEvolution: 3,
+                        bondLevel: 8,
+                        lastInteraction: Date.now()
+                    }
+                },
+                availableCritters: {
+                    bella: {
+                        id: 'bella',
+                        name: 'Bella',
+                        type: 'bunny',
+                        emoji: '🐰',
+                        stage: 'baby',
+                        specialization: 'social',
+                        personality: 'friendly',
+                        habitat: 'playground',
+                        unlockRequirement: 'Complete friendship quest',
+                        unlockProgress: 0,
+                        unlockTarget: 1,
+                        discovered: true,
+                        unlocked: false
+                    },
+                    charlie: {
+                        id: 'charlie',
+                        name: 'Charlie',
+                        type: 'cat',
+                        emoji: '🐱',
+                        stage: 'baby',
+                        specialization: 'creativity',
+                        personality: 'artistic',
+                        habitat: 'library',
+                        unlockRequirement: 'Complete 5 creative activities',
+                        unlockProgress: 0,
+                        unlockTarget: 5,
+                        discovered: false,
+                        unlocked: false
+                    },
+                    danny: {
+                        id: 'danny',
+                        name: 'Danny',
+                        type: 'dog',
+                        emoji: '🐶',
+                        stage: 'baby',
+                        specialization: 'physical',
+                        personality: 'energetic',
+                        habitat: 'park',
+                        unlockRequirement: 'Walk 500 steps',
+                        unlockProgress: 0,
+                        unlockTarget: 500,
+                        discovered: false,
+                        unlocked: false
+                    },
+                    ellie: {
+                        id: 'ellie',
+                        name: 'Ellie',
+                        type: 'elephant',
+                        emoji: '🐘',
+                        stage: 'baby',
+                        specialization: 'intelligence',
+                        personality: 'wise',
+                        habitat: 'school',
+                        unlockRequirement: 'Reach level 10 in learning skills',
+                        unlockProgress: 0,
+                        unlockTarget: 10,
+                        discovered: false,
+                        unlocked: false
+                    },
+                    ruby: {
+                        id: 'ruby',
+                        name: 'Ruby',
+                        type: 'fox',
+                        emoji: '🦊',
+                        stage: 'baby',
+                        specialization: 'cunning',
+                        personality: 'clever',
+                        habitat: 'forest',
+                        unlockRequirement: 'Solve 10 logic puzzles',
+                        unlockProgress: 0,
+                        unlockTarget: 10,
+                        discovered: false,
+                        unlocked: false
+                    },
+                    luna: {
+                        id: 'luna',
+                        name: 'Luna',
+                        type: 'owl',
+                        emoji: '🦉',
+                        stage: 'baby',
+                        specialization: 'wisdom',
+                        personality: 'studious',
+                        habitat: 'library',
+                        unlockRequirement: 'Read 20 books',
+                        unlockProgress: 0,
+                        unlockTarget: 20,
+                        discovered: false,
+                        unlocked: false
+                    },
+                    splash: {
+                        id: 'splash',
+                        name: 'Splash',
+                        type: 'dolphin',
+                        emoji: '🐬',
+                        stage: 'baby',
+                        specialization: 'aquatic',
+                        personality: 'playful',
+                        habitat: 'pond',
+                        unlockRequirement: 'Complete water activities',
+                        unlockProgress: 0,
+                        unlockTarget: 3,
+                        discovered: false,
+                        unlocked: false
+                    },
+                    spark: {
+                        id: 'spark',
+                        name: 'Spark',
+                        type: 'dragon',
+                        emoji: '🐉',
+                        stage: 'egg',
+                        specialization: 'magical',
+                        personality: 'mystical',
+                        habitat: 'mountain',
+                        unlockRequirement: 'Master all skill trees',
+                        unlockProgress: 0,
+                        unlockTarget: 4,
+                        discovered: false,
+                        unlocked: false
+                    }
+                }
+            },
+            critterGrowth: {
+                stages: ['egg', 'baby', 'child', 'teen', 'adult', 'elder', 'legendary'],
+                experienceRequired: [0, 100, 300, 600, 1000, 1500, 2500],
+                growthActivities: {
+                    math: ['counting', 'addition', 'subtraction', 'multiplication', 'division', 'algebra'],
+                    science: ['observation', 'experiment', 'hypothesis', 'discovery', 'invention', 'research'],
+                    reading: ['letters', 'words', 'sentences', 'stories', 'books', 'literature'],
+                    creativity: ['drawing', 'coloring', 'crafting', 'music', 'dance', 'imagination'],
+                    social: ['greeting', 'sharing', 'helping', 'teamwork', 'leadership', 'empathy'],
+                    physical: ['walking', 'running', 'jumping', 'climbing', 'sports', 'adventure']
+                }
+            },
+            breeding: {
+                unlocked: false,
+                combinations: {
+                    'koala+bunny': { result: 'koabun', name: 'Koabun', emoji: '🐨🐰', rarity: 'rare' },
+                    'cat+owl': { result: 'cowl', name: 'Cowl', emoji: '🐱🦉', rarity: 'rare' },
+                    'dog+fox': { result: 'dox', name: 'Dox', emoji: '🐶🦊', rarity: 'rare' },
+                    'elephant+dragon': { result: 'dragonphant', name: 'Dragonphant', emoji: '🐘🐉', rarity: 'legendary' },
+                    'dolphin+dragon': { result: 'aquadragon', name: 'Aquadragon', emoji: '🐬🐉', rarity: 'legendary' }
+                },
+                breedingPairs: [],
+                incubationTime: 24 * 60 * 60 * 1000, // 24 hours in milliseconds
+                activeBreeding: []
             }
         };
 
@@ -7024,6 +7645,387 @@
         setTimeout(() => {
             initializeNewLayout();
         }, 3000);
+
+        // CRITTER COLLECTION SYSTEM
+
+        // Critter Collection Management
+        function openCritterCollection() {
+            const modal = document.getElementById('critterCollectionModal');
+            const grid = document.getElementById('critterGrid');
+            
+            updateCollectionStats();
+            populateCritterGrid();
+            
+            modal.style.display = 'block';
+            showCuteEffect('🐾 Critter collection opened!', 'sparkle-effect');
+        }
+
+        function closeCritterCollection() {
+            document.getElementById('critterCollectionModal').style.display = 'none';
+        }
+
+        function updateCollectionStats() {
+            const collection = cuteGameState.critterCollection;
+            const ownedCount = Object.keys(collection.critters).length;
+            const discoveredCount = Object.values(collection.availableCritters).filter(c => c.discovered).length + ownedCount;
+            
+            document.getElementById('collectedCount').textContent = ownedCount;
+            document.getElementById('discoveredCount').textContent = discoveredCount;
+            document.getElementById('breedingStatus').textContent = cuteGameState.breeding.unlocked ? 'Yes' : 'No';
+            document.getElementById('critterCount').textContent = `${ownedCount}/${collection.maxCapacity}`;
+        }
+
+        function populateCritterGrid() {
+            const grid = document.getElementById('critterGrid');
+            const collection = cuteGameState.critterCollection;
+            grid.innerHTML = '';
+            
+            // Add owned critters
+            Object.values(collection.critters).forEach(critter => {
+                const card = createCritterCard(critter, 'owned');
+                grid.appendChild(card);
+            });
+            
+            // Add available critters
+            Object.values(collection.availableCritters).forEach(critter => {
+                const status = critter.unlocked ? 'owned' : (critter.discovered ? 'discovered' : 'locked');
+                const card = createCritterCard(critter, status);
+                grid.appendChild(card);
+            });
+        }
+
+        function createCritterCard(critter, status) {
+            const card = document.createElement('div');
+            card.className = `critter-card ${status}`;
+            
+            const emoji = status === 'locked' ? '❓' : critter.emoji;
+            const name = status === 'locked' ? '???' : critter.name;
+            const type = status === 'locked' ? 'Unknown' : critter.type;
+            
+            let statusText = '';
+            if (status === 'owned') {
+                statusText = `Level ${critter.level || 1}`;
+            } else if (status === 'discovered') {
+                statusText = critter.unlockRequirement;
+            } else {
+                statusText = 'Not discovered';
+            }
+            
+            card.innerHTML = `
+                <div class="critter-card-emoji">${emoji}</div>
+                <div class="critter-card-name">${name}</div>
+                <div class="critter-card-type">${type}</div>
+                <div class="critter-card-status">${statusText}</div>
+            `;
+            
+            if (status === 'owned') {
+                card.onclick = () => showCritterDetails(critter.id);
+            } else if (status === 'discovered') {
+                card.onclick = () => showUnlockProgress(critter.id);
+            }
+            
+            return card;
+        }
+
+        // Critter Switching
+        function openCritterSwitcher() {
+            const modal = document.getElementById('critterSwitcherModal');
+            const list = document.getElementById('ownedCrittersList');
+            
+            list.innerHTML = '';
+            
+            Object.values(cuteGameState.critterCollection.critters).forEach(critter => {
+                const item = document.createElement('div');
+                item.className = `owned-critter-item ${critter.id === cuteGameState.critterCollection.activeCritter ? 'active' : ''}`;
+                
+                item.innerHTML = `
+                    <div class="owned-critter-emoji">${critter.emoji}</div>
+                    <div class="owned-critter-details">
+                        <div class="owned-critter-name">${critter.name}</div>
+                        <div class="owned-critter-stats">Level ${critter.level} ${critter.stage} • ${critter.specialization}</div>
+                    </div>
+                `;
+                
+                item.onclick = () => switchActiveCritter(critter.id);
+                list.appendChild(item);
+            });
+            
+            modal.style.display = 'block';
+            showCuteEffect('🔄 Choose your active critter!', 'sparkle-effect');
+        }
+
+        function closeCritterSwitcher() {
+            document.getElementById('critterSwitcherModal').style.display = 'none';
+        }
+
+        function switchActiveCritter(critterId) {
+            cuteGameState.critterCollection.activeCritter = critterId;
+            updateActiveCritterDisplay();
+            updateGameWorldCritter();
+            closeCritterSwitcher();
+            showCuteAchievement('Critter Switched!', `🔄 ${cuteGameState.critterCollection.critters[critterId].name} is now active!`);
+        }
+
+        function updateActiveCritterDisplay() {
+            const activeCritter = getActiveCritter();
+            if (!activeCritter) return;
+            
+            document.getElementById('activeCritterAvatar').textContent = activeCritter.emoji;
+            document.getElementById('activeCritterName').textContent = activeCritter.name;
+            document.getElementById('activeCritterLevel').textContent = `Level ${activeCritter.level} ${activeCritter.stage}`;
+            document.getElementById('activeCritterSpec').textContent = activeCritter.specialization;
+            
+            // Update growth bars
+            const growthPoints = activeCritter.growthPoints;
+            document.getElementById('mathGrowth').style.width = growthPoints.math + '%';
+            document.getElementById('scienceGrowth').style.width = growthPoints.science + '%';
+            document.getElementById('creativityGrowth').style.width = growthPoints.creativity + '%';
+        }
+
+        function updateGameWorldCritter() {
+            const activeCritter = getActiveCritter();
+            if (!activeCritter) return;
+            
+            // Update the visual critter in the game world
+            document.getElementById('cuteKoala').textContent = activeCritter.emoji;
+            document.getElementById('koalaTitle').textContent = `${activeCritter.name} the ${activeCritter.type} • Level ${activeCritter.level}`;
+            document.getElementById('koalaStatus').textContent = `${activeCritter.name} is exploring! 🌈`;
+        }
+
+        function getActiveCritter() {
+            return cuteGameState.critterCollection.critters[cuteGameState.critterCollection.activeCritter];
+        }
+
+        // Critter Growth and Development
+        function awardCritterGrowth(activityType, points = 10) {
+            const activeCritter = getActiveCritter();
+            if (!activeCritter) return;
+            
+            // Award growth points based on activity type
+            const growthMapping = {
+                'math': 'math',
+                'science': 'science',
+                'reading': 'reading',
+                'creativity': 'creativity',
+                'social': 'social',
+                'physical': 'physical',
+                'learn': 'reading',
+                'play': 'physical',
+                'create': 'creativity',
+                'explore': 'physical'
+            };
+            
+            const growthType = growthMapping[activityType] || 'math';
+            activeCritter.growthPoints[growthType] = Math.min(100, activeCritter.growthPoints[growthType] + points);
+            activeCritter.experience += points;
+            
+            // Check for level up
+            checkCritterLevelUp(activeCritter);
+            
+            // Check for evolution
+            checkCritterEvolution(activeCritter);
+            
+            // Update displays
+            updateActiveCritterDisplay();
+            
+            showCuteEffect(`📈 ${activeCritter.name} gained ${points} ${growthType} points!`, 'sparkle-effect');
+        }
+
+        function checkCritterLevelUp(critter) {
+            const requiredExp = cuteGameState.critterGrowth.experienceRequired;
+            const currentStageIndex = cuteGameState.critterGrowth.stages.indexOf(critter.stage);
+            
+            if (currentStageIndex < requiredExp.length - 1) {
+                const nextStageExp = requiredExp[currentStageIndex + 1];
+                if (critter.experience >= nextStageExp) {
+                    critter.level++;
+                    critter.stage = cuteGameState.critterGrowth.stages[currentStageIndex + 1];
+                    showCuteAchievement('Level Up!', `🎉 ${critter.name} evolved to ${critter.stage}!`);
+                    
+                    // Award bonus stats
+                    Object.keys(critter.growthPoints).forEach(stat => {
+                        critter.growthPoints[stat] = Math.min(100, critter.growthPoints[stat] + 5);
+                    });
+                }
+            }
+        }
+
+        function checkCritterEvolution(critter) {
+            // Check if critter can evolve based on growth points
+            const totalGrowth = Object.values(critter.growthPoints).reduce((sum, val) => sum + val, 0);
+            const averageGrowth = totalGrowth / Object.keys(critter.growthPoints).length;
+            
+            if (averageGrowth >= 80 && critter.evolutionStage < critter.maxEvolution) {
+                critter.evolutionStage++;
+                critter.level += 2;
+                
+                // Enhance critter abilities
+                critter.intelligence = Math.min(100, critter.intelligence + 10);
+                critter.creativity = Math.min(100, critter.creativity + 10);
+                critter.social = Math.min(100, critter.social + 10);
+                critter.strength = Math.min(100, critter.strength + 10);
+                
+                showCuteAchievement('Evolution!', `✨ ${critter.name} has evolved! All abilities increased!`);
+            }
+        }
+
+        // Critter Discovery and Unlocking
+        function checkCritterUnlocks() {
+            const availableCritters = cuteGameState.critterCollection.availableCritters;
+            
+            Object.values(availableCritters).forEach(critter => {
+                if (!critter.discovered && !critter.unlocked) {
+                    checkCritterDiscovery(critter);
+                } else if (critter.discovered && !critter.unlocked) {
+                    checkCritterUnlock(critter);
+                }
+            });
+        }
+
+        function checkCritterDiscovery(critter) {
+            // Discovery conditions based on player actions
+            const discoveryConditions = {
+                'bella': () => cuteGameState.story.completedQuests.length > 0,
+                'charlie': () => cuteGameState.skillTrees.creativity.level >= 2,
+                'danny': () => cuteGameState.explorationRewards.stepsWalked >= 100,
+                'ellie': () => cuteGameState.skillTrees.learning.level >= 3,
+                'ruby': () => cuteGameState.advancedMiniGames.logicPuzzles.level >= 2,
+                'luna': () => cuteGameState.explorationRewards.objectsInteracted >= 5,
+                'splash': () => cuteGameState.movement.currentLocation === 'pond',
+                'spark': () => Object.values(cuteGameState.skillTrees).every(tree => tree.level >= 5)
+            };
+            
+            const condition = discoveryConditions[critter.id];
+            if (condition && condition()) {
+                critter.discovered = true;
+                showCuteAchievement('New Critter Discovered!', `🔍 ${critter.name} the ${critter.type} has been discovered!`);
+                updateCollectionStats();
+            }
+        }
+
+        function checkCritterUnlock(critter) {
+            // Update unlock progress based on requirements
+            const unlockConditions = {
+                'bella': () => cuteGameState.story.completedQuests.includes('friendship_quest'),
+                'charlie': () => cuteGameState.resources.stickers >= 100, // Creative activities
+                'danny': () => cuteGameState.explorationRewards.stepsWalked >= 500,
+                'ellie': () => cuteGameState.skillTrees.learning.level >= 10,
+                'ruby': () => cuteGameState.advancedMiniGames.logicPuzzles.completed.length >= 10,
+                'luna': () => cuteGameState.explorationRewards.objectsInteracted >= 20,
+                'splash': () => cuteGameState.weather.effects.includes('rain'),
+                'spark': () => Object.values(cuteGameState.skillTrees).every(tree => tree.level >= 10)
+            };
+            
+            const condition = unlockConditions[critter.id];
+            if (condition && condition()) {
+                unlockCritter(critter.id);
+            }
+        }
+
+        function unlockCritter(critterId) {
+            const critter = cuteGameState.critterCollection.availableCritters[critterId];
+            if (!critter) return;
+            
+            // Create new critter instance
+            const newCritter = {
+                id: critterId,
+                name: critter.name,
+                type: critter.type,
+                emoji: critter.emoji,
+                stage: 'baby',
+                level: 1,
+                experience: 0,
+                specialization: critter.specialization,
+                personality: critter.personality,
+                happiness: 50,
+                health: 100,
+                energy: 100,
+                love: 25,
+                intelligence: 30,
+                creativity: 30,
+                social: 30,
+                strength: 30,
+                discovered: true,
+                unlocked: true,
+                habitat: critter.habitat,
+                favoriteActivities: ['play', 'learn'],
+                growthPoints: {
+                    math: 10,
+                    science: 10,
+                    reading: 10,
+                    creativity: 10,
+                    social: 10,
+                    physical: 10
+                },
+                evolutionStage: 1,
+                maxEvolution: 3,
+                bondLevel: 1,
+                lastInteraction: Date.now()
+            };
+            
+            // Add to collection
+            cuteGameState.critterCollection.critters[critterId] = newCritter;
+            cuteGameState.critterCollection.totalCritters++;
+            critter.unlocked = true;
+            
+            showCuteAchievement('New Critter Unlocked!', `🎉 ${critter.name} has joined your collection!`);
+            updateCollectionStats();
+            
+            // Check if breeding is unlocked
+            if (cuteGameState.critterCollection.totalCritters >= 3 && !cuteGameState.breeding.unlocked) {
+                cuteGameState.breeding.unlocked = true;
+                showCuteAchievement('Breeding Unlocked!', '🧬 You can now breed critters in the laboratory!');
+            }
+        }
+
+        // Enhanced activity system to award critter growth
+        function enhancedDoCuteActivity(activityType) {
+            // Call original activity function
+            doCuteActivity(activityType);
+            
+            // Award critter growth
+            awardCritterGrowth(activityType, 15);
+            
+            // Check for critter unlocks
+            checkCritterUnlocks();
+        }
+
+        // Override original activity functions
+        const originalDoCuteActivity = doCuteActivity;
+        doCuteActivity = function(activityType) {
+            originalDoCuteActivity(activityType);
+            awardCritterGrowth(activityType, 10);
+            checkCritterUnlocks();
+        };
+
+        // Override educational challenge completion
+        const originalCompleteEducationalChallenge = completeEducationalChallenge;
+        completeEducationalChallenge = function(challengeType) {
+            originalCompleteEducationalChallenge(challengeType);
+            awardCritterGrowth(challengeType, 20);
+            checkCritterUnlocks();
+        };
+
+        // Initialize critter collection system
+        function initializeCritterCollection() {
+            updateActiveCritterDisplay();
+            updateGameWorldCritter();
+            updateCollectionStats();
+            checkCritterUnlocks();
+            
+            // Set up periodic critter care reminders
+            setInterval(() => {
+                const activeCritter = getActiveCritter();
+                if (activeCritter && Date.now() - activeCritter.lastInteraction > 300000) { // 5 minutes
+                    showCuteEffect(`💭 ${activeCritter.name} misses you! Come play together!`, 'love-effect');
+                }
+            }, 300000); // Check every 5 minutes
+        }
+
+        // Initialize critter collection system
+        setTimeout(() => {
+            initializeCritterCollection();
+        }, 3500);
     </script>
 </body>
 </html>
