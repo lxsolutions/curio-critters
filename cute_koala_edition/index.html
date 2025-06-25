@@ -17,20 +17,365 @@
             background: linear-gradient(135deg, #FFB6C1 0%, #FFE4E1 50%, #E6E6FA 100%);
             height: 100vh;
             overflow: hidden;
+            margin: 0;
+            padding: 0;
+            display: grid;
+            grid-template-areas: 
+                "header header header"
+                "left-panel game-world right-panel"
+                "bottom-panel bottom-panel bottom-panel";
+            grid-template-columns: 280px 1fr 280px;
+            grid-template-rows: 70px 1fr 140px;
+            gap: 8px;
+            padding: 8px;
+        }
+
+        .game-header {
+            grid-area: header;
+            background: rgba(255,255,255,0.95);
+            border-radius: 15px;
+            padding: 10px;
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
+            align-items: center;
+            border: 2px solid #FFB6C1;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .game-world-container {
+            grid-area: game-world;
+            background: rgba(255,255,255,0.98);
+            border-radius: 20px;
+            padding: 15px;
+            border: 3px solid #4682B4;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .left-panel {
+            grid-area: left-panel;
+            background: rgba(255,255,255,0.95);
+            border-radius: 15px;
+            padding: 10px;
+            border: 2px solid #9370DB;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            overflow-y: auto;
+            max-height: 100%;
+            position: relative;
+        }
+
+        .right-panel {
+            grid-area: right-panel;
+            background: rgba(255,255,255,0.95);
+            border-radius: 15px;
+            padding: 10px;
+            border: 2px solid #32CD32;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            overflow-y: auto;
+            max-height: 100%;
+            position: relative;
+        }
+
+        .bottom-panel {
+            grid-area: bottom-panel;
+            background: rgba(255,255,255,0.95);
+            border-radius: 15px;
+            padding: 10px;
+            border: 2px solid #FFD700;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            display: flex;
+            gap: 15px;
+            overflow-x: auto;
             align-items: center;
         }
 
-        .game-container {
-            width: 375px;
-            height: 667px;
-            background: linear-gradient(180deg, #87CEEB 0%, #98FB98 100%);
-            border-radius: 25px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-            position: relative;
+        .panel-toggle {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: rgba(255,255,255,0.9);
+            border: 1px solid #ccc;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 12px;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .panel-toggle:hover {
+            background: rgba(255,255,255,1);
+            transform: scale(1.1);
+        }
+
+        .panel-minimized {
+            height: 50px !important;
             overflow: hidden;
-            border: 8px solid #FFB6C1;
+        }
+
+        .panel-title {
+            font-size: 12px;
+            font-weight: bold;
+            color: #8B008B;
+            text-align: center;
+            margin-bottom: 8px;
+            padding: 5px;
+            background: rgba(255,182,193,0.3);
+            border-radius: 8px;
+        }
+
+        .game-container {
+            display: none; /* Hide old container */
+        }
+
+        /* Header Styles */
+        .header-left, .header-center, .header-right {
+            display: flex;
+            align-items: center;
+        }
+
+        .player-details {
+            margin-left: 8px;
+        }
+
+        .player-name {
+            font-size: 12px;
+            font-weight: bold;
+            color: #8B008B;
+        }
+
+        .player-level {
+            font-size: 10px;
+            color: #9370DB;
+        }
+
+        .game-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #4682B4;
+            text-align: center;
+        }
+
+        .resource-display {
+            display: flex;
+            gap: 15px;
+            font-size: 12px;
+            font-weight: bold;
+            color: #8B008B;
+        }
+
+        /* Panel Content Styles */
+        .stats-display {
+            margin-bottom: 15px;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+            font-size: 10px;
+        }
+
+        .stat-bar {
+            flex: 1;
+            height: 8px;
+            background: rgba(200,200,200,0.3);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .stat-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #32CD32, #90EE90);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        .activity-section, .features-section, .advanced-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 120px;
+        }
+
+        .activity-buttons, .special-buttons, .advanced-buttons {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .activity-button {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 8px;
+            background: rgba(255,255,255,0.8);
+            border: 2px solid #32CD32;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 60px;
+        }
+
+        .activity-button:hover {
+            background: rgba(50,205,50,0.2);
+            transform: scale(1.05);
+        }
+
+        .activity-icon {
+            font-size: 20px;
+            margin-bottom: 4px;
+        }
+
+        .activity-name {
+            font-size: 8px;
+            font-weight: bold;
+            color: #32CD32;
+        }
+
+        .weather-display {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .weather-icon {
+            font-size: 24px;
+        }
+
+        .weather-text {
+            font-size: 10px;
+            font-weight: bold;
+            color: #4682B4;
+        }
+
+        .weather-temp {
+            font-size: 9px;
+            color: #708090;
+        }
+
+        .friends-list {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .friend-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 6px;
+            background: rgba(255,255,255,0.6);
+            border-radius: 8px;
+            font-size: 9px;
+        }
+
+        .friend-item.locked {
+            opacity: 0.5;
+        }
+
+        .friendship-bar {
+            width: 40px;
+            height: 6px;
+            background: rgba(200,200,200,0.3);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .friendship-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #FFB6C1, #FF69B4);
+            border-radius: 3px;
+        }
+
+        .locked-text {
+            font-size: 8px;
+            color: #808080;
+        }
+
+        /* Movement Controls Adjustments */
+        .movement-controls {
+            background: rgba(255,255,255,0.9);
+            border: 2px solid #4682B4;
+            border-radius: 15px;
+            padding: 8px;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .movement-instructions {
+            font-size: 9px;
+            color: #4682B4;
+            margin-bottom: 6px;
+            font-weight: bold;
+        }
+
+        /* Mini Map Adjustments */
+        .mini-map {
+            margin-bottom: 15px;
+        }
+
+        .mini-map-content {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3px;
+            margin-bottom: 6px;
+        }
+
+        .map-location {
+            width: 25px;
+            height: 25px;
+            background: rgba(139,69,19,0.2);
+            border: 1px solid #8B4513;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .current-location {
+            font-size: 8px;
+            color: #8B4513;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        /* Koko Thoughts Panel Adjustments */
+        .koko-thoughts-panel {
+            background: rgba(255,182,193,0.3);
+            border-radius: 10px;
+            padding: 8px;
+            margin-bottom: 15px;
+        }
+
+        .koko-thought {
+            font-size: 9px;
+            color: #FF69B4;
+            text-align: center;
+            font-style: italic;
+            margin-bottom: 4px;
+            min-height: 15px;
+        }
+
+        .mood-indicator {
+            font-size: 8px;
+            color: #FF1493;
+            text-align: center;
+            font-weight: bold;
         }
 
         .game-screen {
@@ -2007,14 +2352,14 @@
         /* Game World and Movement System */
         .game-world {
             position: relative;
-            width: 500px;
-            height: 400px;
+            width: 100%;
+            height: 450px;
             background: linear-gradient(45deg, #87CEEB, #E0F6FF);
             border: 3px solid #4682B4;
             border-radius: 20px;
             overflow: hidden;
-            margin: 10px auto;
             box-shadow: 0 8px 25px rgba(70,130,180,0.4);
+            margin-bottom: 10px;
         }
 
         .location-background {
@@ -2358,7 +2703,246 @@
     </style>
 </head>
 <body>
-    <div class="game-container">
+    <!-- Game Header -->
+    <div class="game-header">
+        <div class="header-left">
+            <div class="player-info">
+                <div class="player-avatar" id="playerAvatar" onclick="showKoalaMenu()">🐨</div>
+                <div class="player-details">
+                    <div class="player-name" id="playerName">Koko</div>
+                    <div class="player-level" id="playerLevel">Level 8</div>
+                </div>
+            </div>
+        </div>
+        <div class="header-center">
+            <div class="game-title">🐨 Koko's Adventure World 🌟</div>
+        </div>
+        <div class="header-right">
+            <div class="resource-display">
+                <span id="stickerCount">1250</span> 🎁
+                <span id="heartCount">670</span> 💕
+                <span id="xpCount">2840</span> ⭐
+            </div>
+        </div>
+    </div>
+
+    <!-- Left Panel -->
+    <div class="left-panel">
+        <div class="panel-toggle" onclick="togglePanel('left')" id="leftToggle">−</div>
+        <div class="panel-content" id="leftContent">
+            <!-- Stats and Progress -->
+            <div class="panel-title">📊 Koko's Stats</div>
+            <div class="stats-display">
+                <div class="stat-item">
+                    <span>Happiness:</span>
+                    <div class="stat-bar">
+                        <div class="stat-fill" id="happinessFill" style="width: 85%"></div>
+                    </div>
+                    <span id="happinessValue">85/100</span>
+                </div>
+                <div class="stat-item">
+                    <span>Health:</span>
+                    <div class="stat-bar">
+                        <div class="stat-fill" id="healthFill" style="width: 92%"></div>
+                    </div>
+                    <span id="healthValue">92/100</span>
+                </div>
+                <div class="stat-item">
+                    <span>Energy:</span>
+                    <div class="stat-bar">
+                        <div class="stat-fill" id="energyFill" style="width: 78%"></div>
+                    </div>
+                    <span id="energyValue">78/100</span>
+                </div>
+                <div class="stat-item">
+                    <span>Love:</span>
+                    <div class="stat-bar">
+                        <div class="stat-fill" id="loveFill" style="width: 67%"></div>
+                    </div>
+                    <span id="loveValue">67/100</span>
+                </div>
+            </div>
+
+            <!-- Quest Progress -->
+            <div class="panel-title">📖 Current Quest</div>
+            <div id="activeQuest" class="active-quest">
+                <div id="questTitle" class="quest-title">Welcome to Eucalyptus Grove!</div>
+                <div id="questTasks" class="quest-tasks">
+                    <!-- Tasks will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Skill Trees -->
+            <div class="panel-title">🌟 Skills</div>
+            <div class="skill-categories">
+                <div class="skill-category" onclick="showSkillTree('learning')">
+                    <span class="skill-emoji">🧠</span>
+                    <span id="learningLevel" class="skill-level">Lv.1</span>
+                </div>
+                <div class="skill-category" onclick="showSkillTree('creativity')">
+                    <span class="skill-emoji">🎨</span>
+                    <span id="creativityLevel" class="skill-level">Lv.1</span>
+                </div>
+                <div class="skill-category" onclick="showSkillTree('friendship')">
+                    <span class="skill-emoji">💕</span>
+                    <span id="friendshipLevel" class="skill-level">Lv.1</span>
+                </div>
+                <div class="skill-category" onclick="showSkillTree('exploration')">
+                    <span class="skill-emoji">🗺️</span>
+                    <span id="explorationLevel" class="skill-level">Lv.1</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Game World Container -->
+    <div class="game-world-container">
+        <!-- Game World -->
+        <div id="gameWorld" class="game-world">
+            <!-- Current Location Background -->
+            <div id="locationBackground" class="location-background"></div>
+            
+            <!-- Interactive Objects in Current Location -->
+            <div id="locationObjects" class="location-objects"></div>
+            
+            <!-- NPCs in Current Location -->
+            <div id="locationNPCs" class="location-npcs"></div>
+            
+            <!-- Cute Koala Character (Moveable) -->
+            <div class="koala-container moveable" id="koalaContainer">
+                <div class="koala-status" id="koalaStatus">Koko is exploring! 🌈</div>
+                <div class="cute-koala" id="cuteKoala" onclick="interactWithKoko()">🐨</div>
+                <div class="koala-eyes">
+                    <div class="sparkle-eye">✨</div>
+                    <div class="sparkle-eye">✨</div>
+                </div>
+                <div class="koala-title" id="koalaTitle">Koko the Super Cute Koala • Level 8</div>
+                <div class="love-progress">
+                    <div class="love-fill" id="loveFillBar" style="width: 67%"></div>
+                </div>
+                <div class="love-text" id="loveText">Love: 670 / 1000 💕</div>
+            </div>
+            
+            <!-- Location Exits/Portals -->
+            <div id="locationExits" class="location-exits"></div>
+        </div>
+        
+        <!-- Movement Controls -->
+        <div class="movement-controls">
+            <div class="movement-instructions">
+                <span>🎮 Use WASD or Arrow Keys to move Koko around!</span>
+            </div>
+            <div class="movement-buttons">
+                <button class="move-btn" onmousedown="startMoving('up')" onmouseup="stopMoving('up')">⬆️</button>
+                <div class="move-row">
+                    <button class="move-btn" onmousedown="startMoving('left')" onmouseup="stopMoving('left')">⬅️</button>
+                    <button class="move-btn" onmousedown="startMoving('down')" onmouseup="stopMoving('down')">⬇️</button>
+                    <button class="move-btn" onmousedown="startMoving('right')" onmouseup="stopMoving('right')">➡️</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Right Panel -->
+    <div class="right-panel">
+        <div class="panel-toggle" onclick="togglePanel('right')" id="rightToggle">−</div>
+        <div class="panel-content" id="rightContent">
+            <!-- Mini Map -->
+            <div class="panel-title">🗺️ World Map</div>
+            <div class="mini-map">
+                <div id="miniMapContent" class="mini-map-content">
+                    <!-- Map will be populated by JavaScript -->
+                </div>
+                <div class="current-location">
+                    📍 <span id="currentLocationName">Cozy Home</span>
+                </div>
+            </div>
+
+            <!-- Koko's Thoughts -->
+            <div class="panel-title">💭 Koko's Thoughts</div>
+            <div class="koko-thoughts-panel">
+                <div id="kokoThought" class="koko-thought">I wonder what we'll discover today!</div>
+                <div id="kokoMoodIndicator" class="mood-indicator">😊 Happy & Playful</div>
+            </div>
+
+            <!-- Weather System -->
+            <div class="panel-title">🌤️ Weather</div>
+            <div class="weather-panel">
+                <div class="weather-display">
+                    <div id="weatherIcon" class="weather-icon">☀️</div>
+                    <div id="weatherText" class="weather-text">Sunny Day</div>
+                    <div id="weatherTemp" class="weather-temp">22°C</div>
+                </div>
+                <div id="weatherEffect" class="weather-effect"></div>
+            </div>
+
+            <!-- Friends List -->
+            <div class="panel-title">👫 Friends</div>
+            <div class="friends-list">
+                <div class="friend-item">
+                    <span>🐰 Bella Bunny</span>
+                    <div class="friendship-bar">
+                        <div class="friendship-fill" style="width: 50%"></div>
+                    </div>
+                </div>
+                <div class="friend-item locked">
+                    <span>🐱 Charlie Cat</span>
+                    <span class="locked-text">🔒 Locked</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Panel -->
+    <div class="bottom-panel">
+        <!-- Activity Buttons -->
+        <div class="activity-section">
+            <div class="panel-title">🎮 Activities</div>
+            <div class="activity-buttons">
+                <div class="activity-button ready" onclick="doCuteActivity('play')" title="Play Games">
+                    <div class="activity-icon">🎈</div>
+                    <div class="activity-name">Play</div>
+                </div>
+                <div class="activity-button ready" onclick="doCuteActivity('learn')" title="Learning Time">
+                    <div class="activity-icon">📚</div>
+                    <div class="activity-name">Learn</div>
+                </div>
+                <div class="activity-button ready" onclick="doCuteActivity('explore')" title="Explore World">
+                    <div class="activity-icon">🗺️</div>
+                    <div class="activity-name">Explore</div>
+                </div>
+                <div class="activity-button ready" onclick="doCuteActivity('create')" title="Creative Time">
+                    <div class="activity-icon">🎨</div>
+                    <div class="activity-name">Create</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Special Features -->
+        <div class="features-section">
+            <div class="panel-title">✨ Special Features</div>
+            <div class="special-buttons">
+                <div class="special-button" onclick="openCustomization()" title="Dress Up Koko">👗</div>
+                <div class="special-button" onclick="openFriends()" title="Visit Friends">👫</div>
+                <div class="special-button" onclick="openPhotoMode()" title="Photo Time">📸</div>
+                <div class="special-button" onclick="changeWeather()" title="Change Weather">🌤️</div>
+            </div>
+        </div>
+
+        <!-- Advanced Features -->
+        <div class="advanced-section">
+            <div class="panel-title">🚀 Advanced</div>
+            <div class="advanced-buttons">
+                <div class="advanced-button" onclick="openAdvancedMiniGames()" title="Advanced Learning Games">🎓</div>
+                <div class="advanced-button" onclick="openLearningAnalytics()" title="Learning Progress">📊</div>
+                <div class="advanced-button" onclick="openMusicSystem()" title="Music & Sounds">🎵</div>
+                <div class="advanced-button" onclick="openStoryChoices()" title="Story Adventures">📚</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden old container -->
+    <div class="game-container" style="display: none;">
         <div class="game-screen">
             <!-- Cute Mode Selector -->
             <div class="mode-selector">
@@ -6373,6 +6957,73 @@
         setTimeout(() => {
             initializeMovementSystem();
         }, 2500);
+
+        // PANEL MANAGEMENT SYSTEM
+
+        function togglePanel(panelName) {
+            const panel = document.querySelector(`.${panelName}-panel`);
+            const content = document.getElementById(`${panelName}Content`);
+            const toggle = document.getElementById(`${panelName}Toggle`);
+            
+            if (panel.classList.contains('panel-minimized')) {
+                panel.classList.remove('panel-minimized');
+                content.style.display = 'block';
+                toggle.textContent = '−';
+            } else {
+                panel.classList.add('panel-minimized');
+                content.style.display = 'none';
+                toggle.textContent = '+';
+            }
+        }
+
+        // Initialize the new layout
+        function initializeNewLayout() {
+            // Update all the display elements with current game state
+            updateResourceDisplay();
+            updateStatsDisplay();
+            updateQuestDisplay();
+            updateSkillTreeDisplay();
+            updateMiniMap();
+            updateKokoThoughtsDisplay();
+            
+            // Show welcome message
+            showCuteEffect('🎮 Welcome to the new adventure layout!', 'sparkle-effect');
+        }
+
+        function updateResourceDisplay() {
+            document.getElementById('stickerCount').textContent = cuteGameState.resources.stickers;
+            document.getElementById('heartCount').textContent = cuteGameState.resources.hearts;
+            document.getElementById('xpCount').textContent = cuteGameState.player.xp;
+        }
+
+        function updateStatsDisplay() {
+            const stats = cuteGameState.stats;
+            
+            document.getElementById('happinessFill').style.width = stats.happiness + '%';
+            document.getElementById('happinessValue').textContent = stats.happiness + '/100';
+            
+            document.getElementById('healthFill').style.width = stats.health + '%';
+            document.getElementById('healthValue').textContent = stats.health + '/100';
+            
+            document.getElementById('energyFill').style.width = cuteGameState.petCare.energy + '%';
+            document.getElementById('energyValue').textContent = cuteGameState.petCare.energy + '/100';
+            
+            document.getElementById('loveFill').style.width = stats.love + '%';
+            document.getElementById('loveValue').textContent = stats.love + '/100';
+        }
+
+        // Override the original update function to also update the new layout
+        const originalUpdateCuteDisplay = updateCuteDisplay;
+        updateCuteDisplay = function() {
+            originalUpdateCuteDisplay();
+            updateResourceDisplay();
+            updateStatsDisplay();
+        };
+
+        // Initialize the new layout after everything else is loaded
+        setTimeout(() => {
+            initializeNewLayout();
+        }, 3000);
     </script>
 </body>
 </html>
