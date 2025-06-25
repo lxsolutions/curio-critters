@@ -258,6 +258,19 @@
             75% { transform: translateY(-15px) rotate(-2deg); }
         }
 
+        @keyframes koalaWiggle {
+            0%, 100% { transform: translateX(0) rotate(0deg); }
+            25% { transform: translateX(-8px) rotate(-3deg); }
+            50% { transform: translateX(8px) rotate(3deg); }
+            75% { transform: translateX(-5px) rotate(-1deg); }
+        }
+
+        @keyframes koalaSpin {
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.1); }
+            100% { transform: rotate(360deg) scale(1); }
+        }
+
         /* Sparkling Puppy Dog Eyes */
         .koala-eyes {
             position: absolute;
@@ -933,7 +946,9 @@
                 name: "Koko",
                 mood: "super happy",
                 personality: "playful and sweet",
-                form: "adorable"
+                form: "adorable",
+                moodLevel: 100,
+                expressions: ["😊", "😄", "🥰", "😍", "🤗", "😆"]
             },
             stats: {
                 health: 92,
@@ -966,7 +981,13 @@
                 { name: "Book", quantity: 7, emoji: "📖" },
                 { name: "Stickers", quantity: 25, emoji: "⭐" }
             ],
-            currentMode: "play"
+            currentMode: "play",
+            comboCount: 0,
+            lastInteraction: 0,
+            specialEvents: [],
+            achievements: [],
+            dailyStreak: 1,
+            totalPlayTime: 0
         };
 
         // Cute Educational Content
@@ -989,6 +1010,24 @@
                     correct: 0,
                     explanation: "5 + 4 = 9 balloons for the party!",
                     bonus: "Perfect addition! Party time! 🎉"
+                },
+                {
+                    title: "🧸 Toy Sharing Fun",
+                    question: "Koko has 20 toys and wants to share them equally among 4 friends. How many toys does each friend get?",
+                    visual: "🧸".repeat(20),
+                    answers: [5, 4, 6, 3],
+                    correct: 0,
+                    explanation: "20 ÷ 4 = 5 toys for each friend!",
+                    bonus: "Amazing division! Sharing is caring! 💕"
+                },
+                {
+                    title: "⭐ Star Pattern Math",
+                    question: "Koko sees a pattern: 2, 4, 6, 8... What comes next?",
+                    visual: "⭐⭐ ⭐⭐⭐⭐ ⭐⭐⭐⭐⭐⭐ ⭐⭐⭐⭐⭐⭐⭐⭐",
+                    answers: [10, 9, 12, 11],
+                    correct: 0,
+                    explanation: "The pattern adds 2 each time: 2, 4, 6, 8, 10!",
+                    bonus: "Pattern master! Koko loves your smart thinking! 🧠"
                 }
             ],
             science: [
@@ -1000,6 +1039,24 @@
                     correct: 0,
                     explanation: "Plants need sunlight and water to grow healthy and beautiful!",
                     bonus: "You're a nature expert! Koko's garden will be amazing! 🌺"
+                },
+                {
+                    title: "🌈 Rainbow Science",
+                    question: "When does Koko see beautiful rainbows in the sky?",
+                    visual: "🌈☀️🌧️",
+                    answers: ["When it's sunny and rainy", "Only at night", "When it's very cold", "Only in winter"],
+                    correct: 0,
+                    explanation: "Rainbows appear when sunlight shines through raindrops!",
+                    bonus: "Rainbow scientist! Koko loves colorful discoveries! 🎨"
+                },
+                {
+                    title: "🦋 Butterfly Life Cycle",
+                    question: "What does a caterpillar become when it grows up?",
+                    visual: "🐛➡️🛡️➡️🦋",
+                    answers: ["A beautiful butterfly", "A bigger caterpillar", "A bird", "A flower"],
+                    correct: 0,
+                    explanation: "Caterpillars transform into beautiful butterflies!",
+                    bonus: "Nature expert! Koko loves learning about animals! 🦋"
                 }
             ],
             reading: [
@@ -1011,6 +1068,44 @@
                     correct: 0,
                     explanation: "The bunny was special because he was kind and liked to share!",
                     bonus: "Great reading! Koko loves stories about kindness! 💕"
+                },
+                {
+                    title: "🏠 Koko's Adventure",
+                    question: "In the story, Koko went to the park, then the library, then home. Where did he go second?",
+                    visual: "🏠➡️🌳➡️📚➡️🏠",
+                    answers: ["The library", "The park", "Home", "The store"],
+                    correct: 0,
+                    explanation: "Koko went to the park first, then the library second!",
+                    bonus: "Excellent memory! You follow stories perfectly! 📖"
+                },
+                {
+                    title: "🎭 Feeling Words",
+                    question: "When Koko's friend gave him a big hug, how do you think Koko felt?",
+                    visual: "🤗💕😊",
+                    answers: ["Happy and loved", "Sad and lonely", "Angry and mad", "Scared and worried"],
+                    correct: 0,
+                    explanation: "Hugs make us feel happy and loved!",
+                    bonus: "Emotion expert! Koko loves your understanding heart! ❤️"
+                }
+            ],
+            creativity: [
+                {
+                    title: "🎨 Color Mixing Magic",
+                    question: "If Koko mixes red paint and yellow paint, what color will he make?",
+                    visual: "🔴➕🟡➡️❓",
+                    answers: ["Orange", "Purple", "Green", "Blue"],
+                    correct: 0,
+                    explanation: "Red + Yellow = Orange! Like a beautiful sunset!",
+                    bonus: "Color artist! Koko wants to paint with you! 🎨"
+                },
+                {
+                    title: "🎵 Music Patterns",
+                    question: "Koko claps a rhythm: CLAP-clap-CLAP-clap. What comes next?",
+                    visual: "👏👏👏👏",
+                    answers: ["CLAP", "clap", "silence", "stomp"],
+                    correct: 0,
+                    explanation: "The pattern is loud-soft-loud-soft, so CLAP comes next!",
+                    bonus: "Music master! Koko loves making rhythms with you! 🎵"
                 }
             ]
         };
@@ -1019,31 +1114,47 @@
         function interactWithKoko() {
             const koala = document.getElementById('cuteKoala');
             
-            // Cute bounce animation
+            // Enhanced bounce animation with random variations
+            const animations = ['koalaBounce 1s ease', 'koalaWiggle 1s ease', 'koalaSpin 1s ease'];
             koala.style.animation = 'none';
             koala.offsetHeight;
-            koala.style.animation = 'koalaBounce 1s ease';
+            koala.style.animation = animations[Math.floor(Math.random() * animations.length)];
             
-            // Calculate cute rewards
-            const xpGain = 25 + Math.floor(Math.random() * 15);
-            const stickerGain = 5 + Math.floor(Math.random() * 10);
-            const loveGain = 8 + Math.floor(Math.random() * 12);
+            // Calculate cute rewards with combo system
+            const baseXP = 25;
+            const comboMultiplier = Math.min(cuteGameState.comboCount * 0.1 + 1, 3);
+            const xpGain = Math.floor((baseXP + Math.random() * 15) * comboMultiplier);
+            const stickerGain = Math.floor((5 + Math.random() * 10) * comboMultiplier);
+            const loveGain = Math.floor((8 + Math.random() * 12) * comboMultiplier);
+            
+            // Increment combo
+            cuteGameState.comboCount++;
+            cuteGameState.lastInteraction = Date.now();
             
             // Update resources
             cuteGameState.player.xp += xpGain;
             cuteGameState.player.love += loveGain;
             cuteGameState.resources.stickers += stickerGain;
             
-            // Show cute floating effects
+            // Show enhanced floating effects
+            if (cuteGameState.comboCount > 1) {
+                showCuteEffect(`${cuteGameState.comboCount}x COMBO!`, "sparkle-effect");
+            }
             showCuteEffect(`+${xpGain} XP`, "sparkle-effect");
             showCuteEffect(`+${stickerGain} Stickers`, "happy-effect");
             showCuteEffect(`+${loveGain} Love`, "love-effect");
             
-            // Random toy drops
-            if (Math.random() < 0.3) {
+            // Random special events
+            if (Math.random() < 0.15) {
+                triggerSpecialEvent();
+            }
+            
+            // Random toy drops with better chances
+            if (Math.random() < 0.4) {
                 const randomToy = cuteGameState.toyBox[Math.floor(Math.random() * cuteGameState.toyBox.length)];
                 randomToy.quantity += 1;
                 showCuteEffect(`Found ${randomToy.emoji}!`, "cute-effect");
+                playToyFoundSound();
             }
             
             // Check for level up
@@ -1051,13 +1162,18 @@
                 levelUpCute();
             }
             
-            // Random learning challenge
-            if (Math.random() < 0.12) {
+            // Random learning challenge with better rewards
+            if (Math.random() < 0.18) {
                 setTimeout(() => showCuteChallenge(), 500);
             }
             
+            // Update Koko's mood based on interaction
+            updateKokoMood();
             updateCuteDisplay();
-            createHeartEffect();
+            createEnhancedHeartEffect();
+            
+            // Play interaction sound
+            playInteractionSound();
         }
 
         // Level up system
@@ -1468,6 +1584,216 @@
                 showCuteAchievement("Welcome!", "Koko is so happy to see you! Let's play together! 🐨💕");
             }, 1000);
         }
+
+        // New Fun Functions
+
+        // Trigger special events
+        function triggerSpecialEvent() {
+            const events = [
+                {
+                    name: "Rainbow Shower",
+                    message: "🌈 A magical rainbow appears! Everything sparkles!",
+                    effect: () => {
+                        cuteGameState.resources.stickers += 50;
+                        cuteGameState.resources.hearts += 10;
+                        createRainbowEffect();
+                    }
+                },
+                {
+                    name: "Toy Explosion",
+                    message: "🎁 Toy explosion! Koko found lots of toys!",
+                    effect: () => {
+                        cuteGameState.toyBox.forEach(toy => toy.quantity += Math.floor(Math.random() * 3) + 1);
+                        createToyExplosion();
+                    }
+                },
+                {
+                    name: "Love Burst",
+                    message: "💕 Love burst! Koko feels extra loved!",
+                    effect: () => {
+                        cuteGameState.player.love += 100;
+                        cuteGameState.stats.happiness = 100;
+                        createLoveBurst();
+                    }
+                },
+                {
+                    name: "Super Learning",
+                    message: "🧠 Brain boost! Learning is super fun right now!",
+                    effect: () => {
+                        setTimeout(() => showCuteChallenge(), 1000);
+                        cuteGameState.player.xp += 200;
+                    }
+                }
+            ];
+            
+            const event = events[Math.floor(Math.random() * events.length)];
+            showCuteAchievement(event.name, event.message);
+            event.effect();
+        }
+
+        // Update Koko's mood
+        function updateKokoMood() {
+            const happiness = cuteGameState.stats.happiness;
+            const love = cuteGameState.stats.love;
+            const avgMood = (happiness + love) / 2;
+            
+            let mood, expression;
+            if (avgMood >= 90) {
+                mood = "ecstatic";
+                expression = "🥰";
+            } else if (avgMood >= 75) {
+                mood = "super happy";
+                expression = "😄";
+            } else if (avgMood >= 60) {
+                mood = "happy";
+                expression = "😊";
+            } else if (avgMood >= 40) {
+                mood = "okay";
+                expression = "😐";
+            } else {
+                mood = "needs attention";
+                expression = "😔";
+            }
+            
+            cuteGameState.koala.mood = mood;
+            cuteGameState.koala.moodLevel = avgMood;
+            
+            // Update status display
+            const statusMessages = {
+                "ecstatic": "Koko is absolutely amazing! 🌟",
+                "super happy": "Koko is super happy! 🌈",
+                "happy": "Koko is feeling great! ✨",
+                "okay": "Koko is doing okay! 😊",
+                "needs attention": "Koko needs some love! 💕"
+            };
+            
+            document.getElementById('koalaStatus').textContent = statusMessages[mood];
+        }
+
+        // Enhanced heart effects
+        function createEnhancedHeartEffect() {
+            const heartSystem = document.getElementById('heartSystem');
+            
+            for (let i = 0; i < 8; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'floating-heart';
+                
+                const hearts = ['💕', '💖', '💗', '💝', '💘', '💞', '❤️', '🧡', '💛', '💚', '💙', '💜'];
+                heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+                
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.top = Math.random() * 100 + '%';
+                heart.style.animationDelay = Math.random() * 3 + 's';
+                heart.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                
+                heartSystem.appendChild(heart);
+                
+                setTimeout(() => {
+                    if (heart.parentNode) {
+                        heart.parentNode.removeChild(heart);
+                    }
+                }, 5000);
+            }
+        }
+
+        // Create rainbow effect
+        function createRainbowEffect() {
+            const gameScreen = document.querySelector('.game-screen');
+            gameScreen.style.background = 'linear-gradient(45deg, #ff0000, #ff8000, #ffff00, #80ff00, #00ff00, #00ff80, #00ffff, #0080ff, #0000ff, #8000ff, #ff00ff, #ff0080)';
+            gameScreen.style.backgroundSize = '400% 400%';
+            gameScreen.style.animation = 'rainbowShift 3s ease-in-out';
+            
+            setTimeout(() => {
+                gameScreen.style.background = 'radial-gradient(circle at center, rgba(255,182,193,0.2) 0%, transparent 70%)';
+                gameScreen.style.animation = '';
+            }, 3000);
+        }
+
+        // Create toy explosion
+        function createToyExplosion() {
+            const gameScreen = document.querySelector('.game-screen');
+            
+            for (let i = 0; i < 15; i++) {
+                const toy = document.createElement('div');
+                toy.style.position = 'absolute';
+                toy.style.fontSize = '24px';
+                toy.style.left = '50%';
+                toy.style.top = '50%';
+                toy.style.pointerEvents = 'none';
+                toy.style.zIndex = '1000';
+                
+                const toys = ['🧸', '⚽', '🧩', '🖍️', '🧱', '🪆', '🚗', '📖', '⭐', '🎈', '🎨', '🎭'];
+                toy.textContent = toys[Math.floor(Math.random() * toys.length)];
+                
+                const angle = (i / 15) * 2 * Math.PI;
+                const distance = 100 + Math.random() * 100;
+                const endX = Math.cos(angle) * distance;
+                const endY = Math.sin(angle) * distance;
+                
+                toy.style.animation = `toyExplosion 2s ease-out forwards`;
+                toy.style.setProperty('--endX', endX + 'px');
+                toy.style.setProperty('--endY', endY + 'px');
+                
+                gameScreen.appendChild(toy);
+                
+                setTimeout(() => {
+                    if (toy.parentNode) {
+                        toy.parentNode.removeChild(toy);
+                    }
+                }, 2000);
+            }
+        }
+
+        // Create love burst
+        function createLoveBurst() {
+            const koala = document.getElementById('cuteKoala');
+            koala.style.filter = 'drop-shadow(0 0 30px rgba(255,20,147,0.8)) hue-rotate(45deg)';
+            koala.style.transform = 'scale(1.2)';
+            
+            setTimeout(() => {
+                koala.style.filter = 'drop-shadow(0 0 20px rgba(255,182,193,0.6))';
+                koala.style.transform = 'scale(1)';
+            }, 2000);
+        }
+
+        // Play interaction sound (visual feedback)
+        function playInteractionSound() {
+            showCuteEffect("♪ ♫ ♪", "sparkle-effect");
+        }
+
+        // Play toy found sound (visual feedback)
+        function playToyFoundSound() {
+            showCuteEffect("✨ DING! ✨", "happy-effect");
+        }
+
+        // Combo system reset
+        setInterval(() => {
+            if (Date.now() - cuteGameState.lastInteraction > 5000) {
+                cuteGameState.comboCount = 0;
+            }
+        }, 1000);
+
+        // Add rainbow animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes rainbowShift {
+                0% { background-position: 0% 50%; }
+                50% { background-position: 100% 50%; }
+                100% { background-position: 0% 50%; }
+            }
+            
+            @keyframes toyExplosion {
+                0% { 
+                    transform: translate(-50%, -50%) scale(0) rotate(0deg);
+                    opacity: 1;
+                }
+                100% { 
+                    transform: translate(calc(-50% + var(--endX)), calc(-50% + var(--endY))) scale(1) rotate(360deg);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
 
         // Start the cute game
         initializeCuteGame();
