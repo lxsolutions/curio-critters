@@ -68,15 +68,85 @@
             display: grid;
             grid-template-areas: 
                 "header header header"
-                "sidebar main-game right-panel"
+                "main-game main-game main-game"
                 "bottom-nav bottom-nav bottom-nav";
-            grid-template-columns: 320px 1fr 320px;
+            grid-template-columns: 1fr;
             grid-template-rows: 80px 1fr 100px;
             height: 100vh;
             gap: 12px;
             padding: 12px;
             position: relative;
             z-index: 2;
+        }
+
+        /* Hidden Menu System */
+        .menu-button {
+            position: fixed;
+            background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(255,255,255,0.85));
+            backdrop-filter: blur(20px);
+            border: 3px solid rgba(255,255,255,0.4);
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 100;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        .menu-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 12px 35px rgba(0,0,0,0.3);
+        }
+
+        .menu-button.active {
+            background: linear-gradient(135deg, #FF6B9D, #C44569);
+            color: white;
+        }
+
+        .stats-menu-btn { top: 120px; left: 20px; }
+        .quests-menu-btn { top: 200px; left: 20px; }
+        .achievements-menu-btn { top: 280px; left: 20px; }
+        .critters-menu-btn { top: 120px; right: 20px; }
+        .story-menu-btn { top: 200px; right: 20px; }
+        .rewards-menu-btn { top: 280px; right: 20px; }
+
+        .slide-menu {
+            position: fixed;
+            background: linear-gradient(135deg, rgba(255,255,255,0.98), rgba(255,255,255,0.92));
+            backdrop-filter: blur(25px);
+            border-radius: 25px;
+            padding: 25px;
+            border: 3px solid rgba(255,255,255,0.5);
+            box-shadow: 0 15px 50px rgba(0,0,0,0.3);
+            z-index: 200;
+            transform: translateX(-100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            width: 320px;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+
+        .slide-menu.right {
+            transform: translateX(100%);
+        }
+
+        .slide-menu.open {
+            transform: translateX(0);
+        }
+
+        .slide-menu.left {
+            top: 100px;
+            left: 20px;
+        }
+
+        .slide-menu.right {
+            top: 100px;
+            right: 20px;
         }
 
         /* Header */
@@ -175,46 +245,181 @@
             font-size: 14px;
         }
 
-        /* Sidebar */
-        .sidebar {
-            grid-area: sidebar;
-            background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(255,255,255,0.85));
-            backdrop-filter: blur(20px);
-            border-radius: 25px;
-            padding: 20px;
-            border: 3px solid rgba(255,255,255,0.3);
-            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-            overflow-y: auto;
-            animation: slideInLeft 0.8s ease-out;
+        /* Enhanced Game World */
+        .interactive-objects {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
         }
 
-        @keyframes slideInLeft {
-            from { transform: translateX(-100px); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
+        .interactive-objects > * {
+            pointer-events: all;
         }
 
-        .sidebar-section {
-            margin-bottom: 25px;
+        .collectible {
+            position: absolute;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            animation: collectibleFloat 3s ease-in-out infinite;
+            z-index: 15;
         }
 
-        .section-title {
-            font-family: 'Fredoka One', cursive;
-            font-size: 16px;
+        .collectible:hover {
+            transform: scale(1.3);
+            filter: brightness(1.3);
+        }
+
+        @keyframes collectibleFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(180deg); }
+        }
+
+        .coin {
+            font-size: 25px;
+            animation-delay: 0s;
+        }
+
+        .gem {
+            font-size: 30px;
+            animation-delay: 1s;
+        }
+
+        .star-collectible {
+            font-size: 20px;
+            animation-delay: 2s;
+        }
+
+        .power-up {
+            font-size: 35px;
+            animation: powerUpPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes powerUpPulse {
+            0%, 100% { transform: scale(1); filter: brightness(1); }
+            50% { transform: scale(1.2); filter: brightness(1.5); }
+        }
+
+        /* NPCs and Characters */
+        .npc {
+            position: absolute;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 20;
+            font-size: 50px;
+        }
+
+        .npc:hover {
+            transform: scale(1.1);
+            filter: brightness(1.2);
+        }
+
+        .npc.talking {
+            animation: npcTalk 1s ease-in-out infinite;
+        }
+
+        @keyframes npcTalk {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            25% { transform: scale(1.05) rotate(-2deg); }
+            75% { transform: scale(1.05) rotate(2deg); }
+        }
+
+        /* Speech Bubbles */
+        .speech-bubble {
+            position: absolute;
+            background: rgba(255,255,255,0.95);
+            border: 3px solid #FF6B9D;
+            border-radius: 20px;
+            padding: 15px;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 600;
+            font-size: 14px;
             color: #2D3436;
-            margin-bottom: 15px;
+            max-width: 200px;
+            z-index: 25;
+            animation: bubbleAppear 0.5s ease-out;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        .speech-bubble::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 20px;
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 10px solid #FF6B9D;
+        }
+
+        @keyframes bubbleAppear {
+            from { opacity: 0; transform: scale(0.8) translateY(10px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        /* Mini-Game Areas */
+        .mini-game-zone {
+            position: absolute;
+            border: 3px dashed rgba(255,255,255,0.8);
+            border-radius: 20px;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            cursor: pointer;
+            transition: all 0.3s ease;
             display: flex;
             align-items: center;
-            gap: 8px;
+            justify-content: center;
+            font-size: 40px;
+            animation: zoneGlow 3s ease-in-out infinite;
         }
 
-        .section-title-icon {
+        .mini-game-zone:hover {
+            background: rgba(255,255,255,0.2);
+            transform: scale(1.05);
+        }
+
+        @keyframes zoneGlow {
+            0%, 100% { box-shadow: 0 0 20px rgba(255,255,255,0.3); }
+            50% { box-shadow: 0 0 40px rgba(255,255,255,0.6); }
+        }
+
+        /* Weather Effects */
+        .weather-effect {
+            position: absolute;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        .rain-drop {
+            position: absolute;
+            width: 2px;
+            height: 20px;
+            background: linear-gradient(to bottom, transparent, #74B9FF);
+            animation: rainFall 1s linear infinite;
+        }
+
+        @keyframes rainFall {
+            from { transform: translateY(-100vh); }
+            to { transform: translateY(100vh); }
+        }
+
+        .snow-flake {
+            position: absolute;
+            color: white;
             font-size: 20px;
-            animation: rotate 4s linear infinite;
+            animation: snowFall 8s linear infinite;
         }
 
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+        @keyframes snowFall {
+            from { transform: translateY(-100vh) rotate(0deg); }
+            to { transform: translateY(100vh) rotate(360deg); }
+        }
+
+        @keyframes collectibleCollected {
+            0% { transform: scale(1) rotate(0deg); opacity: 1; }
+            50% { transform: scale(1.5) rotate(180deg); opacity: 0.8; }
+            100% { transform: scale(0) rotate(360deg); opacity: 0; }
         }
 
         /* Main Game Area */
@@ -398,22 +603,40 @@
             animation-delay: 2s;
         }
 
-        /* Right Panel */
-        .right-panel {
-            grid-area: right-panel;
-            background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(255,255,255,0.85));
-            backdrop-filter: blur(20px);
-            border-radius: 25px;
-            padding: 20px;
-            border: 3px solid rgba(255,255,255,0.3);
-            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-            overflow-y: auto;
-            animation: slideInRight 0.8s ease-out;
+        /* Menu Content Styles */
+        .menu-content {
+            margin-bottom: 20px;
         }
 
-        @keyframes slideInRight {
-            from { transform: translateX(100px); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
+        .menu-title {
+            font-family: 'Fredoka One', cursive;
+            font-size: 18px;
+            color: #2D3436;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .close-menu-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255,107,157,0.2);
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .close-menu-btn:hover {
+            background: rgba(255,107,157,0.4);
+            transform: scale(1.1);
         }
 
         /* Bottom Navigation */
@@ -646,6 +869,137 @@
         <div class="floating-element">🦋</div>
     </div>
 
+    <!-- Hidden Menu Buttons -->
+    <div class="menu-button stats-menu-btn touch-feedback" onclick="toggleMenu('stats')">📊</div>
+    <div class="menu-button quests-menu-btn touch-feedback" onclick="toggleMenu('quests')">🎯</div>
+    <div class="menu-button achievements-menu-btn touch-feedback" onclick="toggleMenu('achievements')">🏆</div>
+    <div class="menu-button critters-menu-btn touch-feedback" onclick="toggleMenu('critters')">🐾</div>
+    <div class="menu-button story-menu-btn touch-feedback" onclick="toggleMenu('story')">📖</div>
+    <div class="menu-button rewards-menu-btn touch-feedback" onclick="toggleMenu('rewards')">🎁</div>
+
+    <!-- Slide-out Menus -->
+    <div id="statsMenu" class="slide-menu left">
+        <button class="close-menu-btn" onclick="closeMenu('stats')">✕</button>
+        <div class="menu-content">
+            <h3 class="menu-title">📊 Koko's Stats</h3>
+            <div class="activity-card">
+                <div class="activity-title">💖 Happiness</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 85%"></div>
+                </div>
+                <div class="activity-description">85/100 - Super Happy!</div>
+            </div>
+            <div class="activity-card">
+                <div class="activity-title">🏃 Energy</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 78%"></div>
+                </div>
+                <div class="activity-description">78/100 - Ready to play!</div>
+            </div>
+            <div class="activity-card">
+                <div class="activity-title">🧠 Intelligence</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 92%"></div>
+                </div>
+                <div class="activity-description">92/100 - Genius level!</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="questsMenu" class="slide-menu left">
+        <button class="close-menu-btn" onclick="closeMenu('quests')">✕</button>
+        <div class="menu-content">
+            <h3 class="menu-title">🎯 Daily Quests</h3>
+            <div class="activity-card touch-feedback" onclick="startQuest('play')">
+                <div class="activity-title">🎈 Play Time</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 60%"></div>
+                </div>
+                <div class="activity-description">Play 3 mini-games (2/3)</div>
+            </div>
+            <div class="activity-card touch-feedback" onclick="startQuest('learn')">
+                <div class="activity-title">📚 Learning Adventure</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 33%"></div>
+                </div>
+                <div class="activity-description">Complete 3 lessons (1/3)</div>
+            </div>
+            <div class="activity-card touch-feedback" onclick="startQuest('explore')">
+                <div class="activity-title">🗺️ Explorer</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 80%"></div>
+                </div>
+                <div class="activity-description">Visit 5 locations (4/5)</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="achievementsMenu" class="slide-menu left">
+        <button class="close-menu-btn" onclick="closeMenu('achievements')">✕</button>
+        <div class="menu-content">
+            <h3 class="menu-title">🏆 Achievements</h3>
+            <div class="activity-card touch-feedback" onclick="openAchievements()">
+                <div class="activity-title">🌟 Recent Unlock</div>
+                <div class="activity-description">🎨 Creative Genius - Complete 10 art activities!</div>
+            </div>
+            <div class="activity-card touch-feedback" onclick="openAchievements()">
+                <div class="activity-title">📈 Progress</div>
+                <div class="activity-description">5/25 achievements unlocked</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="crittersMenu" class="slide-menu right">
+        <button class="close-menu-btn" onclick="closeMenu('critters')">✕</button>
+        <div class="menu-content">
+            <h3 class="menu-title">🐾 My Critters</h3>
+            <div class="activity-card touch-feedback" onclick="openCritterCollection()">
+                <div class="activity-title">🐨 Koko</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 75%"></div>
+                </div>
+                <div class="activity-description">Level 8 Adult Explorer</div>
+            </div>
+            <div class="activity-card touch-feedback" onclick="unlockCritter('bella')">
+                <div class="activity-title">🐰 Bella (Locked)</div>
+                <div class="activity-description">Complete friendship quest to unlock!</div>
+            </div>
+            <div class="activity-card touch-feedback" onclick="openBreedingLab()">
+                <div class="activity-title">🧬 Breeding Lab</div>
+                <div class="activity-description">Discover new critter combinations!</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="storyMenu" class="slide-menu right">
+        <button class="close-menu-btn" onclick="closeMenu('story')">✕</button>
+        <div class="menu-content">
+            <h3 class="menu-title">📖 Story Mode</h3>
+            <div class="activity-card touch-feedback" onclick="openStoryMode()">
+                <div class="activity-title">🌳 Chapter 1</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 33%"></div>
+                </div>
+                <div class="activity-description">Welcome to Eucalyptus Grove (Scene 1/3)</div>
+            </div>
+            <div class="activity-card touch-feedback">
+                <div class="activity-title">🌈 Chapter 2 (Locked)</div>
+                <div class="activity-description">Complete Chapter 1 to unlock!</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="rewardsMenu" class="slide-menu right">
+        <button class="close-menu-btn" onclick="closeMenu('rewards')">✕</button>
+        <div class="menu-content">
+            <h3 class="menu-title">🎁 Daily Rewards</h3>
+            <div class="activity-card touch-feedback" onclick="claimDailyReward()">
+                <div class="activity-title">🎉 Day 3 Bonus</div>
+                <div class="activity-description">Claim your daily reward!</div>
+            </div>
+        </div>
+    </div>
+
     <div class="game-container">
         <!-- Header -->
         <header class="game-header">
@@ -672,85 +1026,14 @@
             </div>
         </header>
 
-        <!-- Sidebar -->
-        <aside class="sidebar">
-            <div class="sidebar-section">
-                <h3 class="section-title">
-                    <span class="section-title-icon">📊</span>
-                    Koko's Stats
-                </h3>
-                <div class="activity-card">
-                    <div class="activity-title">💖 Happiness</div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: 85%"></div>
-                    </div>
-                    <div class="activity-description">85/100 - Super Happy!</div>
-                </div>
-                <div class="activity-card">
-                    <div class="activity-title">🏃 Energy</div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: 78%"></div>
-                    </div>
-                    <div class="activity-description">78/100 - Ready to play!</div>
-                </div>
-                <div class="activity-card">
-                    <div class="activity-title">🧠 Intelligence</div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: 92%"></div>
-                    </div>
-                    <div class="activity-description">92/100 - Genius level!</div>
-                </div>
-            </div>
-
-            <div class="sidebar-section">
-                <h3 class="section-title">
-                    <span class="section-title-icon">🎯</span>
-                    Daily Quests
-                </h3>
-                <div class="activity-card touch-feedback" onclick="startQuest('play')">
-                    <div class="activity-title">🎈 Play Time</div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: 60%"></div>
-                    </div>
-                    <div class="activity-description">Play 3 mini-games (2/3)</div>
-                </div>
-                <div class="activity-card touch-feedback" onclick="startQuest('learn')">
-                    <div class="activity-title">📚 Learning Adventure</div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: 33%"></div>
-                    </div>
-                    <div class="activity-description">Complete 3 lessons (1/3)</div>
-                </div>
-                <div class="activity-card touch-feedback" onclick="startQuest('explore')">
-                    <div class="activity-title">🗺️ Explorer</div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: 80%"></div>
-                    </div>
-                    <div class="activity-description">Visit 5 locations (4/5)</div>
-                </div>
-            </div>
-
-            <div class="sidebar-section">
-                <h3 class="section-title">
-                    <span class="section-title-icon">🏆</span>
-                    Achievements
-                </h3>
-                <div class="activity-card touch-feedback" onclick="openAchievements()">
-                    <div class="activity-title">🌟 Recent Unlock</div>
-                    <div class="activity-description">🎨 Creative Genius - Complete 10 art activities!</div>
-                </div>
-                <div class="activity-card touch-feedback" onclick="openAchievements()">
-                    <div class="activity-title">📈 Progress</div>
-                    <div class="activity-description">5/25 achievements unlocked</div>
-                </div>
-            </div>
-        </aside>
-
-        <!-- Main Game Area -->
+        <!-- Enhanced Main Game Area -->
         <main class="main-game">
             <div class="game-world" onclick="interactWithWorld(event)">
                 <!-- Sky Layer -->
                 <div class="world-layer sky-layer"></div>
+                
+                <!-- Weather Effects -->
+                <div class="weather-effect" id="weatherContainer"></div>
                 
                 <!-- Clouds -->
                 <div class="clouds">
@@ -758,70 +1041,35 @@
                     <div class="cloud cloud2"></div>
                 </div>
 
-                <!-- Interactive Elements -->
-                <div class="interactive-element tree" onclick="interactWithElement('tree', event)">🌳</div>
-                <div class="interactive-element flower" onclick="interactWithElement('flower', event)">🌸</div>
-                <div class="interactive-element butterfly" onclick="interactWithElement('butterfly', event)">🦋</div>
-                <div class="interactive-element treasure" onclick="interactWithElement('treasure', event)">💎</div>
+                <!-- Interactive Objects Layer -->
+                <div class="interactive-objects">
+                    <!-- Collectibles -->
+                    <div class="collectible coin" style="top: 60%; left: 15%;" onclick="collectItem('coin', event)">🪙</div>
+                    <div class="collectible gem" style="top: 40%; left: 80%;" onclick="collectItem('gem', event)">💎</div>
+                    <div class="collectible star-collectible" style="top: 25%; left: 60%;" onclick="collectItem('star', event)">⭐</div>
+                    <div class="collectible power-up" style="top: 70%; left: 70%;" onclick="collectItem('powerup', event)">⚡</div>
 
-                <!-- Main Character -->
-                <div class="character" onclick="interactWithCharacter(event)" id="mainCharacter">🐨</div>
+                    <!-- NPCs -->
+                    <div class="npc" style="top: 50%; left: 25%;" onclick="talkToNPC('bunny', event)">🐰</div>
+                    <div class="npc" style="top: 35%; left: 85%;" onclick="talkToNPC('owl', event)">🦉</div>
+                    <div class="npc" style="top: 65%; left: 45%;" onclick="talkToNPC('fox', event)">🦊</div>
+
+                    <!-- Mini-Game Zones -->
+                    <div class="mini-game-zone" style="top: 20%; left: 20%; width: 120px; height: 80px;" onclick="startMiniGame('math', event)">🔢</div>
+                    <div class="mini-game-zone" style="top: 15%; left: 75%; width: 100px; height: 100px;" onclick="startMiniGame('puzzle', event)">🧩</div>
+                    <div class="mini-game-zone" style="bottom: 20%; right: 15%; width: 110px; height: 90px;" onclick="startMiniGame('music', event)">🎵</div>
+
+                    <!-- Interactive Elements -->
+                    <div class="interactive-element tree" onclick="interactWithElement('tree', event)">🌳</div>
+                    <div class="interactive-element flower" onclick="interactWithElement('flower', event)">🌸</div>
+                    <div class="interactive-element butterfly" onclick="interactWithElement('butterfly', event)">🦋</div>
+                    <div class="interactive-element treasure" onclick="interactWithElement('treasure', event)">💎</div>
+
+                    <!-- Main Character -->
+                    <div class="character" onclick="interactWithCharacter(event)" id="mainCharacter">🐨</div>
+                </div>
             </div>
         </main>
-
-        <!-- Right Panel -->
-        <aside class="right-panel">
-            <div class="sidebar-section">
-                <h3 class="section-title">
-                    <span class="section-title-icon">🐾</span>
-                    My Critters
-                </h3>
-                <div class="activity-card touch-feedback" onclick="openCritterCollection()">
-                    <div class="activity-title">🐨 Koko</div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: 75%"></div>
-                    </div>
-                    <div class="activity-description">Level 8 Adult Explorer</div>
-                </div>
-                <div class="activity-card touch-feedback" onclick="unlockCritter('bella')">
-                    <div class="activity-title">🐰 Bella (Locked)</div>
-                    <div class="activity-description">Complete friendship quest to unlock!</div>
-                </div>
-                <div class="activity-card touch-feedback" onclick="openBreedingLab()">
-                    <div class="activity-title">🧬 Breeding Lab</div>
-                    <div class="activity-description">Discover new critter combinations!</div>
-                </div>
-            </div>
-
-            <div class="sidebar-section">
-                <h3 class="section-title">
-                    <span class="section-title-icon">📖</span>
-                    Story Mode
-                </h3>
-                <div class="activity-card touch-feedback" onclick="openStoryMode()">
-                    <div class="activity-title">🌳 Chapter 1</div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: 33%"></div>
-                    </div>
-                    <div class="activity-description">Welcome to Eucalyptus Grove (Scene 1/3)</div>
-                </div>
-                <div class="activity-card touch-feedback">
-                    <div class="activity-title">🌈 Chapter 2 (Locked)</div>
-                    <div class="activity-description">Complete Chapter 1 to unlock!</div>
-                </div>
-            </div>
-
-            <div class="sidebar-section">
-                <h3 class="section-title">
-                    <span class="section-title-icon">🎁</span>
-                    Daily Rewards
-                </h3>
-                <div class="activity-card touch-feedback" onclick="claimDailyReward()">
-                    <div class="activity-title">🎉 Day 3 Bonus</div>
-                    <div class="activity-description">Claim your daily reward!</div>
-                </div>
-            </div>
-        </aside>
 
         <!-- Bottom Navigation -->
         <nav class="bottom-nav">
@@ -883,7 +1131,263 @@
             console.log("🌟 Curio Critters - Ultimate Adventure Started! 🐾");
             createParticleEffects();
             startBackgroundAnimations();
+            initializeWeatherEffects();
+            spawnRandomCollectibles();
             updateUI();
+        }
+
+        // Menu System
+        let openMenus = [];
+
+        function toggleMenu(menuType) {
+            const menu = document.getElementById(menuType + 'Menu');
+            const button = document.querySelector(`.${menuType}-menu-btn`);
+            
+            if (menu.classList.contains('open')) {
+                closeMenu(menuType);
+            } else {
+                // Close other menus first
+                openMenus.forEach(openMenu => {
+                    if (openMenu !== menuType) {
+                        closeMenu(openMenu);
+                    }
+                });
+                
+                menu.classList.add('open');
+                button.classList.add('active');
+                openMenus.push(menuType);
+                
+                showNotification(`📱 ${menuType.charAt(0).toUpperCase() + menuType.slice(1)} menu opened!`);
+            }
+        }
+
+        function closeMenu(menuType) {
+            const menu = document.getElementById(menuType + 'Menu');
+            const button = document.querySelector(`.${menuType}-menu-btn`);
+            
+            menu.classList.remove('open');
+            button.classList.remove('active');
+            openMenus = openMenus.filter(m => m !== menuType);
+        }
+
+        // Enhanced Collectible System
+        function collectItem(itemType, event) {
+            event.stopPropagation();
+            
+            const rewards = {
+                coin: { stickers: 25, message: "🪙 Coin collected! +25 stickers!" },
+                gem: { hearts: 15, message: "💎 Gem found! +15 hearts!" },
+                star: { stars: 30, message: "⭐ Star collected! +30 stars!" },
+                powerup: { stickers: 50, hearts: 25, stars: 40, message: "⚡ Power-up! Mega rewards!" }
+            };
+            
+            const reward = rewards[itemType];
+            if (reward) {
+                // Award rewards
+                Object.entries(reward).forEach(([resource, amount]) => {
+                    if (gameState.resources[resource]) {
+                        gameState.resources[resource] += amount;
+                    }
+                });
+                
+                // Remove collectible
+                event.target.style.animation = 'collectibleCollected 0.5s ease-out forwards';
+                setTimeout(() => {
+                    event.target.remove();
+                    respawnCollectible(itemType);
+                }, 500);
+                
+                createInteractionEffect(event.clientX, event.clientY, event.target.textContent);
+                showNotification(reward.message);
+                updateUI();
+            }
+        }
+
+        function respawnCollectible(itemType) {
+            setTimeout(() => {
+                const collectibles = {
+                    coin: '🪙',
+                    gem: '💎',
+                    star: '⭐',
+                    powerup: '⚡'
+                };
+                
+                const newCollectible = document.createElement('div');
+                newCollectible.className = `collectible ${itemType}`;
+                newCollectible.textContent = collectibles[itemType];
+                newCollectible.style.top = Math.random() * 70 + 15 + '%';
+                newCollectible.style.left = Math.random() * 80 + 10 + '%';
+                newCollectible.onclick = (e) => collectItem(itemType, e);
+                
+                document.querySelector('.interactive-objects').appendChild(newCollectible);
+            }, Math.random() * 10000 + 5000); // Respawn after 5-15 seconds
+        }
+
+        // NPC Interaction System
+        function talkToNPC(npcType, event) {
+            event.stopPropagation();
+            
+            const npc = event.target;
+            npc.classList.add('talking');
+            
+            const dialogues = {
+                bunny: [
+                    "Hi there! I'm Bella the Bunny! 🐰",
+                    "Want to play a hopping game? 🦘",
+                    "I love carrots! Do you have any? 🥕",
+                    "Let's be friends forever! 💕"
+                ],
+                owl: [
+                    "Hoot hoot! I'm Oliver the Wise Owl! 🦉",
+                    "I know lots of fun facts! Want to learn? 📚",
+                    "The stars are beautiful tonight! ✨",
+                    "Knowledge is the greatest treasure! 🧠"
+                ],
+                fox: [
+                    "Hey! I'm Felix the Clever Fox! 🦊",
+                    "I know where all the treasures are hidden! 💎",
+                    "Want to go on an adventure? 🗺️",
+                    "I'm the fastest runner in the forest! 🏃"
+                ]
+            };
+            
+            const dialogue = dialogues[npcType];
+            const randomMessage = dialogue[Math.floor(Math.random() * dialogue.length)];
+            
+            showSpeechBubble(npc, randomMessage);
+            
+            // Award friendship points
+            gameState.resources.hearts += 5;
+            updateUI();
+            
+            setTimeout(() => {
+                npc.classList.remove('talking');
+            }, 3000);
+        }
+
+        function showSpeechBubble(npc, message) {
+            // Remove existing speech bubbles
+            document.querySelectorAll('.speech-bubble').forEach(bubble => bubble.remove());
+            
+            const bubble = document.createElement('div');
+            bubble.className = 'speech-bubble';
+            bubble.textContent = message;
+            
+            const rect = npc.getBoundingClientRect();
+            bubble.style.position = 'fixed';
+            bubble.style.left = rect.left + 'px';
+            bubble.style.top = (rect.top - 80) + 'px';
+            
+            document.body.appendChild(bubble);
+            
+            setTimeout(() => {
+                bubble.remove();
+            }, 3000);
+        }
+
+        // Mini-Game System
+        function startMiniGame(gameType, event) {
+            event.stopPropagation();
+            
+            const games = {
+                math: {
+                    title: "🔢 Math Magic",
+                    description: "Solve fun math problems with Koko!",
+                    reward: { stickers: 100, stars: 50 }
+                },
+                puzzle: {
+                    title: "🧩 Puzzle Master",
+                    description: "Complete colorful puzzles!",
+                    reward: { hearts: 75, stickers: 50 }
+                },
+                music: {
+                    title: "🎵 Music Maker",
+                    description: "Create beautiful melodies!",
+                    reward: { stars: 100, hearts: 50 }
+                }
+            };
+            
+            const game = games[gameType];
+            showNotification(`🎮 Starting ${game.title}! Get ready for fun!`);
+            
+            // Simulate mini-game completion
+            setTimeout(() => {
+                Object.entries(game.reward).forEach(([resource, amount]) => {
+                    gameState.resources[resource] += amount;
+                });
+                
+                showNotification(`🏆 ${game.title} completed! Great job!`);
+                updateUI();
+            }, 2000);
+        }
+
+        // Weather Effects System
+        function initializeWeatherEffects() {
+            setInterval(() => {
+                if (Math.random() < 0.3) {
+                    createWeatherEffect();
+                }
+            }, 15000); // Change weather every 15 seconds
+        }
+
+        function createWeatherEffect() {
+            const weatherContainer = document.getElementById('weatherContainer');
+            const effects = ['rain', 'snow', 'sparkles'];
+            const effect = effects[Math.floor(Math.random() * effects.length)];
+            
+            // Clear previous weather
+            weatherContainer.innerHTML = '';
+            
+            if (effect === 'rain') {
+                for (let i = 0; i < 20; i++) {
+                    const drop = document.createElement('div');
+                    drop.className = 'rain-drop';
+                    drop.style.left = Math.random() * 100 + '%';
+                    drop.style.animationDelay = Math.random() * 2 + 's';
+                    weatherContainer.appendChild(drop);
+                }
+                showNotification("🌧️ It's raining! Koko loves the rain!");
+            } else if (effect === 'snow') {
+                for (let i = 0; i < 15; i++) {
+                    const flake = document.createElement('div');
+                    flake.className = 'snow-flake';
+                    flake.textContent = '❄️';
+                    flake.style.left = Math.random() * 100 + '%';
+                    flake.style.animationDelay = Math.random() * 8 + 's';
+                    weatherContainer.appendChild(flake);
+                }
+                showNotification("❄️ Snow is falling! So magical!");
+            } else {
+                for (let i = 0; i < 10; i++) {
+                    const sparkle = document.createElement('div');
+                    sparkle.className = 'snow-flake';
+                    sparkle.textContent = '✨';
+                    sparkle.style.left = Math.random() * 100 + '%';
+                    sparkle.style.animationDelay = Math.random() * 6 + 's';
+                    weatherContainer.appendChild(sparkle);
+                }
+                showNotification("✨ Magical sparkles everywhere!");
+            }
+            
+            // Clear weather after 10 seconds
+            setTimeout(() => {
+                weatherContainer.innerHTML = '';
+            }, 10000);
+        }
+
+        function spawnRandomCollectibles() {
+            setInterval(() => {
+                if (Math.random() < 0.4) {
+                    const types = ['coin', 'gem', 'star', 'powerup'];
+                    const type = types[Math.floor(Math.random() * types.length)];
+                    
+                    // Check if this type already exists
+                    const existing = document.querySelector(`.collectible.${type}`);
+                    if (!existing) {
+                        respawnCollectible(type);
+                    }
+                }
+            }, 8000); // Check every 8 seconds
         }
 
         // Particle Effects
