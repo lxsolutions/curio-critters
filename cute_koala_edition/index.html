@@ -1,0 +1,1474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curio Critters - Koko the Koala's Cute Adventure! 🐨✨</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', cursive;
+            background: linear-gradient(135deg, #FFB6C1 0%, #FFE4E1 50%, #E6E6FA 100%);
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .game-container {
+            width: 375px;
+            height: 667px;
+            background: linear-gradient(180deg, #87CEEB 0%, #98FB98 100%);
+            border-radius: 25px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            position: relative;
+            overflow: hidden;
+            border: 8px solid #FFB6C1;
+        }
+
+        .game-screen {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            background: radial-gradient(circle at center, rgba(255,182,193,0.2) 0%, transparent 70%);
+        }
+
+        /* Cute Mode Selector */
+        .mode-selector {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 35px;
+            background: linear-gradient(90deg, rgba(255,182,193,0.9), rgba(255,228,225,0.9));
+            display: flex;
+            z-index: 200;
+            border-bottom: 3px solid #FFB6C1;
+        }
+
+        .mode-tab {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+            color: #FF69B4;
+        }
+
+        .mode-tab.active {
+            background: linear-gradient(45deg, #FFB6C1, #FFE4E1);
+            color: #8B008B;
+            border-bottom-color: #FF69B4;
+            box-shadow: 0 2px 8px rgba(255,105,180,0.3);
+        }
+
+        .mode-tab:hover:not(.active) {
+            background: rgba(255,182,193,0.5);
+            transform: translateY(-1px);
+        }
+
+        /* Cute HUD */
+        .cute-hud {
+            position: absolute;
+            top: 35px;
+            left: 0;
+            right: 0;
+            background: linear-gradient(180deg, rgba(255,182,193,0.9) 0%, transparent 100%);
+            padding: 8px;
+            z-index: 100;
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+
+        .player-info {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .player-avatar {
+            width: 30px;
+            height: 30px;
+            background: linear-gradient(45deg, #FFB6C1, #FFE4E1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            border: 3px solid #FF69B4;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 12px rgba(255,105,180,0.4);
+        }
+
+        .player-avatar:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 16px rgba(255,105,180,0.6);
+        }
+
+        .level-section {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .level-badge {
+            background: linear-gradient(45deg, #FF69B4, #FFB6C1);
+            color: white;
+            padding: 2px 6px;
+            border-radius: 12px;
+            font-size: 9px;
+            font-weight: bold;
+            text-align: center;
+            box-shadow: 0 2px 6px rgba(255,105,180,0.3);
+        }
+
+        .xp-container {
+            width: 70px;
+        }
+
+        .xp-bar {
+            height: 4px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 6px;
+            overflow: hidden;
+            border: 1px solid #FF69B4;
+        }
+
+        .xp-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #FF69B4, #FFB6C1);
+            transition: width 0.5s ease;
+            box-shadow: 0 0 8px rgba(255,105,180,0.5);
+        }
+
+        .xp-text {
+            font-size: 7px;
+            color: #FF69B4;
+            text-align: center;
+            margin-top: 1px;
+            font-weight: bold;
+        }
+
+        .resources {
+            display: flex;
+            gap: 4px;
+            font-size: 8px;
+            color: #FF69B4;
+            font-weight: bold;
+        }
+
+        .resource-item {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+            background: rgba(255,255,255,0.7);
+            padding: 2px 4px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 1px solid #FFB6C1;
+        }
+
+        .resource-item:hover {
+            background: rgba(255,182,193,0.8);
+            transform: scale(1.05);
+            box-shadow: 0 2px 6px rgba(255,105,180,0.3);
+        }
+
+        /* Cute Stats */
+        .cute-stats {
+            display: flex;
+            gap: 2px;
+            margin-bottom: 4px;
+        }
+
+        .stat-mini {
+            flex: 1;
+            height: 4px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 6px;
+            overflow: hidden;
+            border: 1px solid #FFB6C1;
+        }
+
+        .stat-fill-mini {
+            height: 100%;
+            transition: width 0.5s ease;
+        }
+
+        .health-fill { background: linear-gradient(90deg, #FF69B4, #FFB6C1); }
+        .energy-fill { background: linear-gradient(90deg, #98FB98, #90EE90); }
+        .happiness-fill { background: linear-gradient(90deg, #FFD700, #FFA500); }
+        .love-fill { background: linear-gradient(90deg, #FF1493, #FF69B4); }
+
+        /* Adorable Koala Display */
+        .koala-area {
+            position: absolute;
+            top: 25%;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+        }
+
+        .koala-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .cute-koala {
+            font-size: 90px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            filter: drop-shadow(0 0 20px rgba(255,182,193,0.6));
+            animation: koalaBounce 3s infinite ease-in-out;
+            position: relative;
+        }
+
+        .cute-koala:hover {
+            transform: scale(1.15);
+            filter: drop-shadow(0 0 30px rgba(255,105,180,0.8));
+        }
+
+        .cute-koala:active {
+            transform: scale(0.9);
+        }
+
+        @keyframes koalaBounce {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-10px) rotate(2deg); }
+            50% { transform: translateY(-5px) rotate(0deg); }
+            75% { transform: translateY(-15px) rotate(-2deg); }
+        }
+
+        /* Sparkling Puppy Dog Eyes */
+        .koala-eyes {
+            position: absolute;
+            top: 20%;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+            pointer-events: none;
+        }
+
+        .sparkle-eye {
+            font-size: 12px;
+            animation: sparkleEyes 2s infinite ease-in-out;
+        }
+
+        @keyframes sparkleEyes {
+            0%, 100% { opacity: 0.8; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.3); }
+        }
+
+        .koala-status {
+            position: absolute;
+            top: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255,255,255,0.9);
+            color: #FF69B4;
+            padding: 4px 8px;
+            border-radius: 15px;
+            font-size: 10px;
+            font-weight: bold;
+            min-width: 100px;
+            text-align: center;
+            border: 2px solid #FFB6C1;
+            box-shadow: 0 4px 12px rgba(255,182,193,0.4);
+        }
+
+        .koala-title {
+            font-size: 11px;
+            color: #FF1493;
+            margin-top: 8px;
+            font-weight: bold;
+        }
+
+        .love-progress {
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 5px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 6px;
+            overflow: hidden;
+            border: 1px solid #FF69B4;
+        }
+
+        .love-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #FF1493, #FF69B4);
+            transition: width 0.5s ease;
+            box-shadow: 0 0 8px rgba(255,20,147,0.5);
+        }
+
+        .love-text {
+            position: absolute;
+            bottom: -38px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 7px;
+            color: #FF1493;
+            font-weight: bold;
+        }
+
+        /* Cute Toy Box (Inventory) */
+        .toy-box {
+            position: absolute;
+            top: 18%;
+            left: 5px;
+            width: 65px;
+            background: rgba(255,255,255,0.9);
+            border: 2px solid #FFB6C1;
+            border-radius: 12px;
+            padding: 4px;
+            box-shadow: 0 4px 12px rgba(255,182,193,0.3);
+        }
+
+        .toy-box-title {
+            font-size: 7px;
+            color: #FF69B4;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 4px;
+        }
+
+        .toy-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 2px;
+        }
+
+        .toy-slot {
+            width: 16px;
+            height: 16px;
+            background: rgba(255,182,193,0.3);
+            border: 1px solid #FFB6C1;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .toy-slot:hover {
+            background: rgba(255,182,193,0.6);
+            border-color: #FF69B4;
+            transform: scale(1.1);
+        }
+
+        .toy-slot.has-toy {
+            background: linear-gradient(45deg, #FFB6C1, #FFE4E1);
+            border-color: #FF69B4;
+            box-shadow: 0 2px 6px rgba(255,105,180,0.3);
+        }
+
+        .toy-quantity {
+            position: absolute;
+            bottom: -1px;
+            right: -1px;
+            background: #FF1493;
+            color: white;
+            font-size: 5px;
+            padding: 1px;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+
+        /* Cute Activities */
+        .activities-panel {
+            position: absolute;
+            bottom: 120px;
+            left: 8px;
+            right: 8px;
+            display: flex;
+            justify-content: center;
+            gap: 4px;
+        }
+
+        .activity-button {
+            width: 35px;
+            height: 35px;
+            background: rgba(255,255,255,0.9);
+            border: 2px solid #FFB6C1;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            box-shadow: 0 4px 12px rgba(255,182,193,0.3);
+        }
+
+        .activity-button:hover {
+            background: rgba(255,182,193,0.8);
+            transform: scale(1.1);
+            box-shadow: 0 6px 16px rgba(255,105,180,0.4);
+        }
+
+        .activity-button.ready {
+            background: linear-gradient(45deg, #98FB98, #90EE90);
+            border-color: #32CD32;
+            animation: activityReady 2s infinite ease-in-out;
+        }
+
+        @keyframes activityReady {
+            0%, 100% { box-shadow: 0 4px 12px rgba(50,205,50,0.4); }
+            50% { box-shadow: 0 6px 16px rgba(50,205,50,0.6); }
+        }
+
+        .activity-level {
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            background: #FF1493;
+            color: white;
+            font-size: 6px;
+            padding: 1px 2px;
+            border-radius: 6px;
+            font-weight: bold;
+        }
+
+        .activity-cooldown {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.7);
+            border-radius: 10px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 7px;
+            font-weight: bold;
+        }
+
+        /* Cute Places */
+        .cute-places {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 100px;
+            background: linear-gradient(180deg, transparent 0%, rgba(255,182,193,0.9) 100%);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 6px;
+            border-top: 3px solid #FFB6C1;
+        }
+
+        .place-button {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 3px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: rgba(255,255,255,0.8);
+            border: 2px solid #FFB6C1;
+            min-width: 35px;
+            position: relative;
+            box-shadow: 0 2px 8px rgba(255,182,193,0.3);
+        }
+
+        .place-button:hover {
+            background: rgba(255,182,193,0.8);
+            border-color: #FF69B4;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255,105,180,0.4);
+        }
+
+        .place-button.available {
+            border-color: #32CD32;
+            background: rgba(152,251,152,0.8);
+        }
+
+        .place-icon {
+            font-size: 16px;
+            margin-bottom: 2px;
+        }
+
+        .place-label {
+            font-size: 6px;
+            font-weight: bold;
+            color: #FF69B4;
+            text-align: center;
+        }
+
+        .place-level {
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            background: #FF1493;
+            color: white;
+            font-size: 5px;
+            padding: 1px 2px;
+            border-radius: 6px;
+            font-weight: bold;
+        }
+
+        /* Cute Challenge Overlay */
+        .challenge-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255,182,193,0.95);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .challenge-panel {
+            background: linear-gradient(145deg, #FFE4E1, #FFB6C1);
+            border: 3px solid #FF69B4;
+            border-radius: 20px;
+            padding: 15px;
+            text-align: center;
+            max-width: 300px;
+            box-shadow: 0 15px 30px rgba(255,105,180,0.4);
+            animation: challengeSlideIn 0.5s ease-out;
+        }
+
+        @keyframes challengeSlideIn {
+            0% { opacity: 0; transform: scale(0.8) translateY(30px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .challenge-title {
+            color: #FF1493;
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 2px rgba(255,255,255,0.5);
+        }
+
+        .challenge-content {
+            color: #8B008B;
+            font-size: 12px;
+            margin-bottom: 15px;
+            line-height: 1.3;
+        }
+
+        .challenge-area {
+            background: rgba(255,255,255,0.8);
+            border-radius: 15px;
+            padding: 10px;
+            margin: 10px 0;
+            min-height: 80px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #FFB6C1;
+        }
+
+        .challenge-visual {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        .challenge-question {
+            color: #FF1493;
+            font-size: 11px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .answer-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px;
+            margin: 10px 0;
+        }
+
+        .answer-button {
+            background: linear-gradient(135deg, #98FB98, #90EE90);
+            color: #006400;
+            border: none;
+            padding: 8px 10px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 3px 8px rgba(50,205,50,0.3);
+            border: 2px solid #32CD32;
+        }
+
+        .answer-button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(50,205,50,0.4);
+        }
+
+        .answer-button.correct {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            color: #8B4513;
+            border-color: #FF8C00;
+        }
+
+        .answer-button.incorrect {
+            background: linear-gradient(135deg, #FFB6C1, #FFC0CB);
+            color: #8B008B;
+            border-color: #FF69B4;
+        }
+
+        /* Cute Effects */
+        .floating-effect {
+            position: absolute;
+            font-size: 16px;
+            font-weight: bold;
+            pointer-events: none;
+            animation: floatEffect 2s ease-out forwards;
+            z-index: 1500;
+        }
+
+        .love-effect { color: #FF1493; }
+        .happy-effect { color: #FFD700; }
+        .cute-effect { color: #FF69B4; }
+        .sparkle-effect { color: #98FB98; }
+
+        @keyframes floatEffect {
+            0% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-60px) scale(1.3);
+            }
+        }
+
+        .heart-system {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            z-index: 50;
+        }
+
+        .floating-heart {
+            position: absolute;
+            pointer-events: none;
+            animation: heartFloat 3s infinite ease-in-out;
+            color: #FF69B4;
+        }
+
+        @keyframes heartFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.7; }
+            50% { transform: translateY(-15px) rotate(15deg); opacity: 1; }
+        }
+
+        /* Achievement System */
+        .achievement-popup {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(45deg, #FFD700, #FFA500);
+            color: #8B4513;
+            padding: 12px 20px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(255,215,0,0.4);
+            font-size: 12px;
+            font-weight: bold;
+            z-index: 2000;
+            opacity: 0;
+            animation: achievementPop 4s ease-out;
+            border: 3px solid #FF8C00;
+        }
+
+        @keyframes achievementPop {
+            0% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+            20%, 80% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+            100% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+        }
+
+        /* Parent Button */
+        .parent-btn {
+            position: absolute;
+            top: 45px;
+            right: 8px;
+            width: 20px;
+            height: 20px;
+            background: rgba(255,255,255,0.9);
+            border: 2px solid #FFB6C1;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: #FF69B4;
+            box-shadow: 0 2px 8px rgba(255,182,193,0.3);
+        }
+
+        .parent-btn:hover {
+            background: rgba(255,182,193,0.8);
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <div class="game-screen">
+            <!-- Cute Mode Selector -->
+            <div class="mode-selector">
+                <div class="mode-tab active" onclick="switchMode('play')" id="playTab">🎈 Play Time</div>
+                <div class="mode-tab" onclick="switchMode('care')" id="careTab">💕 Care Time</div>
+                <div class="mode-tab" onclick="switchMode('friends')" id="friendsTab">👫 Friends</div>
+            </div>
+
+            <!-- Heart System -->
+            <div class="heart-system" id="heartSystem"></div>
+
+            <!-- Cute HUD -->
+            <div class="cute-hud">
+                <div class="top-bar">
+                    <div class="player-info">
+                        <div class="player-avatar" id="playerAvatar" onclick="showKoalaMenu()">🐨</div>
+                        <div class="level-section">
+                            <div class="level-badge" id="levelBadge">Level 8 ⭐</div>
+                            <div class="xp-container">
+                                <div class="xp-bar">
+                                    <div class="xp-fill" id="xpFill" style="width: 67%"></div>
+                                </div>
+                                <div class="xp-text" id="xpText">670 / 1000</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="resources">
+                        <div class="resource-item" onclick="showResourceDetails('stickers')">
+                            <span>🌟</span>
+                            <span id="stickerAmount">247</span>
+                        </div>
+                        <div class="resource-item" onclick="showResourceDetails('hearts')">
+                            <span>💖</span>
+                            <span id="heartAmount">89</span>
+                        </div>
+                        <div class="resource-item" onclick="showResourceDetails('treats')">
+                            <span>🍪</span>
+                            <span id="treatAmount">156</span>
+                        </div>
+                        <div class="resource-item" onclick="showResourceDetails('toys')">
+                            <span>🧸</span>
+                            <span id="toyAmount">34</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="cute-stats">
+                    <div class="stat-mini" title="Health">
+                        <div class="stat-fill-mini health-fill" id="healthFill" style="width: 92%"></div>
+                    </div>
+                    <div class="stat-mini" title="Energy">
+                        <div class="stat-fill-mini energy-fill" id="energyFill" style="width: 78%"></div>
+                    </div>
+                    <div class="stat-mini" title="Happiness">
+                        <div class="stat-fill-mini happiness-fill" id="happinessFill" style="width: 96%"></div>
+                    </div>
+                    <div class="stat-mini" title="Love">
+                        <div class="stat-fill-mini love-fill" id="loveFill" style="width: 85%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Parent Button -->
+            <div class="parent-btn" onclick="openParentDashboard()" title="Parent Info">
+                👨‍👩‍👧‍👦
+            </div>
+
+            <!-- Cute Toy Box -->
+            <div class="toy-box">
+                <div class="toy-box-title">🎁 Toy Box</div>
+                <div class="toy-grid" id="toyGrid">
+                    <!-- Toy slots will be generated here -->
+                </div>
+            </div>
+
+            <!-- Adorable Koala Display -->
+            <div class="koala-area">
+                <div class="koala-container">
+                    <div class="koala-status" id="koalaStatus">Koko is super happy! 🌈</div>
+                    <div class="cute-koala" id="cuteKoala" onclick="interactWithKoko()">🐨</div>
+                    <div class="koala-eyes">
+                        <div class="sparkle-eye">✨</div>
+                        <div class="sparkle-eye">✨</div>
+                    </div>
+                    <div class="koala-title" id="koalaTitle">Koko the Super Cute Koala • Level 8</div>
+                    <div class="love-progress">
+                        <div class="love-fill" id="loveFillBar" style="width: 67%"></div>
+                    </div>
+                    <div class="love-text" id="loveText">Love: 670 / 1000 💕</div>
+                </div>
+            </div>
+
+            <!-- Cute Activities -->
+            <div class="activities-panel">
+                <div class="activity-button ready" onclick="doCuteActivity('play')" title="Play Games">
+                    🎮
+                    <div class="activity-level">5</div>
+                    <div class="activity-cooldown" id="play-cooldown"></div>
+                </div>
+                <div class="activity-button ready" onclick="doCuteActivity('hug')" title="Give Hugs">
+                    🤗
+                    <div class="activity-level">3</div>
+                    <div class="activity-cooldown" id="hug-cooldown"></div>
+                </div>
+                <div class="activity-button ready" onclick="doCuteActivity('dance')" title="Dance Party">
+                    💃
+                    <div class="activity-level">4</div>
+                    <div class="activity-cooldown" id="dance-cooldown"></div>
+                </div>
+                <div class="activity-button ready" onclick="doCuteActivity('sing')" title="Sing Songs">
+                    🎵
+                    <div class="activity-level">6</div>
+                    <div class="activity-cooldown" id="sing-cooldown"></div>
+                </div>
+                <div class="activity-button ready" onclick="doCuteActivity('learn')" title="Learn Together">
+                    📚
+                    <div class="activity-level">7</div>
+                    <div class="activity-cooldown" id="learn-cooldown"></div>
+                </div>
+                <div class="activity-button ready" onclick="doCuteActivity('magic')" title="Magic Time">
+                    🪄
+                    <div class="activity-level">2</div>
+                    <div class="activity-cooldown" id="magic-cooldown"></div>
+                </div>
+            </div>
+
+            <!-- Cute Places -->
+            <div class="cute-places">
+                <div class="place-button available" onclick="visitCutePlace('playground')" id="playgroundPlace">
+                    <div class="place-icon">🛝</div>
+                    <div class="place-label">Playground</div>
+                    <div class="place-level">Fun!</div>
+                </div>
+                <div class="place-button available" onclick="visitCutePlace('park')" id="parkPlace">
+                    <div class="place-icon">🌳</div>
+                    <div class="place-label">Park</div>
+                    <div class="place-level">Nature</div>
+                </div>
+                <div class="place-button available" onclick="visitCutePlace('library')" id="libraryPlace">
+                    <div class="place-icon">📚</div>
+                    <div class="place-label">Library</div>
+                    <div class="place-level">Books</div>
+                </div>
+                <div class="place-button available" onclick="visitCutePlace('bakery')" id="bakeryPlace">
+                    <div class="place-icon">🧁</div>
+                    <div class="place-label">Bakery</div>
+                    <div class="place-level">Treats</div>
+                </div>
+                <div class="place-button available" onclick="visitCutePlace('school')" id="schoolPlace">
+                    <div class="place-icon">🏫</div>
+                    <div class="place-label">School</div>
+                    <div class="place-level">Learn</div>
+                </div>
+                <div class="place-button" onclick="visitCutePlace('shop')" id="shopPlace">
+                    <div class="place-icon">🏪</div>
+                    <div class="place-label">Toy Shop</div>
+                </div>
+                <div class="place-button" onclick="visitCutePlace('home')" id="homePlace">
+                    <div class="place-icon">🏠</div>
+                    <div class="place-label">Home</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cute Challenge Overlay -->
+        <div class="challenge-overlay" id="challengeOverlay">
+            <div class="challenge-panel" id="challengePanel">
+                <!-- Challenge content will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Cute Game State
+        let cuteGameState = {
+            player: {
+                name: "Best Friend",
+                level: 8,
+                xp: 670,
+                xpToNext: 1000,
+                love: 670,
+                loveToNext: 1000
+            },
+            koala: {
+                name: "Koko",
+                mood: "super happy",
+                personality: "playful and sweet",
+                form: "adorable"
+            },
+            stats: {
+                health: 92,
+                energy: 78,
+                happiness: 96,
+                love: 85
+            },
+            resources: {
+                stickers: 247,
+                hearts: 89,
+                treats: 156,
+                toys: 34
+            },
+            activities: {
+                play: { level: 5, cooldown: 0, loveGain: 15 },
+                hug: { level: 3, cooldown: 0, loveGain: 25 },
+                dance: { level: 4, cooldown: 0, loveGain: 20 },
+                sing: { level: 6, cooldown: 0, loveGain: 18 },
+                learn: { level: 7, cooldown: 0, loveGain: 30 },
+                magic: { level: 2, cooldown: 0, loveGain: 35 }
+            },
+            toyBox: [
+                { name: "Teddy Bear", quantity: 3, emoji: "🧸" },
+                { name: "Ball", quantity: 2, emoji: "⚽" },
+                { name: "Puzzle", quantity: 5, emoji: "🧩" },
+                { name: "Crayons", quantity: 8, emoji: "🖍️" },
+                { name: "Blocks", quantity: 12, emoji: "🧱" },
+                { name: "Doll", quantity: 1, emoji: "🪆" },
+                { name: "Car", quantity: 4, emoji: "🚗" },
+                { name: "Book", quantity: 7, emoji: "📖" },
+                { name: "Stickers", quantity: 25, emoji: "⭐" }
+            ],
+            currentMode: "play"
+        };
+
+        // Cute Educational Content
+        const cuteEducationalContent = {
+            math: [
+                {
+                    title: "🍪 Koko's Cookie Counting",
+                    question: "Koko baked 12 yummy cookies! He gave 3 to his friend and ate 2 himself. How many cookies are left?",
+                    visual: "🍪".repeat(12),
+                    answers: [7, 8, 9, 10],
+                    correct: 0,
+                    explanation: "12 - 3 - 2 = 7 cookies left!",
+                    bonus: "Great counting! Koko is so proud! 🌟"
+                },
+                {
+                    title: "🎈 Balloon Party Math",
+                    question: "At Koko's party, there are 5 red balloons and 4 blue balloons. How many balloons in total?",
+                    visual: "🎈".repeat(9),
+                    answers: [9, 8, 10, 11],
+                    correct: 0,
+                    explanation: "5 + 4 = 9 balloons for the party!",
+                    bonus: "Perfect addition! Party time! 🎉"
+                }
+            ],
+            science: [
+                {
+                    title: "🌱 Koko's Garden Science",
+                    question: "What do plants need to grow big and strong like Koko's flowers?",
+                    visual: "🌱🌞💧",
+                    answers: ["Sunlight and water", "Only candy", "Just hugs", "TV and games"],
+                    correct: 0,
+                    explanation: "Plants need sunlight and water to grow healthy and beautiful!",
+                    bonus: "You're a nature expert! Koko's garden will be amazing! 🌺"
+                }
+            ],
+            reading: [
+                {
+                    title: "📚 Koko's Story Time",
+                    question: "Koko read: 'The little bunny was very kind and shared his carrots with all his friends.' What was special about the bunny?",
+                    visual: "🐰🥕📖",
+                    answers: ["He was kind and shared", "He was very fast", "He was big and strong", "He liked to sleep"],
+                    correct: 0,
+                    explanation: "The bunny was special because he was kind and liked to share!",
+                    bonus: "Great reading! Koko loves stories about kindness! 💕"
+                }
+            ]
+        };
+
+        // Interact with Koko
+        function interactWithKoko() {
+            const koala = document.getElementById('cuteKoala');
+            
+            // Cute bounce animation
+            koala.style.animation = 'none';
+            koala.offsetHeight;
+            koala.style.animation = 'koalaBounce 1s ease';
+            
+            // Calculate cute rewards
+            const xpGain = 25 + Math.floor(Math.random() * 15);
+            const stickerGain = 5 + Math.floor(Math.random() * 10);
+            const loveGain = 8 + Math.floor(Math.random() * 12);
+            
+            // Update resources
+            cuteGameState.player.xp += xpGain;
+            cuteGameState.player.love += loveGain;
+            cuteGameState.resources.stickers += stickerGain;
+            
+            // Show cute floating effects
+            showCuteEffect(`+${xpGain} XP`, "sparkle-effect");
+            showCuteEffect(`+${stickerGain} Stickers`, "happy-effect");
+            showCuteEffect(`+${loveGain} Love`, "love-effect");
+            
+            // Random toy drops
+            if (Math.random() < 0.3) {
+                const randomToy = cuteGameState.toyBox[Math.floor(Math.random() * cuteGameState.toyBox.length)];
+                randomToy.quantity += 1;
+                showCuteEffect(`Found ${randomToy.emoji}!`, "cute-effect");
+            }
+            
+            // Check for level up
+            if (cuteGameState.player.xp >= cuteGameState.player.xpToNext) {
+                levelUpCute();
+            }
+            
+            // Random learning challenge
+            if (Math.random() < 0.12) {
+                setTimeout(() => showCuteChallenge(), 500);
+            }
+            
+            updateCuteDisplay();
+            createHeartEffect();
+        }
+
+        // Level up system
+        function levelUpCute() {
+            cuteGameState.player.level++;
+            cuteGameState.player.xp -= cuteGameState.player.xpToNext;
+            cuteGameState.player.xpToNext = Math.floor(cuteGameState.player.xpToNext * 1.2);
+            
+            // Increase all stats
+            cuteGameState.stats.health = Math.min(100, cuteGameState.stats.health + 5);
+            cuteGameState.stats.energy = Math.min(100, cuteGameState.stats.energy + 5);
+            cuteGameState.stats.happiness = Math.min(100, cuteGameState.stats.happiness + 5);
+            cuteGameState.stats.love = Math.min(100, cuteGameState.stats.love + 5);
+            
+            // Level up activities
+            Object.keys(cuteGameState.activities).forEach(activity => {
+                if (Math.random() < 0.3) {
+                    cuteGameState.activities[activity].level++;
+                    cuteGameState.activities[activity].loveGain += 2;
+                }
+            });
+            
+            showCuteEffect("LEVEL UP!", "happy-effect");
+            showCuteAchievement("Level Up!", `Koko reached Level ${cuteGameState.player.level}! 🎉`);
+        }
+
+        // Do cute activities
+        function doCuteActivity(activityName) {
+            const activity = cuteGameState.activities[activityName];
+            
+            if (activity.cooldown > 0) {
+                showCuteEffect("Wait a little bit!", "cute-effect");
+                return;
+            }
+            
+            // Activity effects
+            const loveGain = activity.loveGain + Math.floor(Math.random() * 10);
+            const stickerGain = Math.floor(activity.level * 2) + Math.floor(Math.random() * 5);
+            
+            cuteGameState.player.love += loveGain;
+            cuteGameState.resources.stickers += stickerGain;
+            
+            // Activity-specific effects
+            switch(activityName) {
+                case 'play':
+                    showCuteEffect(`🎮 +${loveGain} Love from playing!`, "love-effect");
+                    cuteGameState.stats.happiness = Math.min(100, cuteGameState.stats.happiness + 8);
+                    break;
+                case 'hug':
+                    showCuteEffect(`🤗 +${loveGain} Love from hugs!`, "love-effect");
+                    cuteGameState.stats.love = Math.min(100, cuteGameState.stats.love + 15);
+                    break;
+                case 'dance':
+                    showCuteEffect(`💃 +${loveGain} Love from dancing!`, "love-effect");
+                    cuteGameState.stats.energy = Math.min(100, cuteGameState.stats.energy + 10);
+                    break;
+                case 'sing':
+                    showCuteEffect(`🎵 +${loveGain} Love from singing!`, "love-effect");
+                    cuteGameState.stats.happiness = Math.min(100, cuteGameState.stats.happiness + 12);
+                    break;
+                case 'learn':
+                    showCuteEffect(`📚 +${loveGain} Love from learning!`, "love-effect");
+                    setTimeout(() => showCuteChallenge(), 1000);
+                    break;
+                case 'magic':
+                    showCuteEffect(`🪄 +${loveGain} Love from magic!`, "love-effect");
+                    cuteGameState.resources.hearts += 3;
+                    break;
+            }
+            
+            // Set cooldown
+            activity.cooldown = 5 + activity.level;
+            startCuteCooldown(activityName);
+            
+            updateCuteDisplay();
+        }
+
+        // Start activity cooldown
+        function startCuteCooldown(activityName) {
+            const cooldownElement = document.getElementById(`${activityName}-cooldown`);
+            const button = cooldownElement.parentElement;
+            
+            button.classList.remove('ready');
+            cooldownElement.style.display = 'flex';
+            cooldownElement.textContent = cuteGameState.activities[activityName].cooldown;
+            
+            const interval = setInterval(() => {
+                cuteGameState.activities[activityName].cooldown--;
+                cooldownElement.textContent = cuteGameState.activities[activityName].cooldown;
+                
+                if (cuteGameState.activities[activityName].cooldown <= 0) {
+                    cooldownElement.style.display = 'none';
+                    button.classList.add('ready');
+                    clearInterval(interval);
+                }
+            }, 1000);
+        }
+
+        // Show cute educational challenge
+        function showCuteChallenge() {
+            const subjects = Object.keys(cuteEducationalContent);
+            const randomSubject = subjects[Math.floor(Math.random() * subjects.length)];
+            const challenges = cuteEducationalContent[randomSubject];
+            const challenge = challenges[Math.floor(Math.random() * challenges.length)];
+            
+            const overlay = document.getElementById('challengeOverlay');
+            const panel = document.getElementById('challengePanel');
+            
+            panel.innerHTML = `
+                <div class="challenge-title">${challenge.title}</div>
+                <div class="challenge-content">Help Koko solve this fun puzzle!</div>
+                <div class="challenge-area">
+                    <div class="challenge-visual">${challenge.visual}</div>
+                    <div class="challenge-question">${challenge.question}</div>
+                    <div class="answer-grid">
+                        ${challenge.answers.map((answer, index) => 
+                            `<button class="answer-button" onclick="answerCuteChallenge(${index}, ${challenge.correct}, '${challenge.explanation}', '${challenge.bonus}')">${answer}</button>`
+                        ).join('')}
+                    </div>
+                </div>
+                <div style="margin-top: 10px; font-size: 10px; color: #8B008B;">
+                    Correct answers make Koko super happy! 🌟
+                </div>
+            `;
+            
+            overlay.style.display = 'flex';
+        }
+
+        // Answer cute challenge
+        function answerCuteChallenge(selected, correct, explanation, bonus) {
+            const isCorrect = selected === correct;
+            const buttons = document.querySelectorAll('.answer-button');
+            
+            buttons.forEach((button, index) => {
+                if (index === correct) {
+                    button.classList.add('correct');
+                } else if (index === selected && !isCorrect) {
+                    button.classList.add('incorrect');
+                }
+                button.disabled = true;
+            });
+            
+            setTimeout(() => {
+                if (isCorrect) {
+                    // Big rewards for correct answers
+                    const xpBonus = 100 + (cuteGameState.player.level * 10);
+                    const stickerBonus = 50 + (cuteGameState.player.level * 5);
+                    const loveBonus = 25 + (cuteGameState.player.level * 3);
+                    
+                    cuteGameState.player.xp += xpBonus;
+                    cuteGameState.resources.stickers += stickerBonus;
+                    cuteGameState.player.love += loveBonus;
+                    cuteGameState.resources.hearts += 5;
+                    
+                    showCuteAchievement("AMAZING!", `${bonus}\n+${xpBonus} XP, +${stickerBonus} Stickers, +${loveBonus} Love!`);
+                } else {
+                    // Consolation rewards
+                    const xpBonus = 25;
+                    const stickerBonus = 10;
+                    
+                    cuteGameState.player.xp += xpBonus;
+                    cuteGameState.resources.stickers += stickerBonus;
+                    
+                    showCuteAchievement("Good Try!", `${explanation}\n+${xpBonus} XP, +${stickerBonus} Stickers for trying!`);
+                }
+                
+                setTimeout(() => {
+                    document.getElementById('challengeOverlay').style.display = 'none';
+                    updateCuteDisplay();
+                }, 3000);
+            }, 2000);
+        }
+
+        // Switch game modes
+        function switchMode(mode) {
+            cuteGameState.currentMode = mode;
+            
+            // Update tab appearance
+            document.querySelectorAll('.mode-tab').forEach(tab => tab.classList.remove('active'));
+            document.getElementById(mode + 'Tab').classList.add('active');
+            
+            // Mode-specific changes
+            switch(mode) {
+                case 'play':
+                    showCuteEffect("Play Time! 🎈", "happy-effect");
+                    break;
+                case 'care':
+                    showCuteEffect("Care Time! 💕", "love-effect");
+                    break;
+                case 'friends':
+                    showCuteEffect("Friend Time! 👫", "sparkle-effect");
+                    break;
+            }
+        }
+
+        // Visit cute places
+        function visitCutePlace(place) {
+            switch(place) {
+                case 'playground':
+                    showCuteEffect("Playing at the playground! 🛝", "happy-effect");
+                    setTimeout(() => showCuteChallenge(), 1000);
+                    break;
+                case 'library':
+                    showCuteEffect("Reading time! 📚", "sparkle-effect");
+                    setTimeout(() => showCuteChallenge(), 1000);
+                    break;
+                case 'school':
+                    showCuteEffect("Learning is fun! 🏫", "cute-effect");
+                    setTimeout(() => showCuteChallenge(), 1000);
+                    break;
+                case 'shop':
+                    showCuteEffect("Toy shop coming soon! 🏪", "happy-effect");
+                    break;
+                default:
+                    showCuteEffect(`Visiting ${place}! 🌟`, "sparkle-effect");
+                    break;
+            }
+        }
+
+        // Show cute floating effects
+        function showCuteEffect(text, className) {
+            const effect = document.createElement('div');
+            effect.className = `floating-effect ${className}`;
+            effect.textContent = text;
+            effect.style.left = (Math.random() * 200 + 100) + 'px';
+            effect.style.top = (Math.random() * 100 + 200) + 'px';
+            
+            document.querySelector('.game-screen').appendChild(effect);
+            
+            setTimeout(() => {
+                if (effect.parentNode) {
+                    effect.parentNode.removeChild(effect);
+                }
+            }, 2000);
+        }
+
+        // Show cute achievement popup
+        function showCuteAchievement(title, description) {
+            const achievement = document.createElement('div');
+            achievement.className = 'achievement-popup';
+            achievement.innerHTML = `🏆 ${title}<br><small>${description}</small>`;
+            
+            document.querySelector('.game-screen').appendChild(achievement);
+            
+            setTimeout(() => {
+                if (achievement.parentNode) {
+                    achievement.parentNode.removeChild(achievement);
+                }
+            }, 4000);
+        }
+
+        // Create heart effects
+        function createHeartEffect() {
+            const heartSystem = document.getElementById('heartSystem');
+            
+            for (let i = 0; i < 5; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'floating-heart';
+                
+                const hearts = ['💕', '💖', '💗', '💝', '💘', '💞'];
+                heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+                
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.top = Math.random() * 100 + '%';
+                heart.style.animationDelay = Math.random() * 3 + 's';
+                heart.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                
+                heartSystem.appendChild(heart);
+                
+                setTimeout(() => {
+                    if (heart.parentNode) {
+                        heart.parentNode.removeChild(heart);
+                    }
+                }, 5000);
+            }
+        }
+
+        // Initialize toy box
+        function initializeToyBox() {
+            const toyGrid = document.getElementById('toyGrid');
+            toyGrid.innerHTML = '';
+            
+            for (let i = 0; i < 9; i++) {
+                const slot = document.createElement('div');
+                slot.className = 'toy-slot';
+                
+                if (i < cuteGameState.toyBox.length) {
+                    const toy = cuteGameState.toyBox[i];
+                    slot.classList.add('has-toy');
+                    slot.textContent = toy.emoji;
+                    slot.title = `${toy.name} (${toy.quantity})`;
+                    
+                    if (toy.quantity > 1) {
+                        const quantity = document.createElement('div');
+                        quantity.className = 'toy-quantity';
+                        quantity.textContent = toy.quantity > 99 ? '99+' : toy.quantity;
+                        slot.appendChild(quantity);
+                    }
+                }
+                
+                toyGrid.appendChild(slot);
+            }
+        }
+
+        // Helper functions
+        function showKoalaMenu() {
+            showCuteEffect("Koko menu coming soon! 🐨", "cute-effect");
+        }
+
+        function showResourceDetails(resource) {
+            showCuteEffect(`${resource} details coming soon! ✨`, "sparkle-effect");
+        }
+
+        function openParentDashboard() {
+            showCuteEffect("Parent info coming soon! 👨‍👩‍👧‍👦", "happy-effect");
+        }
+
+        // Update cute display
+        function updateCuteDisplay() {
+            // Update level and XP
+            document.getElementById('levelBadge').textContent = `Level ${cuteGameState.player.level} ⭐`;
+            document.getElementById('xpFill').style.width = `${(cuteGameState.player.xp / cuteGameState.player.xpToNext) * 100}%`;
+            document.getElementById('xpText').textContent = `${cuteGameState.player.xp} / ${cuteGameState.player.xpToNext}`;
+            
+            // Update resources
+            document.getElementById('stickerAmount').textContent = cuteGameState.resources.stickers;
+            document.getElementById('heartAmount').textContent = cuteGameState.resources.hearts;
+            document.getElementById('treatAmount').textContent = cuteGameState.resources.treats;
+            document.getElementById('toyAmount').textContent = cuteGameState.resources.toys;
+            
+            // Update stats
+            document.getElementById('healthFill').style.width = `${cuteGameState.stats.health}%`;
+            document.getElementById('energyFill').style.width = `${cuteGameState.stats.energy}%`;
+            document.getElementById('happinessFill').style.width = `${cuteGameState.stats.happiness}%`;
+            document.getElementById('loveFill').style.width = `${cuteGameState.stats.love}%`;
+            
+            // Update love progress
+            document.getElementById('loveFillBar').style.width = `${(cuteGameState.player.love / cuteGameState.player.loveToNext) * 100}%`;
+            document.getElementById('loveText').textContent = `Love: ${cuteGameState.player.love} / ${cuteGameState.player.loveToNext} 💕`;
+            
+            // Update koala status
+            document.getElementById('koalaStatus').textContent = `Koko is ${cuteGameState.koala.mood}! 🌈`;
+            document.getElementById('koalaTitle').textContent = `${cuteGameState.koala.name} the Super Cute Koala • Level ${cuteGameState.player.level}`;
+        }
+
+        // Keyboard controls
+        document.addEventListener('keydown', (event) => {
+            const key = event.key;
+            
+            // Activity hotkeys
+            if (key >= '1' && key <= '6') {
+                const activities = ['play', 'hug', 'dance', 'sing', 'learn', 'magic'];
+                const activityIndex = parseInt(key) - 1;
+                if (activities[activityIndex]) {
+                    doCuteActivity(activities[activityIndex]);
+                }
+            }
+            
+            // Mode switching
+            if (key.toLowerCase() === 'q') switchMode('play');
+            if (key.toLowerCase() === 'w') switchMode('care');
+            if (key.toLowerCase() === 'e') switchMode('friends');
+        });
+
+        // Initialize cute game
+        function initializeCuteGame() {
+            updateCuteDisplay();
+            initializeToyBox();
+            
+            // Auto-regeneration
+            setInterval(() => {
+                cuteGameState.stats.energy = Math.min(100, cuteGameState.stats.energy + 2);
+                cuteGameState.stats.happiness = Math.min(100, cuteGameState.stats.happiness + 1);
+                updateCuteDisplay();
+            }, 5000);
+            
+            // Random cute events
+            setInterval(() => {
+                if (Math.random() < 0.08) {
+                    const events = [
+                        { message: "Koko found a shiny sticker! ✨", stickers: 10 },
+                        { message: "A friend gave Koko a hug! 🤗", love: 15 },
+                        { message: "Koko learned something new! 📚", xp: 50 },
+                        { message: "Koko found a yummy treat! 🍪", treats: 5 },
+                        { message: "Koko feels extra happy! 😊", happiness: 10 }
+                    ];
+                    
+                    const event = events[Math.floor(Math.random() * events.length)];
+                    
+                    Object.keys(event).forEach(key => {
+                        if (key !== 'message') {
+                            if (key === 'xp') cuteGameState.player.xp += event[key];
+                            else if (key === 'love') cuteGameState.player.love += event[key];
+                            else if (key === 'happiness') cuteGameState.stats.happiness = Math.min(100, cuteGameState.stats.happiness + event[key]);
+                            else if (cuteGameState.resources[key] !== undefined) {
+                                cuteGameState.resources[key] += event[key];
+                            }
+                        }
+                    });
+                    
+                    showCuteEffect(event.message, "sparkle-effect");
+                    updateCuteDisplay();
+                }
+            }, 15000);
+            
+            // Welcome message
+            setTimeout(() => {
+                showCuteAchievement("Welcome!", "Koko is so happy to see you! Let's play together! 🐨💕");
+            }, 1000);
+        }
+
+        // Start the cute game
+        initializeCuteGame();
+    </script>
+</body>
+</html>
