@@ -850,6 +850,380 @@
             50% { transform: scale(1.2); }
         }
 
+        /* Pet Care Panel */
+        .pet-care-panel {
+            background: rgba(255,255,255,0.9);
+            border: 2px solid #FFB6C1;
+            border-radius: 12px;
+            padding: 6px;
+            margin: 5px 0;
+        }
+
+        .pet-care-header {
+            font-size: 8px;
+            font-weight: bold;
+            color: #FF1493;
+            text-align: center;
+            margin-bottom: 4px;
+        }
+
+        .care-stats {
+            display: flex;
+            gap: 4px;
+        }
+
+        .care-stat {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            padding: 2px;
+            border-radius: 6px;
+        }
+
+        .care-stat:hover {
+            background: rgba(255,182,193,0.3);
+            transform: scale(1.05);
+        }
+
+        .care-emoji {
+            font-size: 12px;
+            margin-bottom: 2px;
+        }
+
+        .care-bar {
+            width: 100%;
+            height: 6px;
+            background: rgba(255,182,193,0.3);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .care-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #98FB98, #90EE90);
+            border-radius: 3px;
+            transition: width 0.3s ease;
+        }
+
+        /* Weather Panel */
+        .weather-panel {
+            background: rgba(255,255,255,0.8);
+            border: 2px solid #87CEEB;
+            border-radius: 10px;
+            padding: 4px;
+            margin: 3px 0;
+            text-align: center;
+        }
+
+        .weather-display {
+            font-size: 8px;
+            font-weight: bold;
+            color: #4682B4;
+        }
+
+        .weather-effect {
+            font-size: 6px;
+            color: #708090;
+        }
+
+        /* Story Panel */
+        .story-panel {
+            background: rgba(255,255,255,0.9);
+            border: 2px solid #DDA0DD;
+            border-radius: 12px;
+            padding: 6px;
+            margin: 5px 0;
+        }
+
+        .story-header {
+            font-size: 8px;
+            font-weight: bold;
+            color: #8B008B;
+            text-align: center;
+            margin-bottom: 4px;
+        }
+
+        .story-info {
+            font-size: 6px;
+            color: #9370DB;
+            margin-bottom: 3px;
+        }
+
+        .story-progress {
+            height: 6px;
+            background: rgba(221,160,221,0.3);
+            border-radius: 3px;
+            overflow: hidden;
+            margin: 2px 0;
+        }
+
+        .active-quest {
+            font-size: 6px;
+            color: #8B008B;
+            display: flex;
+            justify-content: space-between;
+            background: rgba(221,160,221,0.2);
+            padding: 2px 4px;
+            border-radius: 6px;
+        }
+
+        /* Special Buttons */
+        .special-buttons {
+            display: flex;
+            gap: 4px;
+            margin: 5px 0;
+            justify-content: center;
+        }
+
+        .special-button {
+            width: 35px;
+            height: 35px;
+            background: linear-gradient(45deg, #FFE4E1, #FFF0F5);
+            border: 2px solid #FF69B4;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 3px 10px rgba(255,105,180,0.3);
+        }
+
+        .special-button:hover {
+            background: linear-gradient(45deg, #FFB6C1, #FFC0CB);
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(255,105,180,0.5);
+        }
+
+        /* Customization Panel */
+        .customization-panel {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(45deg, #FFE4E1, #FFF0F5);
+            border: 3px solid #FF69B4;
+            border-radius: 20px;
+            padding: 15px;
+            z-index: 3000;
+            max-width: 300px;
+            box-shadow: 0 10px 30px rgba(255,105,180,0.4);
+        }
+
+        .customization-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            font-size: 14px;
+            font-weight: bold;
+            color: #FF1493;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .customization-tabs {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 10px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 5px;
+            background: rgba(255,182,193,0.3);
+            border: 1px solid #FFB6C1;
+            border-radius: 8px;
+            font-size: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .tab-btn.active {
+            background: #FFB6C1;
+            color: white;
+        }
+
+        .customization-items {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            max-height: 150px;
+            overflow-y: auto;
+        }
+
+        .customization-item {
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.8);
+            border: 2px solid #FFB6C1;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .customization-item:hover {
+            background: #FFB6C1;
+            transform: scale(1.1);
+        }
+
+        .customization-item.selected {
+            background: #FF69B4;
+            border-color: #FF1493;
+        }
+
+        /* Friends Panel */
+        .friends-panel {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(45deg, #E6E6FA, #F0F8FF);
+            border: 3px solid #9370DB;
+            border-radius: 20px;
+            padding: 15px;
+            z-index: 3000;
+            max-width: 280px;
+            box-shadow: 0 10px 30px rgba(147,112,219,0.4);
+        }
+
+        .friends-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            font-size: 14px;
+            font-weight: bold;
+            color: #8B008B;
+        }
+
+        .friends-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .friend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px;
+            background: rgba(255,255,255,0.8);
+            border: 2px solid #DDA0DD;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .friend-item:hover {
+            background: rgba(221,160,221,0.3);
+            transform: scale(1.02);
+        }
+
+        .friend-emoji {
+            font-size: 24px;
+        }
+
+        .friend-info {
+            flex: 1;
+        }
+
+        .friend-name {
+            font-size: 10px;
+            font-weight: bold;
+            color: #8B008B;
+        }
+
+        .friend-friendship {
+            font-size: 8px;
+            color: #9370DB;
+        }
+
+        /* Photo Mode */
+        .photo-mode {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(45deg, #FFF8DC, #FFFACD);
+            border: 3px solid #DAA520;
+            border-radius: 20px;
+            padding: 15px;
+            z-index: 3000;
+            max-width: 320px;
+            box-shadow: 0 10px 30px rgba(218,165,32,0.4);
+        }
+
+        .photo-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            font-size: 14px;
+            font-weight: bold;
+            color: #B8860B;
+        }
+
+        .photo-controls {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 10px;
+        }
+
+        .photo-btn {
+            flex: 1;
+            padding: 6px;
+            background: rgba(218,165,32,0.3);
+            border: 1px solid #DAA520;
+            border-radius: 8px;
+            font-size: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .photo-btn:hover {
+            background: #DAA520;
+            color: white;
+        }
+
+        .photo-preview {
+            width: 200px;
+            height: 150px;
+            background: linear-gradient(45deg, #87CEEB, #E0F6FF);
+            border: 2px solid #4682B4;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .photo-koko {
+            font-size: 60px;
+            animation: photoKokoPose 2s infinite ease-in-out;
+        }
+
+        @keyframes photoKokoPose {
+            0%, 100% { transform: rotate(-5deg) scale(1); }
+            50% { transform: rotate(5deg) scale(1.1); }
+        }
+
         @keyframes heartFloat {
             0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.7; }
             50% { transform: translateY(-15px) rotate(15deg); opacity: 1; }
@@ -1003,6 +1377,95 @@
                         </div>
                     </div>
                 </div>
+                
+                <!-- Pet Care Panel -->
+                <div class="pet-care-panel">
+                    <div class="pet-care-header">💕 Koko's Care</div>
+                    <div class="care-stats">
+                        <div class="care-stat" onclick="feedKoko()">
+                            <span class="care-emoji">🍎</span>
+                            <div class="care-bar">
+                                <div id="hungerBar" class="care-fill" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        <div class="care-stat" onclick="batheKoko()">
+                            <span class="care-emoji">🛁</span>
+                            <div class="care-bar">
+                                <div id="cleanBar" class="care-fill" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        <div class="care-stat" onclick="restKoko()">
+                            <span class="care-emoji">😴</span>
+                            <div class="care-bar">
+                                <div id="energyBar" class="care-fill" style="width: 75%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Weather Display -->
+                <div class="weather-panel">
+                    <div id="weatherDisplay" class="weather-display">☀️ Sunny 22°C</div>
+                    <div id="weatherEffect" class="weather-effect"></div>
+                </div>
+                
+                <!-- Story Progress -->
+                <div class="story-panel">
+                    <div class="story-header">📖 Koko's Adventure</div>
+                    <div class="story-info">
+                        <span id="currentChapter">Chapter 1: New Friends</span>
+                        <div class="story-progress">
+                            <div id="storyProgressBar" class="progress-fill" style="width: 25%"></div>
+                        </div>
+                    </div>
+                    <div id="activeQuest" class="active-quest" style="display: none;">
+                        <span id="questText">Find 3 new toys!</span>
+                        <span id="questProgress">1/3</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Customization Panel -->
+            <div id="customizationPanel" class="customization-panel" style="display: none;">
+                <div class="customization-header">
+                    <span>✨ Dress Up Koko!</span>
+                    <button onclick="closeCustomization()" class="close-btn">❌</button>
+                </div>
+                <div class="customization-tabs">
+                    <button onclick="showCustomizationTab('hats')" class="tab-btn active">🎩 Hats</button>
+                    <button onclick="showCustomizationTab('accessories')" class="tab-btn">🎀 Accessories</button>
+                    <button onclick="showCustomizationTab('backgrounds')" class="tab-btn">🌈 Backgrounds</button>
+                </div>
+                <div id="customizationItems" class="customization-items">
+                    <!-- Items will be populated by JavaScript -->
+                </div>
+            </div>
+            
+            <!-- Friends Panel -->
+            <div id="friendsPanel" class="friends-panel" style="display: none;">
+                <div class="friends-header">
+                    <span>👫 Koko's Friends</span>
+                    <button onclick="closeFriends()" class="close-btn">❌</button>
+                </div>
+                <div id="friendsList" class="friends-list">
+                    <!-- Friends will be populated by JavaScript -->
+                </div>
+            </div>
+            
+            <!-- Photo Mode -->
+            <div id="photoMode" class="photo-mode" style="display: none;">
+                <div class="photo-header">
+                    <span>📸 Photo Time!</span>
+                    <button onclick="closePhotoMode()" class="close-btn">❌</button>
+                </div>
+                <div class="photo-controls">
+                    <button onclick="takePhoto()" class="photo-btn">📸 Take Photo</button>
+                    <button onclick="changePose()" class="photo-btn">🤸 Change Pose</button>
+                    <button onclick="addStickers()" class="photo-btn">⭐ Add Stickers</button>
+                </div>
+                <div id="photoPreview" class="photo-preview">
+                    <div id="photoKoko" class="photo-koko">🐨</div>
+                </div>
             </div>
 
             <!-- Achievement Notifications -->
@@ -1076,6 +1539,14 @@
                     <div class="activity-level">2</div>
                     <div class="activity-cooldown" id="magic-cooldown"></div>
                 </div>
+            </div>
+            
+            <!-- Special Feature Buttons -->
+            <div class="special-buttons">
+                <div class="special-button" onclick="openCustomization()" title="Dress Up Koko">👗</div>
+                <div class="special-button" onclick="openFriends()" title="Visit Friends">👫</div>
+                <div class="special-button" onclick="openPhotoMode()" title="Photo Time">📸</div>
+                <div class="special-button" onclick="changeWeather()" title="Change Weather">🌤️</div>
             </div>
 
             <!-- Cute Places -->
@@ -1193,13 +1664,52 @@
             kokoCustomization: {
                 hat: null,
                 accessory: null,
-                background: "default"
+                background: "default",
+                unlocked: {
+                    hats: ['🎩', '👑', '🎓', '🧢'],
+                    accessories: ['🎀', '👓', '🌸', '⭐'],
+                    backgrounds: ['🌈', '🌸', '🌟', '🏖️', '🌲', '🎪']
+                }
             },
             miniGameScores: {
                 memoryMatch: 0,
                 colorMixer: 0,
                 rhythmGame: 0,
                 puzzleSolver: 0
+            },
+            petCare: {
+                hunger: 85,
+                cleanliness: 90,
+                energy: 75,
+                lastFed: Date.now(),
+                lastBathed: Date.now(),
+                lastSlept: Date.now()
+            },
+            weather: {
+                current: 'sunny',
+                temperature: 22,
+                effects: []
+            },
+            story: {
+                currentChapter: 1,
+                unlockedChapters: [1],
+                completedQuests: [],
+                activeQuest: null
+            },
+            friends: [
+                { name: 'Bella Bunny', emoji: '🐰', friendship: 50, unlocked: true },
+                { name: 'Charlie Cat', emoji: '🐱', friendship: 0, unlocked: false },
+                { name: 'Danny Dog', emoji: '🐶', friendship: 0, unlocked: false },
+                { name: 'Ellie Elephant', emoji: '🐘', friendship: 0, unlocked: false }
+            ],
+            timeOfDay: 'morning',
+            seasonalEvents: [],
+            photoAlbum: [],
+            skillTrees: {
+                learning: { level: 1, points: 0, unlocked: ['basic_math'] },
+                creativity: { level: 1, points: 0, unlocked: ['color_mixing'] },
+                friendship: { level: 1, points: 0, unlocked: ['basic_care'] },
+                exploration: { level: 1, points: 0, unlocked: ['playground'] }
             }
         };
 
@@ -2445,6 +2955,370 @@
         setTimeout(() => {
             initializeNewSystems();
         }, 1000);
+
+        // NEW ADVANCED FEATURES
+
+        // Pet Care System
+        function feedKoko() {
+            if (cuteGameState.petCare.hunger < 100) {
+                cuteGameState.petCare.hunger = Math.min(100, cuteGameState.petCare.hunger + 20);
+                cuteGameState.petCare.lastFed = Date.now();
+                updatePetCareDisplay();
+                showCuteEffect('🍎 Yummy! Koko loves apples!', 'happy-effect');
+                
+                // Boost happiness when well-fed
+                cuteGameState.stats.happiness = Math.min(100, cuteGameState.stats.happiness + 5);
+                updateCuteDisplay();
+            } else {
+                showCuteEffect('🤗 Koko is already full!', 'cute-effect');
+            }
+        }
+
+        function batheKoko() {
+            if (cuteGameState.petCare.cleanliness < 100) {
+                cuteGameState.petCare.cleanliness = Math.min(100, cuteGameState.petCare.cleanliness + 25);
+                cuteGameState.petCare.lastBathed = Date.now();
+                updatePetCareDisplay();
+                showCuteEffect('🛁 Splish splash! Koko is sparkling clean!', 'sparkle-effect');
+                
+                // Create bubble effect
+                createBubbleEffect();
+                
+                // Boost health when clean
+                cuteGameState.stats.health = Math.min(100, cuteGameState.stats.health + 5);
+                updateCuteDisplay();
+            } else {
+                showCuteEffect('✨ Koko is already squeaky clean!', 'sparkle-effect');
+            }
+        }
+
+        function restKoko() {
+            if (cuteGameState.petCare.energy < 100) {
+                cuteGameState.petCare.energy = Math.min(100, cuteGameState.petCare.energy + 30);
+                cuteGameState.petCare.lastSlept = Date.now();
+                updatePetCareDisplay();
+                showCuteEffect('😴 Sweet dreams! Koko feels refreshed!', 'love-effect');
+                
+                // Create sleep effect
+                createSleepEffect();
+                
+                // Boost energy stat
+                cuteGameState.stats.energy = Math.min(100, cuteGameState.stats.energy + 10);
+                updateCuteDisplay();
+            } else {
+                showCuteEffect('⚡ Koko is full of energy!', 'sparkle-effect');
+            }
+        }
+
+        function updatePetCareDisplay() {
+            document.getElementById('hungerBar').style.width = cuteGameState.petCare.hunger + '%';
+            document.getElementById('cleanBar').style.width = cuteGameState.petCare.cleanliness + '%';
+            document.getElementById('energyBar').style.width = cuteGameState.petCare.energy + '%';
+        }
+
+        // Weather System
+        function changeWeather() {
+            const weathers = [
+                { type: 'sunny', emoji: '☀️', temp: 25, effect: 'Perfect day for playing!' },
+                { type: 'rainy', emoji: '🌧️', temp: 18, effect: 'Cozy indoor time!' },
+                { type: 'snowy', emoji: '❄️', temp: 5, effect: 'Winter wonderland!' },
+                { type: 'cloudy', emoji: '☁️', temp: 20, effect: 'Nice and cool!' },
+                { type: 'rainbow', emoji: '🌈', temp: 22, effect: 'Magical rainbow day!' }
+            ];
+            
+            const newWeather = weathers[Math.floor(Math.random() * weathers.length)];
+            cuteGameState.weather = newWeather;
+            
+            document.getElementById('weatherDisplay').textContent = 
+                `${newWeather.emoji} ${newWeather.type.charAt(0).toUpperCase() + newWeather.type.slice(1)} ${newWeather.temp}°C`;
+            document.getElementById('weatherEffect').textContent = newWeather.effect;
+            
+            showCuteEffect(`🌤️ Weather changed to ${newWeather.type}!`, 'sparkle-effect');
+            
+            // Weather affects mood
+            if (newWeather.type === 'rainbow') {
+                cuteGameState.stats.happiness = Math.min(100, cuteGameState.stats.happiness + 15);
+                createRainbowEffect();
+            }
+            
+            updateCuteDisplay();
+        }
+
+        // Customization System
+        function openCustomization() {
+            document.getElementById('customizationPanel').style.display = 'block';
+            showCustomizationTab('hats');
+            showCuteEffect('👗 Time to dress up Koko!', 'sparkle-effect');
+        }
+
+        function closeCustomization() {
+            document.getElementById('customizationPanel').style.display = 'none';
+        }
+
+        function showCustomizationTab(type) {
+            // Update tab buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Show items
+            const items = cuteGameState.kokoCustomization.unlocked[type];
+            const container = document.getElementById('customizationItems');
+            container.innerHTML = '';
+            
+            // Add "none" option
+            const noneItem = document.createElement('div');
+            noneItem.className = 'customization-item';
+            noneItem.textContent = '❌';
+            noneItem.onclick = () => selectCustomization(type, null);
+            container.appendChild(noneItem);
+            
+            // Add unlocked items
+            items.forEach(item => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'customization-item';
+                itemDiv.textContent = item;
+                itemDiv.onclick = () => selectCustomization(type, item);
+                
+                if (cuteGameState.kokoCustomization[type] === item) {
+                    itemDiv.classList.add('selected');
+                }
+                
+                container.appendChild(itemDiv);
+            });
+        }
+
+        function selectCustomization(type, item) {
+            cuteGameState.kokoCustomization[type] = item;
+            
+            // Update visual
+            document.querySelectorAll('.customization-item').forEach(el => el.classList.remove('selected'));
+            event.target.classList.add('selected');
+            
+            // Apply to Koko
+            applyCustomization();
+            
+            showCuteEffect(`✨ Koko looks amazing!`, 'sparkle-effect');
+        }
+
+        function applyCustomization() {
+            const koala = document.getElementById('cuteKoala');
+            const customization = cuteGameState.kokoCustomization;
+            
+            // This would apply visual changes to Koko
+            // For now, we'll show the effect
+            let description = 'Koko is wearing: ';
+            if (customization.hat) description += customization.hat + ' ';
+            if (customization.accessory) description += customization.accessory + ' ';
+            
+            showCuteEffect(description, 'cute-effect');
+        }
+
+        // Friends System
+        function openFriends() {
+            document.getElementById('friendsPanel').style.display = 'block';
+            populateFriendsList();
+            showCuteEffect('👫 Time to visit friends!', 'love-effect');
+        }
+
+        function closeFriends() {
+            document.getElementById('friendsPanel').style.display = 'none';
+        }
+
+        function populateFriendsList() {
+            const container = document.getElementById('friendsList');
+            container.innerHTML = '';
+            
+            cuteGameState.friends.forEach(friend => {
+                const friendDiv = document.createElement('div');
+                friendDiv.className = 'friend-item';
+                if (!friend.unlocked) friendDiv.style.opacity = '0.5';
+                
+                friendDiv.innerHTML = `
+                    <div class="friend-emoji">${friend.emoji}</div>
+                    <div class="friend-info">
+                        <div class="friend-name">${friend.name}</div>
+                        <div class="friend-friendship">Friendship: ${friend.friendship}%</div>
+                    </div>
+                `;
+                
+                if (friend.unlocked) {
+                    friendDiv.onclick = () => interactWithFriend(friend);
+                }
+                
+                container.appendChild(friendDiv);
+            });
+        }
+
+        function interactWithFriend(friend) {
+            friend.friendship = Math.min(100, friend.friendship + 10);
+            showCuteEffect(`💕 ${friend.name} friendship +10!`, 'love-effect');
+            populateFriendsList();
+            
+            // Unlock new friends based on friendship levels
+            if (friend.friendship >= 75) {
+                const nextFriend = cuteGameState.friends.find(f => !f.unlocked);
+                if (nextFriend) {
+                    nextFriend.unlocked = true;
+                    showCuteAchievement('New Friend!', `${nextFriend.name} wants to be friends!`);
+                }
+            }
+        }
+
+        // Photo Mode System
+        function openPhotoMode() {
+            document.getElementById('photoMode').style.display = 'block';
+            showCuteEffect('📸 Say cheese, Koko!', 'sparkle-effect');
+        }
+
+        function closePhotoMode() {
+            document.getElementById('photoMode').style.display = 'none';
+        }
+
+        function takePhoto() {
+            const timestamp = new Date().toLocaleString();
+            cuteGameState.photoAlbum.push({
+                timestamp: timestamp,
+                pose: cuteGameState.currentPose || 'happy',
+                customization: {...cuteGameState.kokoCustomization}
+            });
+            
+            showCuteEffect('📸 Photo saved! Koko looks adorable!', 'sparkle-effect');
+            createCameraFlash();
+        }
+
+        function changePose() {
+            const poses = ['🐨', '🤗', '😍', '🥰', '😊', '🤸'];
+            const newPose = poses[Math.floor(Math.random() * poses.length)];
+            document.getElementById('photoKoko').textContent = newPose;
+            cuteGameState.currentPose = newPose;
+            showCuteEffect('🤸 New pose!', 'happy-effect');
+        }
+
+        function addStickers() {
+            const photoPreview = document.getElementById('photoPreview');
+            const stickers = ['⭐', '💖', '🌈', '✨', '🎈', '🌸'];
+            
+            for (let i = 0; i < 3; i++) {
+                const sticker = document.createElement('div');
+                sticker.style.position = 'absolute';
+                sticker.style.fontSize = '20px';
+                sticker.style.left = Math.random() * 80 + '%';
+                sticker.style.top = Math.random() * 80 + '%';
+                sticker.style.pointerEvents = 'none';
+                sticker.textContent = stickers[Math.floor(Math.random() * stickers.length)];
+                photoPreview.appendChild(sticker);
+            }
+            
+            showCuteEffect('⭐ Stickers added!', 'sparkle-effect');
+        }
+
+        // Special Effects
+        function createBubbleEffect() {
+            const gameScreen = document.querySelector('.game-screen');
+            const bubbles = ['🫧', '💙', '🔵', '💎'];
+            
+            for (let i = 0; i < 10; i++) {
+                const bubble = document.createElement('div');
+                bubble.style.position = 'absolute';
+                bubble.style.fontSize = '16px';
+                bubble.style.left = Math.random() * 100 + '%';
+                bubble.style.top = '100%';
+                bubble.style.pointerEvents = 'none';
+                bubble.style.animation = 'bubbleFloat 3s ease-out forwards';
+                bubble.textContent = bubbles[Math.floor(Math.random() * bubbles.length)];
+                
+                gameScreen.appendChild(bubble);
+                
+                setTimeout(() => {
+                    if (bubble.parentNode) bubble.parentNode.removeChild(bubble);
+                }, 3000);
+            }
+        }
+
+        function createSleepEffect() {
+            const gameScreen = document.querySelector('.game-screen');
+            const sleepEmojis = ['😴', '💤', '🌙', '⭐'];
+            
+            for (let i = 0; i < 8; i++) {
+                const sleep = document.createElement('div');
+                sleep.style.position = 'absolute';
+                sleep.style.fontSize = '18px';
+                sleep.style.left = Math.random() * 100 + '%';
+                sleep.style.top = Math.random() * 100 + '%';
+                sleep.style.pointerEvents = 'none';
+                sleep.style.animation = 'sleepFloat 4s ease-in-out forwards';
+                sleep.textContent = sleepEmojis[Math.floor(Math.random() * sleepEmojis.length)];
+                
+                gameScreen.appendChild(sleep);
+                
+                setTimeout(() => {
+                    if (sleep.parentNode) sleep.parentNode.removeChild(sleep);
+                }, 4000);
+            }
+        }
+
+        function createCameraFlash() {
+            const gameScreen = document.querySelector('.game-screen');
+            const flash = document.createElement('div');
+            flash.style.position = 'absolute';
+            flash.style.top = '0';
+            flash.style.left = '0';
+            flash.style.width = '100%';
+            flash.style.height = '100%';
+            flash.style.background = 'rgba(255,255,255,0.8)';
+            flash.style.pointerEvents = 'none';
+            flash.style.animation = 'cameraFlash 0.3s ease-out';
+            
+            gameScreen.appendChild(flash);
+            
+            setTimeout(() => {
+                if (flash.parentNode) flash.parentNode.removeChild(flash);
+            }, 300);
+        }
+
+        // Add new animations
+        const advancedStyle = document.createElement('style');
+        advancedStyle.textContent = `
+            @keyframes bubbleFloat {
+                0% { transform: translateY(0) scale(0); opacity: 0; }
+                50% { transform: translateY(-200px) scale(1); opacity: 1; }
+                100% { transform: translateY(-400px) scale(0); opacity: 0; }
+            }
+            
+            @keyframes sleepFloat {
+                0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.7; }
+                50% { transform: translateY(-20px) rotate(10deg); opacity: 1; }
+            }
+            
+            @keyframes cameraFlash {
+                0% { opacity: 0; }
+                50% { opacity: 1; }
+                100% { opacity: 0; }
+            }
+        `;
+        document.head.appendChild(advancedStyle);
+
+        // Pet care degradation over time
+        setInterval(() => {
+            const now = Date.now();
+            const hourInMs = 60 * 60 * 1000;
+            
+            // Gradual degradation
+            if (now - cuteGameState.petCare.lastFed > hourInMs) {
+                cuteGameState.petCare.hunger = Math.max(0, cuteGameState.petCare.hunger - 1);
+            }
+            if (now - cuteGameState.petCare.lastBathed > 2 * hourInMs) {
+                cuteGameState.petCare.cleanliness = Math.max(0, cuteGameState.petCare.cleanliness - 1);
+            }
+            if (now - cuteGameState.petCare.lastSlept > 3 * hourInMs) {
+                cuteGameState.petCare.energy = Math.max(0, cuteGameState.petCare.energy - 1);
+            }
+            
+            updatePetCareDisplay();
+        }, 60000); // Check every minute
+
+        // Initialize pet care display
+        updatePetCareDisplay();
     </script>
 </body>
 </html>
