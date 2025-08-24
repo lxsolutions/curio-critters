@@ -130,3 +130,7 @@ The app is optimized for tablet testing and can be accessed via WiFi.
 
 **This is education disguised as the most engaging game ever created! 🎯**
 
+## License
+
+Licensed under MIT License. See [LICENSE.md](LICENSE.md).
+
