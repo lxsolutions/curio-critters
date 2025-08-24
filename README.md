@@ -47,14 +47,14 @@ The app is optimized for tablet testing and can be accessed via WiFi or public U
 1. Start the HTTP server in the project root:
    ```bash
    cd /workspace/curio-critters
-   python -m http.server 8082
+   python -m http.server 50468
    ```
 2. Get the local IP address:
    ```bash
    hostname -I | awk '{print $1}'
    ```
 3. Open Silk Browser on your Amazon Fire Tablet
-4. Navigate to `http://<local_ip>:8082` (replace `<local_ip>` with your server's IP)
+4. Navigate to `http://<local_ip>:50468` (replace `<local_ip>` with your server's IP)
 5. Add the app to home screen for PWA installation
 
 #### Testing Instructions

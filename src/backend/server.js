@@ -22,7 +22,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/quests', questRoutes);
 
 // Start server
-const PORT = process.env.PORT || 58649; // Use available port 54089
+const PORT = process.env.PORT || 54795;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
