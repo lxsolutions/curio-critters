@@ -12,6 +12,8 @@ Curio Critters is an educational RPG game that makes K-12 learning addictive and
 
 ## Getting Started
 
+**Note**: The repository has been updated with the full implementation. For QA and testing, clone this branch and follow the installation instructions below.
+
 ### Prerequisites
 
 - Node.js (v16 or higher)
