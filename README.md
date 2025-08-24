@@ -109,18 +109,30 @@ The app is optimized for tablet testing and can be accessed via WiFi.
 
 ## Deployment
 
+### Production Deployment
+
+The Curio Critters app is deployed to:
+
+- **Frontend:** [https://curio-critters-frontend.vercel.app](https://curio-critters-frontend.vercel.app)
+- **Backend:** [https://curio-critters-backend.onrender.com](https://curio-critters-backend.onrender.com)
+
+### Local Development
+
 1. Build the frontend for production:
    ```bash
    cd src/frontend
    npm run build
    ```
 
-2. Host the static frontend files (from `dist/` directory)
+2. Host the static frontend files (from `dist/` directory) using Vercel:
+   ```bash
+   vercel --prod
+   ```
 
-3. Run the backend server on your production environment:
+3. Deploy the backend to Render:
    ```bash
    cd src/backend
-   node server.js
+   render deploy
    ```
 
 ## Documentation
