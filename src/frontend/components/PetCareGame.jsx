@@ -8,13 +8,30 @@ import React, { useState, useEffect } from 'react';
 import learningEngine from '../utils/learningEngine';
 
 const PetCareGame = () => {
-  const [currentRoom, setCurrentRoom] = useState('garden');
-  const [creatureStats, setCreatureStats] = useState({
-    happiness: 85,
-    energy: 92,
-    magic: 78
-  });
-  const [messageIndex, setMessageIndex] = useState(0);
+  // Load from localStorage or use defaults
+  const loadPetData = () => {
+    const savedData = localStorage.getItem('petData');
+    if (savedData) {
+      return JSON.parse(savedData);
+    }
+    return {
+      currentRoom: 'garden',
+      creatureStats: {
+        happiness: 85,
+        energy: 92,
+        magic: 78
+      },
+      messageIndex: 0
+    };
+  };
+
+  const savePetData = (data) => {
+    localStorage.setItem('petData', JSON.stringify(data));
+  };
+
+  const [currentRoom, setCurrentRoom] = useState(loadPetData().currentRoom);
+  const [creatureStats, setCreatureStats] = useState(loadPetData().creatureStats);
+  const [messageIndex, setMessageIndex] = useState(loadPetData().messageIndex);
   const [currentMiniGame, setCurrentMiniGame] = useState(null);
 
   const speechMessages = [
@@ -37,10 +54,14 @@ const PetCareGame = () => {
 
   const petCreature = () => {
     // Increase happiness
-    setCreatureStats(prevStats => ({
-      ...prevStats,
-      happiness: Math.min(100, prevStats.happiness + 2)
-    }));
+    setCreatureStats(prevStats => {
+      const newStats = {
+        ...prevStats,
+        happiness: Math.min(100, prevStats.happiness + 2)
+      };
+      savePetData({ currentRoom, creatureStats: newStats, messageIndex });
+      return newStats;
+    });
 
     showNotification("Sparkle loves your pets! 💕");
   };
@@ -79,6 +100,9 @@ const PetCareGame = () => {
     setTimeout(() => {
       alert(newMessage); // Temporary - will replace with proper UI
     }, 500);
+
+    // Save current state
+    savePetData({ currentRoom: room, creatureStats, messageIndex });
   };
 
   const showNotification = (message) => {
@@ -205,6 +229,7 @@ const PetCareGame = () => {
         <div
           className="creature text-8xl cursor-pointer mx-auto"
           onClick={petCreature}
+          onTouchStart={petCreature} // Add touch support for tablets
         >
           🐉
         </div>
@@ -217,12 +242,13 @@ const PetCareGame = () => {
       </div>
 
       {/* Bottom Navigation */}
-      <div className="bottom-nav flex justify-around items-center bg-gray-100 p-4 rounded-lg shadow-inner">
+      <div className="bottom-nav flex justify-around items-center bg-gray-100 p-4 rounded-lg shadow-inner sm:flex-col md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
         {['kitchen', 'bathroom', 'playroom', 'bedroom', 'garden'].map((room) => (
           <button
             key={room}
-            className="nav-button flex flex-col items-center px-2 py-3 rounded-lg hover:bg-indigo-100 transition-all"
+            className="nav-button flex flex-col items-center px-2 py-3 rounded-lg hover:bg-indigo-100 transition-all mb-2 sm:mb-4 md:mb-0"
             onClick={() => switchRoom(room)}
+            onTouchStart={() => switchRoom(room)} // Add touch support for tablets
           >
             <div className="nav-icon text-2xl">{getRoomIcon(room)}</div>
             <div className="nav-label text-xs font-bold mt-1">{room.charAt(0).toUpperCase() + room.slice(1)}</div>
@@ -252,7 +278,10 @@ const PetCareGame = () => {
                   className={`mini-game-button p-3 rounded-lg transition-all ${
                     index === currentMiniGame.correct ? 'bg-green-500 hover:bg-green-600' : 'bg-blue-500 hover:bg-blue-600'
                   } text-white font-bold`}
+
                   onClick={() => handleAnswerSelection(index)}
+                  onTouchStart={() => handleAnswerSelection(index)} // Add touch support for tablets
+
                 >
                   {answer}
                 </button>
@@ -319,6 +348,8 @@ const getRoomIcon = (room) => {
       if (currentMiniGame.onCorrect) {
         currentMiniGame.onCorrect();
       }
+      // Save progress after correct answer
+      savePetData({ currentRoom, creatureStats, messageIndex });
     } else {
       message += "❌ Incorrect. Try again!";
     }

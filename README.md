@@ -39,6 +39,38 @@ Curio Critters is an educational RPG game that makes K-12 learning addictive and
 
 4. Open your browser to `http://localhost:5179` (port may vary)
 
+### For Amazon Fire Tablet QA Testing
+
+The app is optimized for tablet testing and can be accessed via WiFi or public URL.
+
+#### Option 1: Local HTTP Server Access
+1. Start the HTTP server in the project root:
+   ```bash
+   cd /workspace/curio-critters
+   python -m http.server 8082
+   ```
+2. Get the local IP address:
+   ```bash
+   hostname -I | awk '{print $1}'
+   ```
+3. Open Silk Browser on your Amazon Fire Tablet
+4. Navigate to `http://<local_ip>:8082` (replace `<local_ip>` with your server's IP)
+5. Add the app to home screen for PWA installation
+
+#### Testing Instructions
+1. **Login**: Test kid login with username and grade selection (stores in localStorage)
+2. **Pet Care**: Navigate to pet care section, try feed/play buttons that trigger learning mini-games
+3. **Quests**: Complete educational quests with trivia questions from various subjects
+4. **Offline Mode**: Disconnect WiFi and verify functionality persists (localStorage + service worker caching)
+5. **PWA Installation**: Add to home screen in Silk Browser for standalone app experience
+
+#### Verification Steps
+- ✅ Kid login works and stores data locally
+- ✅ Pet care mini-games trigger educational content
+- ✅ Quests present subject-specific questions with rewards
+- ✅ Offline mode maintains progress and functionality
+- ✅ PWA installs correctly on Amazon Fire Tablet
+
 ### 🏆 Revolutionary Features
 - Diablo II-style progression system
 - Complete stealth learning framework

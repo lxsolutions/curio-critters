@@ -7,7 +7,9 @@ const ASSETS_TO_CACHE = [
   '/main.jsx',
   '/output.css',
   '/assets/icons/icon-192x192.png',
-  '/assets/icons/icon-512x512.png'
+  '/assets/icons/icon-512x512.png',
+  '/data/questions/math.json',
+  '/data/questions/science.json'
 ];
 
 self.addEventListener('install', (event) => {

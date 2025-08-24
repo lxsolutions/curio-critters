@@ -168,6 +168,7 @@ const RPGAdventure = () => {
         <div
           className="creature text-8xl cursor-pointer mx-auto text-yellow-300"
           onClick={petCreature}
+          onTouchStart={petCreature} // Add touch support for tablets
         >
           🐉
         </div>
@@ -187,6 +188,7 @@ const RPGAdventure = () => {
                   key={index}
                   className="quest-button bg-indigo-700 text-white px-3 py-2 rounded-lg hover:bg-indigo-600 transition-all"
                   onClick={() => startQuest(quest)}
+                  onTouchStart={() => startQuest(quest)} // Add touch support for tablets
                 >
                   {quest.title}
                 </button>
@@ -207,6 +209,7 @@ const RPGAdventure = () => {
                   key={index}
                   className="answer-button bg-indigo-700 text-white px-3 py-2 rounded-lg hover:bg-indigo-600 transition-all"
                   onClick={() => selectAnswer(index)}
+                  onTouchStart={() => selectAnswer(index)} // Add touch support for tablets
                 >
                   {answer}
                 </button>
