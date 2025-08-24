@@ -1,6 +1,8 @@
 
 # Curio Critters - Educational RPG Game
 
+[![CI](https://github.com/lxsolutions/curio-critters/actions/workflows/ci.yml/badge.svg)](https://github.com/lxsolutions/curio-critters/actions/workflows/ci.yml) [![Release](https://img.shields.io/github/v/release/lxsolutions/curio-critters)](https://github.com/lxsolutions/curio-critters/releases)
+
 Curio Critters is an educational RPG game that makes K-12 learning addictive and fun. The game integrates Diablo II-style progression, Fluvsies-inspired pet care, stealth learning frameworks, and epic adventures covering core subjects.
 
 ## Features
