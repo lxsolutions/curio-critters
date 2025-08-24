@@ -1,0 +1,76 @@
+
+
+
+[
+  {
+    "id": "math-001",
+    "subject": "Math",
+    "topic": "Addition",
+    "gradeLevel": ["K", "1"],
+    "question": "What is 2 + 3?",
+    "answers": [
+      { "text": "5", "correct": true },
+      { "text": "4", "correct": false },
+      { "text": "6", "correct": false }
+    ],
+    "difficulty": "easy",
+    "tags": ["addition", "basic_math"]
+  },
+  {
+    "id": "math-002",
+    "subject": "Math",
+    "topic": "Subtraction",
+    "gradeLevel": ["1", "2"],
+    "question": "What is 7 - 4?",
+    "answers": [
+      { "text": "3", "correct": true },
+      { "text": "4", "correct": false },
+      { "text": "5", "correct": false }
+    ],
+    "difficulty": "easy",
+    "tags": ["subtraction"]
+  },
+  {
+    "id": "math-003",
+    "subject": "Math",
+    "topic": "Multiplication",
+    "gradeLevel": ["2", "3"],
+    "question": "What is 3 × 4?",
+    "answers": [
+      { "text": "12", "correct": true },
+      { "text": "9", "correct": false },
+      { "text": "16", "correct": false }
+    ],
+    "difficulty": "medium",
+    "tags": ["multiplication"]
+  },
+  {
+    "id": "math-004",
+    "subject": "Math",
+    "topic": "Division",
+    "gradeLevel": ["3", "4"],
+    "question": "What is 20 ÷ 5?",
+    "answers": [
+      { "text": "4", "correct": true },
+      { "text": "5", "correct": false },
+      { "text": "6", "correct": false }
+    ],
+    "difficulty": "medium",
+    "tags": ["division"]
+  },
+  {
+    "id": "math-005",
+    "subject": "Math",
+    "topic": "Fractions",
+    "gradeLevel": ["4", "5"],
+    "question": "What is 1/2 + 1/4?",
+    "answers": [
+      { "text": "3/4", "correct": true },
+      { "text": "1/4", "correct": false },
+      { "text": "2/4", "correct": false }
+    ],
+    "difficulty": "hard",
+    "tags": ["fractions"]
+  }
+]
+

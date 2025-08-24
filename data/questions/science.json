@@ -1,0 +1,50 @@
+
+
+
+
+[
+  {
+    "id": "science-001",
+    "subject": "Science",
+    "topic": "Biology",
+    "gradeLevel": ["K", "1"],
+    "question": "What do plants need to grow?",
+    "answers": [
+      { "text": "Sunlight, water, and soil", "correct": true },
+      { "text": "Only sunlight", "correct": false },
+      { "text": "Only water", "correct": false }
+    ],
+    "difficulty": "easy",
+    "tags": ["biology", "plants"]
+  },
+  {
+    "id": "science-002",
+    "subject": "Science",
+    "topic": "Physics",
+    "gradeLevel": ["3", "4"],
+    "question": "What makes things fall to the ground?",
+    "answers": [
+      { "text": "Gravity", "correct": true },
+      { "text": "Wind", "correct": false },
+      { "text": "Magic", "correct": false }
+    ],
+    "difficulty": "medium",
+    "tags": ["physics"]
+  },
+  {
+    "id": "science-003",
+    "subject": "Science",
+    "topic": "Chemistry",
+    "gradeLevel": ["5", "6"],
+    "question": "What happens when you mix red and blue?",
+    "answers": [
+      { "text": "Purple", "correct": true },
+      { "text": "Green", "correct": false },
+      { "text": "Yellow", "correct": false }
+    ],
+    "difficulty": "hard",
+    "tags": ["chemistry", "color_mixing"]
+  }
+]
+
+
