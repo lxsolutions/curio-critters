@@ -2,7 +2,6 @@
 
 
 import React, { useEffect, useRef } from 'react';
-import { get, set } from "idb-keyval";
 import soundEngine from '../utils/soundEngine';
 import animationEngine from '../utils/animationEngine';
 
@@ -43,71 +42,13 @@ const PetCareGame = () => {
     // Logic to update speech bubble text
   };
 
-  const saveProgress = async (data) => {
-    try {
-      if (!navigator.onLine) {
-        // Store progress in IndexedDB for offline sync
-        await set("pendingProgress", data);
-      } else {
-        // Send to server
-        await fetch('/api/progress/1', {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(data)
-        });
-      }
-    } catch (error) {
-      console.error('Error saving progress:', error);
-      // Fallback to IndexedDB if online save fails
-      await set("pendingProgress", data);
-    }
-  };
-
-  useEffect(() => {
-    // Sync any pending progress when back online
-    const handleOnline = async () => {
-      const pending = await get("pendingProgress");
-      if (pending) {
-        try {
-          await fetch('/api/progress/1', {
-            method: 'PUT',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(pending)
-          });
-          // Clear pending progress after successful sync
-          await del("pendingProgress");
-        } catch (error) {
-          console.error('Error syncing pending progress:', error);
-        }
-      }
-    };
-
-    window.addEventListener('online', handleOnline);
-
-    return () => {
-      window.removeEventListener('online', handleOnline);
-    };
-  }, []);
-
-  const handleAnswerSelection = async (isCorrect) => {
+  const handleAnswerSelection = (isCorrect) => {
     if (isCorrect) {
       soundEngine.play('correct');
       animationEngine.createSparkles();
-
-      // Save progress
-      const progressData = { critter_state: 'happy', level: 2 };
-      await saveProgress(progressData);
     } else {
       soundEngine.play('wrong');
       animationEngine.shakeElement(answerButtonRefs.current[0]);
-
-      // Save progress
-      const progressData = { critter_state: 'sad', level: 1 };
-      await saveProgress(progressData);
     }
   };
 
@@ -120,7 +61,6 @@ const PetCareGame = () => {
         <p>Magic: {creature.magic}</p>
       </div>
       <div className="creature-area">
-        <div className="room-info">Current room: Living Room</div>
         <div className="creature">{currentCreature.emoji}</div>
         <div className="speech-bubble">{currentSpeechBubble}</div>
         <div className="sparkles-container" id="sparkleContainer"></div>

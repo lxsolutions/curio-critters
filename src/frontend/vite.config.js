@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [react()],
   server: {
     host: true, // This makes the server accessible externally
-    port: 3000,
+    port: 50390,
     open: false // Don't automatically open browser
   },
   build: {
