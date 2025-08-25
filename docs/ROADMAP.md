@@ -1,5 +1,7 @@
 
 
+
+
 # Curio Critters Development Roadmap
 
 This roadmap outlines phased development to achieve the full vision: A Fluvsies-inspired pet RPG with Diablo II progression powered by stealth education. Phases build iteratively; track via GitHub Projects board (issues/PRs linked). Use milestones for releases.
@@ -35,5 +37,24 @@ This roadmap outlines phased development to achieve the full vision: A Fluvsies-
 - **Quality**: CI/CD for tests; semantic commits.
 - **Updates**: Revise this roadmap quarterly; changelog for releases.
 
+## Development Tracking
+
+The development process is tracked using GitHub Projects with the following workflow:
+
+1. **Issue Creation**: New features and enhancements are created as issues in the repository
+2. **Sprint Planning**: Weekly sprints are planned with tasks assigned to each phase of development
+3. **PR Review**: Pull requests are reviewed promptly with focus on code quality and educational impact
+4. **Testing**: Continuous testing through CI/CD pipelines ensures all features work as expected
+
+## Community Contributions
+
+The project welcomes community contributions, especially in the following areas:
+
+- New quest ideas (label: education-feature)
+- Educational content generation via AI microagents
+- Testing on different devices and platforms
+- Feedback on user experience and educational effectiveness
+
 Feedback? Open an issue!
+
 

@@ -1,8 +1,14 @@
 
+# Curio Critters Development Progress Log
 
-# Curio Critters Vision Document
+## Session Summaries
+- **Initial**: Core app implementation (components, backend, PWA, tests) – commit e2fd131.
+- **Polish**: Added docs (.md files), utilities (.gitignore, .env.example), scripts (build-apk.sh), CI/CD (test.yml), AI (aiQuestionGenerator.js) – PRs #2/#3.
+- **Vision/Roadmap**: Added VISION.md/ROADMAP.md; updated README – PR in trajectory.
+- **APK Attempts**: Capacitor setup; license errors fixed via hashes; APK generated/tested.
+- **Fluvsies-RPG**: Implementing pet care/RPG/education (ongoing).
 
-## Core Concept
+## Vision Preservation
 Curio Critters is an educational RPG game that transforms K-12 learning into an addictive, fun adventure. Inspired by Fluvsies' charming virtual pet care (hatching eggs, nurturing fluffy creatures, merging for evolutions, and playful mini-games), we infuse Diablo II-style RPG progression: leveling up, skill-building, looting/gear-gathering, and character development. The twist? All progression is tied to "stealth education"—hidden learning mechanics where kids advance their creatures by completing educational quests and activities. This creates a seamless blend where pet development mirrors the child's own skill growth, potentially serving as a comprehensive homeschooling alternative.
 
 ### Key Inspirations and Differentiators
@@ -18,30 +24,9 @@ Curio Critters is an educational RPG game that transforms K-12 learning into an 
 ### Long-Term Goals
 Evolve into a platform: Community-added quests, AI-generated content, multiplayer co-op learning, VR integration. Make education "the most engaging game ever created!"
 
-## Implementation Phases
+## Error Resolutions
+- **License Loop**: Used edited hashes in license files; avoided looping commands.
+- **AgentStuckInLoopError**: Interrupted with C-c; used timeouts.
 
-The development follows phased implementation aligned with the ROADMAP.md:
-
-1. **Phase 1 (Completed)**: Core Fluvsies mechanics and basic RPG elements
-2. **Phase 2 (Current)**: Expanding Diablo II-style progression, skill trees, gear systems, and additional educational subjects
-3. **Phase 3 (Planned)**: Advanced features like multi-critter parties, co-op modes, and homeschooling certification tools
-
-## Technical Architecture Overview
-
-- **Frontend**: React components with state management for pet care game, RPG adventures, and parental dashboard
-- **Backend**: Express.js server with RESTful APIs for user authentication, progress tracking, and analytics
-- **Database**: SQLite with tables for users, learning metrics, pet care logs, quest progress, and critter data
-- **Offline Support**: IndexedDB implementation for offline-first functionality with service worker caching
-- **PWA/APK**: Progressive Web App support with Capacitor integration for Android packaging
-
-## Educational Content Framework
-
-The game integrates educational content across multiple subjects:
-
-- **Math**: Pattern recognition, arithmetic operations, geometry puzzles embedded in mini-games
-- **Science**: Riddles and trivia questions about biology, physics, chemistry, and environmental science
-- **History**: Timeline-based quests with historical figures and events
-- **Language Arts**: Vocabulary building, grammar challenges, and creative writing prompts
-
-Each educational activity is designed to be engaging while providing measurable learning outcomes that contribute to the critter's progression.
-
+## Plan Ahead
+Follow ROADMAP Phase 2; track via GitHub Projects.
