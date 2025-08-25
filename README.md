@@ -144,6 +144,10 @@ The Curio Critters app is deployed to:
 
 **This is education disguised as the most engaging game ever created! 🎯**
 
+## Vision and Roadmap
+
+For the game's conceptual vision and development plans, see [VISION.md](docs/VISION.md) and [ROADMAP.md](docs/ROADMAP.md).
+
 ## License
 
 Licensed under MIT License. See [LICENSE.md](LICENSE.md).
