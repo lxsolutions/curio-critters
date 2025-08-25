@@ -22,11 +22,13 @@ app.get('/api', (req, res) => {
 });
 
 // API routes
+const critterRoutes = require('./routes/critters');
 app.use('/api/auth', authRoutes);
 app.use('/api/quests', questRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/progress', progressRoutes);
 app.use('/api/analytics', analyticsRoutes);
+app.use('/api/critters', critterRoutes);
 
 // Start server
 const PORT = process.env.PORT || 56456;

@@ -13,12 +13,18 @@ This roadmap outlines phased development to achieve the full vision: A Fluvsies-
 - Tech: React frontend, Express backend, PWA/APK support, tests.
 - Status: Done (commit e2fd131); all features passing tests.
 
-## Phase 2: RPG Integration and Education Depth (Next - v1.1, Target: Q4 2025)
+## Phase 2: RPG Integration and Education Depth (In Progress - v1.1, Target: Q4 2025)
 - Expand Diablo II elements: Skill trees for critters (e.g., "math branch" unlocks abilities), gear/loot system (educational rewards).
+  - **Status**: Implementing skill tree components and XP progression
 - More subjects: Add history/language quests; dynamic generation via AI microagent.
+  - **Status**: Adding history JSON data, integrating with question generator
 - Enhancements: Offline sync improvements, parental dashboard expansions (curriculum reports).
+  - **Status**: Updating IndexedDB schema for new educational data types
 - Testing: E2E with Cypress; kid QA on Fire Tablet APK.
-- Milestones: #1 - RPG mechanics; #2 - New subjects.
+  - **Status**: Pending implementation completion
+- Milestones:
+  - #1 - RPG mechanics ✓ (In progress)
+  - #2 - New subjects ✓ (History content added)
 
 ## Phase 3: Polish and Expansion (v2.0, Target: Q1 2026)
 - Advanced features: Multi-critter parties, co-op modes, VR/AR hints.

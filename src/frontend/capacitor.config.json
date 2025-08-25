@@ -1,5 +1,5 @@
 {
-  "appId": "com.lxsolutions.curiocritters",
-  "appName": "\fcd /workspace/curio-critters/src/frontend && echo \"y\" | npx cap init",
+  "appId": "dist",
+  "appName": "com.lxsolutions.curiocritters",
   "webDir": "dist"
 }

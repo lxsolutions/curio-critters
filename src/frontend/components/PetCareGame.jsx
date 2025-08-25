@@ -8,10 +8,16 @@ import animationEngine from '../utils/animationEngine';
 
 const PetCareGame = () => {
   const [creature, setCreature] = useState({
+    id: null,
+    name: 'Mystery Critter',
+    type: 'fluffy_cat', // default
     happiness: 85,
     energy: 70,
     magic: 90,
-    emoji: '🐨'
+    emoji: '🐱✨',
+    level: 1,
+    xp: 0,
+    eggs: []
   });
   const [currentSpeechBubble, setCurrentSpeechBubble] = useState("Hello!");
   const [answers, setAnswers] = useState([
@@ -231,6 +237,18 @@ const calculateDifficulty = (history, currentLevel) => {
   if (history.filter(h => h.isCorrect).length / history.length < 0.4) return Math.max(1, currentLevel - 1); // Decrease for poor performance
 
   return currentLevel;
+};
+
+// Helper function to get critter emoji based on type
+const getCritterEmoji = (type) => {
+  switch(type) {
+    case 'fluffy_cat': return '🐱✨';
+    case 'unicorn_panda': return '🦄🐼';
+    case 'dragon_bunny': return '🐇🔥';
+    case 'rainbow_squirrel': return '🐿️🌈';
+    case 'mermaid_fox': return '🦊🧜‍♀️';
+    default: return '🐨'; // Default emoji
+  }
 };
 
 export default PetCareGame;

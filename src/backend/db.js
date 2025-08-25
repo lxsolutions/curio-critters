@@ -52,6 +52,38 @@ db.exec(`
   )
 `);
 
+db.exec(`
+  CREATE TABLE IF NOT EXISTS critters (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    name TEXT NOT NULL,
+    type TEXT NOT NULL, -- e.g., 'fluffy_cat', 'unicorn_panda'
+    happiness INTEGER DEFAULT 50,
+    energy INTEGER DEFAULT 70,
+    magic INTEGER DEFAULT 90,
+    level INTEGER DEFAULT 1,
+    xp INTEGER DEFAULT 0,
+    gear JSON DEFAULT '{}',
+    skills JSON DEFAULT '[]',
+    merged BOOLEAN DEFAULT FALSE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+  )
+`);
+
+db.exec(`
+  CREATE TABLE IF NOT EXISTS critter_eggs (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    egg_type TEXT NOT NULL, -- e.g., 'common', 'rare'
+    hatch_timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP + INTERVAL '5 minutes',
+    hatched BOOLEAN DEFAULT FALSE,
+    critter_id INTEGER,
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (critter_id) REFERENCES critters(id)
+  )
+`);
+
 // Helper functions
 function getUserByUsername(username) {
   const stmt = db.prepare('SELECT * FROM users WHERE username = ?');
@@ -89,6 +121,57 @@ function getLearningMetricsForUser(userId) {
   return stmt.all(userId);
 }
 
+// Critter helper functions
+function addCritter(userId, name, type) {
+  const stmt = db.prepare('INSERT INTO critters (user_id, name, type) VALUES (?, ?, ?)');
+  const info = stmt.run(userId, name, type);
+  return getCritterById(info.lastInsertRowid);
+}
+
+function getCritterById(id) {
+  const stmt = db.prepare('SELECT * FROM critters WHERE id = ?');
+  return stmt.get(id);
+}
+
+function updateCritterStats(critterId, stats) {
+  const { happiness, energy, magic, xp } = stats;
+  const stmt = db.prepare(`
+    UPDATE critters
+    SET happiness = ?, energy = ?, magic = ?, xp = ?
+    WHERE id = ?`);
+  stmt.run(happiness, energy, magic, xp, critterId);
+}
+
+function getCrittersForUser(userId) {
+  const stmt = db.prepare('SELECT * FROM critters WHERE user_id = ?');
+  return stmt.all(userId);
+}
+
+// Egg helper functions
+function addEgg(userId, eggType) {
+  const stmt = db.prepare('INSERT INTO critter_eggs (user_id, egg_type) VALUES (?, ?)');
+  const info = stmt.run(userId, eggType);
+  return getEggById(info.lastInsertRowid);
+}
+
+function getEggById(id) {
+  const stmt = db.prepare('SELECT * FROM critter_eggs WHERE id = ?');
+  return stmt.get(id);
+}
+
+function hatchEgg(eggId, critterId) {
+  // Update the egg to mark it as hatched and link to the new critter
+  const stmt1 = db.prepare('UPDATE critter_eggs SET hatched = TRUE, critter_id = ? WHERE id = ?');
+  stmt1.run(critterId, eggId);
+
+  return getEggById(eggId);
+}
+
+function getUnhatchedEggsForUser(userId) {
+  const stmt = db.prepare('SELECT * FROM critter_eggs WHERE user_id = ? AND hatched = FALSE ORDER BY hatch_timestamp ASC');
+  return stmt.all(userId);
+}
+
 module.exports = {
   db,
   getUserByUsername,
@@ -96,7 +179,19 @@ module.exports = {
   getUserById,
   updateUserProgress,
   logLearningMetric,
-  getLearningMetricsForUser
+  getLearningMetricsForUser,
+
+  // Critter functions
+  addCritter,
+  getCritterById,
+  updateCritterStats,
+  getCrittersForUser,
+
+  // Egg functions
+  addEgg,
+  getEggById,
+  hatchEgg,
+  getUnhatchedEggsForUser
 };
 
 
