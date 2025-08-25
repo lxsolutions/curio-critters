@@ -7,6 +7,7 @@
 import React, { useState, useEffect } from 'react';
 import { get, set } from "idb-keyval";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import jsPDF from 'jspdf';
 
 const ParentalDashboard = () => {
   const [userData, setUserData] = useState(null);
@@ -123,6 +124,75 @@ const ParentalDashboard = () => {
       window.removeEventListener('online', handleOnline);
     };
   }, []);
+
+
+
+  // Export learning progress as PDF certificate
+  const exportProgressToPDF = () => {
+    if (!learningMetrics.length) {
+      alert("No learning data available to export!");
+      return;
+    }
+
+    const doc = new jsPDF();
+    doc.setFontSize(24);
+    doc.text('Curio Critters Learning Progress Report', 10, 20);
+
+    // Add student info
+    if (userData) {
+      doc.setFontSize(16);
+      doc.text(`Student: ${userData.username}`, 10, 35);
+      const today = new Date().toLocaleDateString();
+      doc.text(`Report Date: ${today}`, 10, 42);
+    }
+
+    // Add progress summary
+    doc.setFontSize(18);
+    doc.text('Learning Progress Summary', 10, 60);
+
+    let yPos = 75;
+    learningMetrics.forEach((metric, index) => {
+      const date = new Date(metric.date).toLocaleDateString();
+      const progressText = `Quest ${index + 1}: ${date} - ${metric.questName}`;
+      doc.setFontSize(12);
+      doc.text(progressText, 10, yPos);
+
+      // Add progress bar
+      const xpProgress = (metric.xp / metric.requiredXP) * 50;
+      doc.rect(60, yPos - 3, 50, 8); // Outline rectangle
+      if (xpProgress > 0) {
+        doc.setFillColor(41, 128, 185); // Blue color
+        doc.rect(60, yPos - 3, xpProgress, 8, 'F'); // Filled progress bar
+      }
+
+      yPos += 15;
+    });
+
+    // Add homeschool alignment section
+    if (learningMetrics.length > 0) {
+      doc.setFontSize(14);
+      doc.text('Common Core Alignment:', 10, yPos + 10);
+
+      const standards = [
+        "CCSS.ELA-LITERACY.RL.3.1 - Ask and answer questions to demonstrate understanding of a text.",
+        "CCSS.MATH.CONTENT.3.OA.A.1 - Interpret products of whole numbers."
+      ];
+
+      doc.setFontSize(10);
+      standards.forEach((standard, i) => {
+        doc.text(`- ${standard}`, 20, yPos + 25 + (i * 8));
+      });
+    }
+
+    // Save the PDF
+    const filename = `CurioCritters_Report_${userData?.username || 'Student'}.pdf`;
+    doc.save(filename);
+
+    alert('Learning progress report exported successfully!');
+  };
+
+
+
 
   // Render loading state while data is being loaded
   if (!userData) {
@@ -274,7 +344,45 @@ const ParentalDashboard = () => {
                           </p>
         )}
       </div>
+
+
+
+
+
+      {/* Homeschool Tools */}
+      <div className="homeschool-tools mt-8 p-6 bg-white rounded-lg shadow-xl">
+        <h2 className="text-xl font-semibold text-indigo-700 mb-4">Homeschool Tools</h2>
+        <button
+          onClick={exportProgressToPDF}
+          className="bg-gradient-to-r from-green-500 to-teal-600 hover:from-green-600 hover:to-teal-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition-all duration-300 transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+        >
+          Export Progress Report (PDF)
+        </button>
+      </div>
+
+
+
+
+
     </div>
+
+
+
+
+      {/* Homeschool Tools */}
+      <div className="homeschool-tools mt-8 p-6 bg-white rounded-lg shadow-xl">
+        <h2 className="text-xl font-semibold text-indigo-700 mb-4">Homeschool Tools</h2>
+        <button
+          onClick={exportProgressToPDF}
+          className="bg-gradient-to-r from-green-500 to-teal-600 hover:from-green-600 hover:to-teal-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition-all duration-300 transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+        >
+          Export Progress Report (PDF)
+        </button>
+      </div>
+
+
+
+
   );
 };
 

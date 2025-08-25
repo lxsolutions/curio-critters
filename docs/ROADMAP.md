@@ -27,9 +27,9 @@ This roadmap outlines phased development to achieve the full vision: A Fluvsies-
   - #2 - New subjects ✓ (History content added)
 
 ## Phase 3: Polish and Expansion (v2.0, Target: Q1 2026)
-- Advanced features: Multi-critter parties, co-op modes, VR/AR hints.
+- Advanced features: Multi-critter parties ✓, co-op modes via WebSockets ✓
 - Community: Open for contributions (new quests via PRs); integrate feedback.
-- Homeschooling tools: Certification exports, adaptive curricula based on standards (e.g., Common Core).
+- Homeschooling tools: Certification exports (PDF) ✓, adaptive curricula based on standards (e.g., Common Core).
 - Deployment: App stores submission; web version scaling.
 
 ## Phase 4: Long-Term Evolution (Ongoing)

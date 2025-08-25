@@ -84,7 +84,7 @@ db.exec(`
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id INTEGER NOT NULL,
     egg_type TEXT NOT NULL, -- e.g., 'common', 'rare'
-    hatch_timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP + INTERVAL '5 minutes',
+    hatch_timestamp TIMESTAMP, -- Will be set programmatically in application code
     hatched BOOLEAN DEFAULT FALSE,
     critter_id INTEGER,
     FOREIGN KEY (user_id) REFERENCES users(id),
@@ -174,7 +174,7 @@ function getCrittersForUser(userId) {
 
 // Egg helper functions
 function addEgg(userId, eggType) {
-  const stmt = db.prepare('INSERT INTO critter_eggs (user_id, egg_type) VALUES (?, ?)');
+  const stmt = db.prepare('INSERT INTO critter_eggs (user_id, egg_type, hatch_timestamp) VALUES (?, ?, ?)');
   const info = stmt.run(userId, eggType);
   return getEggById(info.lastInsertRowid);
 }

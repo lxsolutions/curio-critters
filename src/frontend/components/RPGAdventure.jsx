@@ -5,12 +5,37 @@ import React, { useState, useEffect } from 'react';
 import { get, set } from "idb-keyval";
 import soundEngine from '../utils/soundEngine';
 import animationEngine from '../utils/animationEngine';
+import * as WebSocketService from '../services/websocket';
 
 const RPGAdventure = () => {
   // Initialize sound and animation engines when component mounts
   useEffect(() => {
     soundEngine.init();
-  }, []);
+
+    // Connect to WebSocket for co-op mode if enabled
+    const userData = JSON.parse(localStorage.getItem('user'));
+    if (coopEnabled && roomId && userData?.id) {
+      WebSocketService.connectWebSocket(userData.id, roomId);
+    }
+
+
+      // Set up message handler for progress updates
+      WebSocketService.socket.onmessage = (event) => {
+        const data = JSON.parse(event.data);
+        console.log('Co-op update received:', data);
+
+        if (data.type === 'PROGRESS_UPDATE' && data.progress) {
+          setGameState(prevState => ({
+            ...prevState,
+            xp: Math.max(prevState.xp, data.progress.xp),
+            level: Math.max(prevState.level, data.progress.level)
+          }));
+        }
+      };
+
+
+
+  }, [coopEnabled, roomId]);
 
   // Save quest progress with offline support
   const saveQuest = async (data) => {
@@ -71,6 +96,13 @@ const RPGAdventure = () => {
     currentLocation: 'forest',
     creatureType: 'dragon'
   });
+
+
+  // Co-op mode state
+  const [coopEnabled, setCoopEnabled] = useState(false);
+  const [roomId, setRoomId] = useState(null);
+
+
 
   const [currentQuest, setCurrentQuest] = useState(null);
   const [questsCompleted, setQuestsCompleted] = useState(0);

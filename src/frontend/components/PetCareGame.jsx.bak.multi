@@ -7,11 +7,20 @@ import soundEngine from '../utils/soundEngine';
 import animationEngine from '../utils/animationEngine';
 
 const PetCareGame = () => {
-  const [critters, setCritters] = useState([]);
-  const [activeCritterIndex, setActiveCritterIndex] = useState(0);
-  const activeCritter = critters[activeCritterIndex];
-
-  // Load user progress from IndexedDB or backend
+  const [creature, setCreature] = useState({
+    id: null,
+    name: 'Mystery Critter',
+    type: 'fluffy_cat', // default
+    happiness: 85,
+    energy: 70,
+    magic: 90,
+    emoji: '🐱✨',
+    level: 1,
+    xp: 0,
+    eggs: [],
+    gear: {},
+    skills: []
+  });
   const [currentSpeechBubble, setCurrentSpeechBubble] = useState("Hello!");
   const [answers, setAnswers] = useState([
     { text: "Feed", isCorrect: true },
@@ -53,28 +62,33 @@ const PetCareGame = () => {
               if (critterResponse.ok) {
                 const critters = await critterResponse.json();
                 if (critters.length > 0) {
-                  // Set all critters and make the first one active
-                  setCritters(critters.map(c => ({
-                    ...c,
-                    emoji: getCritterEmoji(c.type)
-                  })));
-                  setActiveCritterIndex(0);
+                  setCreature(prev => ({
+                    ...prev,
+                    id: critters[0].id,
+                    name: critters[0].name,
+                    type: critters[0].type,
+                    happiness: critters[0].happiness,
+                    energy: critters[0].energy,
+                    magic: critters[0].magic,
+                    level: critters[0].level,
+                    xp: critters[0].xp,
+                    gear: critters[0].gear || {},
+                    skills: critters[0].skills || [],
+                    emoji: getCritterEmoji(critters[0].type)
+                  }));
                 }
               }
 
-              // Load eggs from backend for all critters
+              // Load eggs from backend
               const eggResponse = await fetch(`/api/users/${userData.userId}/eggs`, {
                 headers: { 'Authorization': `Bearer ${userData.token}` }
               });
               if (eggResponse.ok) {
                 const eggs = await eggResponse.json();
-                // Update each critter with their respective eggs
-                setCritters(prev => prev.map(critter =>
-                  ({
-                    ...critter,
-                    eggs: eggs.filter(egg => !egg.hatched && (!critter.eggs || !critter.eggs.find(e => e.id === egg.id)))
-                  })
-                ));
+                setCreature(prev => ({
+                  ...prev,
+                  eggs: eggs.filter(egg => !egg.hatched)
+                }));
               }
 
             } else {
@@ -86,12 +100,13 @@ const PetCareGame = () => {
               });
               if (response.ok) {
                 const newCritter = await response.json();
-                setCritters([{
-                  ...newCritter,
-                  emoji: getCritterEmoji(newCritter.type),
-                  eggs: []
-                }]);
-                setActiveCritterIndex(0);
+                setCreature(prev => ({
+                  ...prev,
+                  id: newCritter.id,
+                  name: newCritter.name,
+                  type: newCritter.type,
+                  emoji: getCritterEmoji(newCritter.type)
+                }));
               }
             }
           } catch (error) {
@@ -126,43 +141,36 @@ const PetCareGame = () => {
   const handleAnswerSelection = async (isCorrect) => {
     setCurrentSpeechBubble(isCorrect ? "🎉 Correct!" : "❌ Wrong answer");
 
-    // Update active critter stats based on correct/incorrect answers
+    // Update creature stats based on correct/incorrect answers
     if (isCorrect) {
       soundEngine.play('correct');
       animationEngine.createSparkles();
 
       const xpGain = difficultyLevel * 10;
-      setCritters(prev => prev.map((critter, index) =>
-        index === activeCritterIndex ? {
-          ...critter,
-          xp: critter.xp + xpGain,
-          happiness: Math.min(100, critter.happiness + 5)
-        } : critter
-      ));
+      setCreature(prev => ({
+        ...prev,
+        xp: prev.xp + xpGain,
+        happiness: Math.min(100, prev.happiness + 5)
+      }));
 
-      // Check if level up for the active critter
-      const currentCritter = activeCritter;
-      if (currentCritter.level < getNextLevelXP(currentCritter.level) && currentCritter.xp >= getNextLevelXP(currentCritter.level)) {
-        setCritters(prev => prev.map((critter, index) =>
-          index === activeCritterIndex ? {
-            ...critter,
-            level: critter.level + 1,
-            happiness: Math.min(100, critter.happiness + 10)
-          } : critter
-        ));
+      // Check if level up
+      if (prev.level < getNextLevelXP(prev.level) && prev.xp >= getNextLevelXP(prev.level)) {
+        setCreature(prev => ({
+          ...prev,
+          level: prev.level + 1,
+          happiness: Math.min(100, prev.happiness + 10)
+        }));
         soundEngine.play('level_up');
       }
     } else {
       soundEngine.play('wrong');
       animationEngine.createSmallSparkles();
 
-      setCritters(prev => prev.map((critter, index) =>
-        index === activeCritterIndex ? {
-          ...critter,
-          happiness: Math.max(0, critter.happiness - 5),
-          energy: Math.max(0, critter.energy - 3)
-        } : critter
-      ));
+      setCreature(prev => ({
+        ...prev,
+        happiness: Math.max(0, prev.happiness - 5),
+        energy: Math.max(0, prev.energy - 3)
+      }));
     }
 
     // Update performance history
@@ -173,11 +181,11 @@ const PetCareGame = () => {
     // Generate new question based on difficulty level
     generateQuestion(difficultyLevel);
 
-    // Save progress to backend or IndexedDB for the active critter
+    // Save progress to backend or IndexedDB
     const progressData = {
       performanceHistory: [...performanceHistory, { isCorrect, timestamp: Date.now() }],
       difficultyLevel,
-      creatureState: activeCritter
+      creatureState: creature
     };
     await saveProgress(progressData);
   };
@@ -186,33 +194,13 @@ const PetCareGame = () => {
     <div className="pet-care-game" role="main">
       <h1>Pet Care Game</h1>
       <div className="creature-stats" aria-label="Creature stats showing happiness, energy, and magic levels">
-        <p>Happiness: {activeCritter.happiness}</p>
-        <p>Energy: {activeCritter.energy}</p>
-        <p>Magic: {activeCritter.magic}</p>
+        <p>Happiness: {creature.happiness}</p>
+        <p>Energy: {creature.energy}</p>
+        <p>Magic: {creature.magic}</p>
       </div>
-
-
-      {/* Critter selection dropdown */}
-      <div className="critter-selection mb-4">
-        <label htmlFor="critter-select" className="text-lg font-semibold">Active Critter:</label>
-        <select
-          id="critter-select"
-          value={activeCritterIndex}
-          onChange={(e) => setActiveCritterIndex(Number(e.target.value))}
-          className="bg-indigo-700 text-white px-3 py-2 rounded-lg hover:bg-indigo-600 transition-all ml-2"
-        >
-          {critters.map((critter, index) => (
-            <option key={index} value={index}>
-              {critter.name} ({getCritterEmoji(critter.type)})
-            </option>
-          ))}
-        </select>
-      </div>
-
-
       <div className="creature-area" role="region" aria-label="Creature interaction area">
         <div className="room-info" aria-label="Current room">Living Room</div>
-        <div className="creature" aria-label="Happy creature emoji"><span role="img" aria-label="happy creature emoji">{activeCritter.emoji}</span></div>
+        <div className="creature" aria-label="Happy creature emoji"><span role="img" aria-label="happy creature emoji">{creature.emoji}</span></div>
         <div className="speech-bubble" aria-live="polite">
           {currentSpeechBubble}
         </div>
@@ -237,9 +225,9 @@ const PetCareGame = () => {
         <h3 className="text-xl font-bold mb-2 text-yellow-300">Fluvsies Mechanics</h3>
 
         {/* Egg Management */}
-        {activeCritter.eggs.length > 0 ? (
+        {creature.eggs.length > 0 ? (
           <div className="egg-section mb-4">
-            <p>🥚 You have {activeCritter.eggs.length} unhatched egg{activeCritter.eggs.length !== 1 ? 's' : ''}</p>
+            <p>🥚 You have {creature.eggs.length} unhatched egg{creature.eggs.length !== 1 ? 's' : ''}</p>
             <button
               onClick={() => checkAndHatchEggs()}
               className="bg-indigo-700 text-white px-3 py-2 rounded-lg hover:bg-indigo-600 transition-all"
@@ -344,12 +332,10 @@ const checkAndHatchEggs = async () => {
         }
       }
 
-      setCritters(prev => prev.map(critter =>
-        ({
-          ...critter,
-          eggs: unhatchedEggs.filter(egg => new Date().getTime() < new Date(egg.hatch_timestamp).getTime())
-        })
-      ));
+      setCreature(prev => ({
+        ...prev,
+        eggs: unhatchedEggs.filter(egg => new Date().getTime() < new Date(egg.hatch_timestamp).getTime())
+      }));
     }
   } catch (error) {
     console.error('Error checking eggs:', error);
@@ -461,7 +447,7 @@ const mergeCritters = async () => {
       const critters = await response.json();
 
       // Find duplicates of the current creature type
-      const duplicates = critters.filter(c => c.type === activeCritter.type && !c.merged);
+      const duplicates = critters.filter(c => c.type === creature.type && !c.merged);
 
       if (duplicates.length >= 2) {
         // Merge two duplicates to evolve the creature
