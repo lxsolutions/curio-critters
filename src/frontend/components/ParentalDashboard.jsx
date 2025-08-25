@@ -1,9 +1,5 @@
 
 
-
-
-
-
 import React, { useState, useEffect } from 'react';
 import { get, set } from "idb-keyval";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
@@ -15,7 +11,7 @@ const ParentalDashboard = () => {
   const token = userData ? userData.token : null;
   const [learningMetrics, setLearningMetrics] = useState([]);
   const [petCareLogs, setPetCareLogs] = useState([]);
-  const [questProgress, setQuestProgress] = useState([];
+  const [questProgress, setQuestProgress] = useState([]);
 
   // Load user data from localStorage or IndexedDB
   useEffect(() => {
@@ -52,6 +48,12 @@ const ParentalDashboard = () => {
           if (response.ok) {
             const data = await response.json();
             setPetCareLogs(data);
+          } else {
+            // Fallback to IndexedDB
+            const pending = await get("pendingPetCare");
+            if (pending) {
+              setPetCareLogs(pending);
+            }
           }
         } catch (error) {
           console.error('Error loading pet care logs:', error);
@@ -65,67 +67,66 @@ const ParentalDashboard = () => {
           if (response.ok) {
             const data = await response.json();
             setQuestProgress(data);
+          } else {
+            // Fallback to IndexedDB
+            const pending = await get("pendingQuests");
+            if (pending) {
+              setQuestProgress(pending);
+            }
           }
         } catch (error) {
           console.error('Error loading quest progress:', error);
         }
 
+        // Sync any pending data when back online
+        const handleOnline = async () => {
+          // Sync pending learning metrics
+          const pendingMetrics = await get("pendingMetrics");
+          if (pendingMetrics) {
+            try {
+              await fetch('/api/analytics/user/metrics', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(pendingMetrics)
+              });
+              await set("pendingMetrics", null);
+            } catch (error) {
+              console.error('Error syncing learning metrics:', error);
+            }
+          }
+
+          // Sync pending pet care logs
+          const pendingPetCare = await get("pendingPetCare");
+          if (pendingPetCare) {
+            try {
+              await fetch('/api/users/1/pet-care-logs', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(pendingPetCare)
+              });
+              await set("pendingPetCare", null);
+            } catch (error) {
+              console.error('Error syncing pet care logs:', error);
+            }
+          }
+
+        };
+
+        if (navigator.onLine) {
+          handleOnline();
+        }
+
+        window.addEventListener('online', handleOnline);
+
+        return () => {
+          window.removeEventListener('online', handleOnline);
+        };
       }
     };
 
     loadUserData();
 
   }, []);
-
-  // Sync offline data when back online
-  useEffect(() => {
-    const handleOnline = async () => {
-      if (!navigator.onLine) return;
-
-      // Sync pending metrics
-      const pendingMetrics = await get("pendingMetrics");
-      if (pendingMetrics) {
-        try {
-          await fetch('/api/users/1/metrics', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(pendingMetrics)
-          });
-          await set("pendingMetrics", null);
-        } catch (error) {
-          console.error('Error syncing learning metrics:', error);
-        }
-      }
-
-      // Sync pending pet care logs
-      const pendingPetCare = await get("pendingPetCare");
-      if (pendingPetCare) {
-        try {
-          await fetch('/api/users/1/pet-care-logs', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(pendingPetCare)
-          });
-          await set("pendingPetCare", null);
-        } catch (error) {
-          console.error('Error syncing pet care logs:', error);
-        }
-      }
-
-    };
-
-    if (navigator.onLine) {
-      handleOnline();
-    }
-
-    window.addEventListener('online', handleOnline);
-
-    return () => {
-      window.removeEventListener('online', handleOnline);
-    };
-  }, []);
-
-
 
   // Export learning progress as PDF certificate
   const exportProgressToPDF = () => {
@@ -191,9 +192,6 @@ const ParentalDashboard = () => {
     alert('Learning progress report exported successfully!');
   };
 
-
-
-
   // Render loading state while data is being loaded
   if (!userData) {
     return (
@@ -209,6 +207,14 @@ const ParentalDashboard = () => {
       <div className="dashboard-header mb-8">
         <h1 className="text-3xl font-bold text-white">Parental Dashboard</h1>
         <p className="text-lg text-indigo-200 mt-2">Welcome, {userData.username}'s Parent!</p>
+
+        {/* Export Button */}
+        <button
+          onClick={exportProgressToPDF}
+          className="mt-4 px-6 py-3 bg-green-500 hover:bg-green-600 text-white font-semibold rounded-lg shadow-md transition-all duration-200 transform hover:scale-105"
+        >
+          Export Progress Report (PDF)
+        </button>
       </div>
 
       <div className="dashboard-cards grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -299,17 +305,17 @@ const ParentalDashboard = () => {
                 )}
               </div>
 
-              {/* Language Arts Report */}
+              {/* Math Report */}
               <div className="mb-6 p-4 bg-gray-50 rounded-lg shadow-inner">
-                <h3 className="text-lg font-semibold text-indigo-700 mb-2">Language Arts</h3>
-                {learningMetrics.filter(metric => metric.subject === 'language').length > 0 ? (
+                <h3 className="text-lg font-semibold text-indigo-700 mb-2">Math</h3>
+                {learningMetrics.filter(metric => metric.subject === 'math').length > 0 ? (
                   <>
-                    <p className="text-sm text-gray-600">Average Score: {(learningMetrics.filter(metric => metric.subject === 'language')
+                    <p className="text-sm text-gray-600">Average Score: {(learningMetrics.filter(metric => metric.subject === 'math')
                       .reduce((sum, metric) => sum + metric.average_score, 0) /
-                      learningMetrics.filter(metric => metric.subject === 'language').length)
+                      learningMetrics.filter(metric => metric.subject === 'math').length)
                       .toFixed(1)}%</p>
                     <ul className="mt-2">
-                      {learningMetrics.filter(metric => metric.subject === 'language')
+                      {learningMetrics.filter(metric => metric.subject === 'math')
                         .map((metric, index) => (
                           <li key={index} className="text-xs text-gray-700 flex justify-between">
                             <span>{metric.topic}</span>
@@ -319,76 +325,43 @@ const ParentalDashboard = () => {
                     </ul>
                   </>
                 ) : (
-                  <p className="text-sm text-gray-500 italic">No language arts data available</p>
+                  <p className="text-sm text-gray-500 italic">No math data available</p>
+                )}
+              </div>
+
+              {/* Science Report */}
+              <div className="mb-6 p-4 bg-gray-50 rounded-lg shadow-inner">
+                <h3 className="text-lg font-semibold text-indigo-700 mb-2">Science</h3>
+                {learningMetrics.filter(metric => metric.subject === 'science').length > 0 ? (
+                  <>
+                    <p className="text-sm text-gray-600">Average Score: {(learningMetrics.filter(metric => metric.subject === 'science')
+                      .reduce((sum, metric) => sum + metric.average_score, 0) /
+                      learningMetrics.filter(metric => metric.subject === 'science').length)
+                      .toFixed(1)}%</p>
+                    <ul className="mt-2">
+                      {learningMetrics.filter(metric => metric.subject === 'science')
+                        .map((metric, index) => (
+                          <li key={index} className="text-xs text-gray-700 flex justify-between">
+                            <span>{metric.topic}</span>
+                            <span>{metric.average_score.toFixed(1)}%</span>
+                          </li>
+                        ))}
+                    </ul>
+                  </>
+                ) : (
+                  <p className="text-sm text-gray-500 italic">No science data available</p>
                 )}
               </div>
 
             </>
           ) : (
-            <p className="text-sm text-gray-500 italic">No subject-specific performance data available</p>
+            <p className="text-sm text-gray-500 italic">No subject-specific data available yet</p>
           )}
         </div>
-
       </div>
-
-      {/* Offline Sync Status */}
-      <div className="offline-sync mt-8 p-6 bg-white rounded-lg shadow-xl">
-        <h2 className="text-xl font-semibold text-indigo-700 mb-4">Offline Sync Status</h2>
-        {navigator.onLine ? (
-          <p className="text-sm text-green-600 flex items-center">
-            ✅ Online - All data is synced
-          </p>
-        ) : (
-          <p className="text-sm text-yellow-600 flex items-center">
-                            📶 Offline - Data will sync when back online
-                          </p>
-        )}
-      </div>
-
-
-
-
-
-      {/* Homeschool Tools */}
-      <div className="homeschool-tools mt-8 p-6 bg-white rounded-lg shadow-xl">
-        <h2 className="text-xl font-semibold text-indigo-700 mb-4">Homeschool Tools</h2>
-        <button
-          onClick={exportProgressToPDF}
-          className="bg-gradient-to-r from-green-500 to-teal-600 hover:from-green-600 hover:to-teal-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition-all duration-300 transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-        >
-          Export Progress Report (PDF)
-        </button>
-      </div>
-
-
-
-
-
     </div>
-
-
-
-
-      {/* Homeschool Tools */}
-      <div className="homeschool-tools mt-8 p-6 bg-white rounded-lg shadow-xl">
-        <h2 className="text-xl font-semibold text-indigo-700 mb-4">Homeschool Tools</h2>
-        <button
-          onClick={exportProgressToPDF}
-          className="bg-gradient-to-r from-green-500 to-teal-600 hover:from-green-600 hover:to-teal-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition-all duration-300 transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-        >
-          Export Progress Report (PDF)
-        </button>
-      </div>
-
-
-
-
   );
 };
 
 export default ParentalDashboard;
-
-
-
-
 

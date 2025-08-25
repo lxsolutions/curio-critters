@@ -8,12 +8,38 @@
 
 
 
-const sqlite3 = require('better-sqlite3');
-const path = require('path');
+const { Pool } = require('pg');
+require('dotenv').config();
 
-// Initialize database
-const dbPath = path.join(__dirname, 'curio_critters.db');
-const db = new sqlite3(dbPath);
+let db;
+
+// Use PostgreSQL if configured, otherwise fallback to SQLite for local development
+if (process.env.DATABASE_URL) {
+  // Production: Connect to PostgreSQL
+  const pool = new Pool({
+    connectionString: process.env.DATABASE_URL,
+    ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false,
+  });
+
+  db = {
+    query: (text, params) => pool.query(text, params),
+    exec: async (sql) => {
+      try {
+        await pool.query(sql);
+      } catch (err) {
+        if (!err.message.includes('already exists')) throw err;
+      }
+    },
+    close: () => pool.end(),
+  };
+} else {
+  // Development: Use SQLite
+  const sqlite3 = require('better-sqlite3');
+  const path = require('path');
+
+  const dbPath = path.join(__dirname, 'curio_critters.db');
+  db = new sqlite3(dbPath);
+}
 
 // Create tables if they don't exist
 db.exec(`
