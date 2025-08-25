@@ -1,7 +1,6 @@
 
 
 
-
 # Curio Critters Development Roadmap
 
 This roadmap outlines phased development to achieve the full vision: A Fluvsies-inspired pet RPG with Diablo II progression powered by stealth education. Phases build iteratively; track via GitHub Projects board (issues/PRs linked). Use milestones for releases.
@@ -26,7 +25,7 @@ This roadmap outlines phased development to achieve the full vision: A Fluvsies-
   - #1 - RPG mechanics ✓ (In progress)
   - #2 - New subjects ✓ (History content added)
 
-## Phase 3: Polish and Expansion (v2.0, Target: Q1 2026) ✓
+## Phase 3: Polish and Expansion (v2.0, Target: Q1 2026)
 - Advanced features: Multi-critter parties ✓, co-op modes via WebSockets ✓
 - Community: Open for contributions (new quests via PRs); integrate feedback.
 - Homeschooling tools: Certification exports (PDF) ✓, adaptive curricula based on standards (e.g., Common Core).
@@ -48,19 +47,8 @@ This roadmap outlines phased development to achieve the full vision: A Fluvsies-
 The development process is tracked using GitHub Projects with the following workflow:
 
 1. **Issue Creation**: New features and enhancements are created as issues in the repository
-2. **Sprint Planning**: Weekly sprints are planned with tasks assigned to each phase of development
-3. **PR Review**: Pull requests are reviewed promptly with focus on code quality and educational impact
-4. **Testing**: Continuous testing through CI/CD pipelines ensures all features work as expected
-
-## Community Contributions
-
-The project welcomes community contributions, especially in the following areas:
-
-- New quest ideas (label: education-feature)
-- Educational content generation via AI microagents
-- Testing on different devices and platforms
-- Feedback on user experience and educational effectiveness
-
-Feedback? Open an issue!
-
+2. **Sprint Planning**: Weekly planning sessions to assign tasks to sprints
+3. **Development**: Features implemented via feature branches (e.g., `feature-rpg-education`)
+4. **Code Review**: PR reviews with focus on education impact, code quality, and accessibility
+5. **Testing**: Automated tests + manual QA before merging to main
 

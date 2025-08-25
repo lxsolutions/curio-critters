@@ -75,6 +75,70 @@ router.get('/user/:id', async (req, res) => {
   }
 });
 
+// Get learning gains metrics for a specific user by ID
+router.get('/metrics/gains/:id', async (req, res) => {
+  try {
+    const user = await getUserById(req.params.id);
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    // Get all learning metrics for this user
+    let metrics = await db.query('SELECT * FROM learning_metrics WHERE user_id = $1 ORDER BY timestamp', [req.params.id]);
+
+    if (metrics.rows.length === 0) {
+      return res.status(404).json({ error: 'No learning data available' });
+    }
+
+    // Calculate gains between consecutive metrics
+    const gainsAnalysis = [];
+    let previousMetric = null;
+
+    for (const metric of metrics.rows) {
+      if (previousMetric && metric.subject === previousMetric.subject && metric.topic === previousMetric.topic) {
+        const gain = metric.average_score - previousMetric.average_score;
+        gainsAnalysis.push({
+          subject: metric.subject,
+          topic: metric.topic,
+          score_gain: gain,
+          timestamp: metric.timestamp,
+          from_date: previousMetric.timestamp,
+          to_date: metric.timestamp
+        });
+      }
+      previousMetric = metric;
+    }
+
+    // Calculate overall progress trends
+    const subjects = [...new Set(metrics.rows.map(m => m.subject))];
+    const subjectGains = {};
+
+    subjects.forEach(subject => {
+      const subjectMetrics = metrics.rows.filter(m => m.subject === subject);
+      let totalGain = 0;
+
+      for (let i = 1; i < subjectMetrics.length; i++) {
+        totalGain += subjectMetrics[i].average_score - subjectMetrics[i-1].average_score;
+      }
+
+      subjectGains[subject] = {
+        average_gain: subjectMetrics.length > 1 ? totalGain / (subjectMetrics.length - 1) : 0,
+        total_topics_covered: new Set(subjectMetrics.map(m => m.topic)).size
+      };
+    });
+
+    res.json({
+      user_id: req.params.id,
+      gains_by_topic: gainsAnalysis,
+      subject_trends: subjectGains,
+      message: 'Learning gains analysis completed successfully'
+    });
+  } catch (error) {
+    console.error('Error calculating learning gains:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 module.exports = router;
 
 
