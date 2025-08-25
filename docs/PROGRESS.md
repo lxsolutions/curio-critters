@@ -32,4 +32,4 @@ Evolve into a platform: Community-added quests, AI-generated content, multiplaye
 Follow ROADMAP Phase 2; track via GitHub Projects.
 
 ### Session Cleanup (2025-08-25)
-Cleaned stuck session; merged all branches into main; local published. All changes from previous sessions have been committed and pushed to the main branch.
+Cleaned stuck session; merged educational-rpg-system branch into main; deleted merged remote branches; all local changes published to main. All branches from previous sessions have been committed, pushed, and cleaned up.
