@@ -17,7 +17,9 @@ const PetCareGame = () => {
     emoji: '🐱✨',
     level: 1,
     xp: 0,
-    eggs: []
+    eggs: [],
+    gear: {},
+    skills: []
   });
   const [currentSpeechBubble, setCurrentSpeechBubble] = useState("Hello!");
   const [answers, setAnswers] = useState([
@@ -52,6 +54,60 @@ const PetCareGame = () => {
             if (progressData && progressData.performanceHistory) {
               setPerformanceHistory(progressData.performanceHistory);
               setDifficultyLevel(calculateDifficulty(progressData.performanceHistory));
+
+              // Load creature data from backend
+              const critterResponse = await fetch(`/api/users/${userData.userId}/critters`, {
+                headers: { 'Authorization': `Bearer ${userData.token}` }
+              });
+              if (critterResponse.ok) {
+                const critters = await critterResponse.json();
+                if (critters.length > 0) {
+                  setCreature(prev => ({
+                    ...prev,
+                    id: critters[0].id,
+                    name: critters[0].name,
+                    type: critters[0].type,
+                    happiness: critters[0].happiness,
+                    energy: critters[0].energy,
+                    magic: critters[0].magic,
+                    level: critters[0].level,
+                    xp: critters[0].xp,
+                    gear: critters[0].gear || {},
+                    skills: critters[0].skills || [],
+                    emoji: getCritterEmoji(critters[0].type)
+                  }));
+                }
+              }
+
+              // Load eggs from backend
+              const eggResponse = await fetch(`/api/users/${userData.userId}/eggs`, {
+                headers: { 'Authorization': `Bearer ${userData.token}` }
+              });
+              if (eggResponse.ok) {
+                const eggs = await eggResponse.json();
+                setCreature(prev => ({
+                  ...prev,
+                  eggs: eggs.filter(egg => !egg.hatched)
+                }));
+              }
+
+            } else {
+              // If no progress data, create a default critter
+              const response = await fetch(`/api/users/${userData.userId}/critters`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${userData.token}` },
+                body: JSON.stringify({ name: "Fluffy", type: "fluffy_cat" })
+              });
+              if (response.ok) {
+                const newCritter = await response.json();
+                setCreature(prev => ({
+                  ...prev,
+                  id: newCritter.id,
+                  name: newCritter.name,
+                  type: newCritter.type,
+                  emoji: getCritterEmoji(newCritter.type)
+                }));
+              }
             }
           } catch (error) {
             console.error('Error loading performance history:', error);
@@ -60,121 +116,70 @@ const PetCareGame = () => {
       } catch (error) {
         console.error('Error loading user progress:', error);
       }
+
+      // Check for any unhatched eggs and hatch them if ready
+      checkAndHatchEggs();
     };
 
     loadUserProgress();
+
+    // Set interval to periodically check for egg hatching
+    const hatchInterval = setInterval(checkAndHatchEggs, 60000); // Check every minute
+
+    return () => clearInterval(hatchInterval);
   }, []);
 
   // Initialize sound and animation engines when component mounts
   useEffect(() => {
     soundEngine.init();
     // Start background music using the sound engine
-    if (process.env.NODE_ENV !== 'test') {
-      soundEngine.play("backgroundMusic");
+    if (!soundEngine.isPlaying('background')) {
+      soundEngine.playLoop('background');
     }
-  }, []);
-
-  const answerButtonRefs = useRef([]);
-
-  // Update speech bubble every 5 seconds
-  useEffect(() => {
-    const interval = setInterval(updateSpeechBubble, 5000);
-    return () => clearInterval(interval);
-  }, []);
-
-  const updateSpeechBubble = () => {
-    // Logic to update speech bubble text
-  };
-
-  const saveProgress = async (data) => {
-    try {
-      if (!navigator.onLine) {
-        // Store progress in IndexedDB for offline sync
-        await set("pendingProgress", data);
-      } else {
-        // Send to server
-        await fetch('/api/progress/1', {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(data)
-        });
-      }
-    } catch (error) {
-      console.error('Error saving progress:', error);
-      // Fallback to IndexedDB if online save fails
-      await set("pendingProgress", data);
-    }
-  };
-
-  useEffect(() => {
-    // Sync any pending progress when back online
-    const handleOnline = async () => {
-      const pending = await get("pendingProgress");
-      if (pending) {
-        try {
-          await fetch('/api/progress/1', {
-            method: 'PUT',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(pending)
-          });
-          // Clear pending progress after successful sync
-          await del("pendingProgress");
-        } catch (error) {
-          console.error('Error syncing pending progress:', error);
-        }
-      }
-    };
-
-    window.addEventListener('online', handleOnline);
-
-    return () => {
-      window.removeEventListener('online', handleOnline);
-    };
   }, []);
 
   const handleAnswerSelection = async (isCorrect) => {
+    setCurrentSpeechBubble(isCorrect ? "🎉 Correct!" : "❌ Wrong answer");
+
+    // Update creature stats based on correct/incorrect answers
     if (isCorrect) {
       soundEngine.play('correct');
       animationEngine.createSparkles();
 
-      // Update performance history and difficulty
-      setPerformanceHistory(prev => [...prev, { isCorrect: true, timestamp: Date.now() }]);
-      const newDifficulty = calculateDifficulty([...performanceHistory, { isCorrect: true, timestamp: Date.now() }]);
-      setDifficultyLevel(newDifficulty);
+      const xpGain = difficultyLevel * 10;
+      setCreature(prev => ({
+        ...prev,
+        xp: prev.xp + xpGain,
+        happiness: Math.min(100, prev.happiness + 5)
+      }));
 
-      // Update creature state based on difficulty
-      if (newDifficulty === 3) {
-        setCreature(prev => ({ ...prev, emoji: '🐨✨', happiness: Math.min(100, prev.happiness + 15) }));
-        setCurrentSpeechBubble("You're amazing! Let's try something harder!");
-      } else if (newDifficulty === 2) {
-        setCreature(prev => ({ ...prev, emoji: '🐨😊', happiness: Math.min(100, prev.happiness + 10) }));
-        setCurrentSpeechBubble("Great job! Keep it up!");
-      } else {
-        setCreature(prev => ({ ...prev, emoji: '🐨😃', happiness: Math.min(100, prev.happiness + 5) }));
-        setCurrentSpeechBubble("Good answer!");
+      // Check if level up
+      if (prev.level < getNextLevelXP(prev.level) && prev.xp >= getNextLevelXP(prev.level)) {
+        setCreature(prev => ({
+          ...prev,
+          level: prev.level + 1,
+          happiness: Math.min(100, prev.happiness + 10)
+        }));
+        soundEngine.play('level_up');
       }
     } else {
       soundEngine.play('wrong');
-      animationEngine.shakeElement(answerButtonRefs.current[0]);
+      animationEngine.createSmallSparkles();
 
-      // Update performance history
-      setPerformanceHistory(prev => [...prev, { isCorrect: false, timestamp: Date.now() }]);
-      const newDifficulty = calculateDifficulty([...performanceHistory, { isCorrect: false, timestamp: Date.now() }]);
-      setDifficultyLevel(newDifficulty);
-
-      // Update creature state based on difficulty
-      if (newDifficulty === 1) {
-        setCreature(prev => ({ ...prev, emoji: '🐨😞', happiness: Math.max(0, prev.happiness - 20) }));
-        setCurrentSpeechBubble("That's okay! Let's try again.");
-      } else {
-        setCreature(prev => ({ ...prev, emoji: '🐨😢', happiness: Math.max(0, prev.happiness - 10) }));
-        setCurrentSpeechBubble("Hmm, that's not right. Try again!");
-      }
+      setCreature(prev => ({
+        ...prev,
+        happiness: Math.max(0, prev.happiness - 5),
+        energy: Math.max(0, prev.energy - 3)
+      }));
     }
+
+    // Update performance history
+    const newHistory = [...performanceHistory, { isCorrect, timestamp: Date.now() }];
+    setPerformanceHistory(newHistory);
+    setDifficultyLevel(calculateDifficulty(newHistory));
+
+    // Generate new question based on difficulty level
+    generateQuestion(difficultyLevel);
 
     // Save progress to backend or IndexedDB
     const progressData = {
@@ -214,6 +219,54 @@ const PetCareGame = () => {
           </button>
         ))}
       </div>
+
+      {/* Fluvsies Mechanics Controls */}
+      <div className="fluvsies-controls mt-6 p-4 bg-purple-900 rounded-lg shadow-inner">
+        <h3 className="text-xl font-bold mb-2 text-yellow-300">Fluvsies Mechanics</h3>
+
+        {/* Egg Management */}
+        {creature.eggs.length > 0 ? (
+          <div className="egg-section mb-4">
+            <p>🥚 You have {creature.eggs.length} unhatched egg{creature.eggs.length !== 1 ? 's' : ''}</p>
+            <button
+              onClick={() => checkAndHatchEggs()}
+              className="bg-indigo-700 text-white px-3 py-2 rounded-lg hover:bg-indigo-600 transition-all"
+            >
+              Check for Hatching
+            </button>
+          </div>
+        ) : (
+          <div className="egg-section mb-4">
+            <p>🥚 No unhatched eggs</p>
+            <button
+              onClick={() => addEgg()}
+              className="bg-indigo-700 text-white px-3 py-2 rounded-lg hover:bg-indigo-600 transition-all"
+            >
+              Find Egg!
+            </button>
+          </div>
+        )}
+
+        {/* Merge Mechanics */}
+        <div className="merge-section mb-4">
+          <p>🐾 Want to evolve your critter?</p>
+          <button
+            onClick={() => mergeCritters()}
+            className="bg-indigo-700 text-white px-3 py-2 rounded-lg hover:bg-indigo-600 transition-all"
+          >
+            Merge Critters
+          </button>
+        </div>
+
+        {/* Skill Tree Button */}
+        <div className="skill-tree-section">
+          <p>🌳 Unlock new skills!</p>
+          <a href="/skill-tree" className="bg-indigo-700 text-white px-3 py-2 rounded-lg hover:bg-indigo-600 transition-all inline-block">
+            View Skill Tree
+          </a>
+        </div>
+
+      </div>
     </div>
   );
 };
@@ -248,6 +301,195 @@ const getCritterEmoji = (type) => {
     case 'rainbow_squirrel': return '🐿️🌈';
     case 'mermaid_fox': return '🦊🧜‍♀️';
     default: return '🐨'; // Default emoji
+  }
+};
+
+// Fluvsies mechanics functions
+
+// Check for unhatched eggs and hatch them if ready
+const checkAndHatchEggs = async () => {
+  const storedUser = localStorage.getItem('user');
+  if (!storedUser) return;
+
+  try {
+    const userData = JSON.parse(storedUser);
+    const eggResponse = await fetch(`/api/users/${userData.userId}/eggs`, {
+      headers: { 'Authorization': `Bearer ${userData.token}` }
+    });
+
+    if (eggResponse.ok) {
+      const eggs = await eggResponse.json();
+      const unhatchedEggs = eggs.filter(egg => !egg.hatched);
+
+      // Check each egg to see if it's ready to hatch
+      for (const egg of unhatchedEggs) {
+        const now = new Date().getTime();
+        const hatchTime = new Date(egg.hatch_timestamp).getTime();
+
+        if (now >= hatchTime) {
+          // Egg is ready to hatch!
+          await hatchEgg(userData.userId, userData.token, egg.id);
+        }
+      }
+
+      setCreature(prev => ({
+        ...prev,
+        eggs: unhatchedEggs.filter(egg => new Date().getTime() < new Date(egg.hatch_timestamp).getTime())
+      }));
+    }
+  } catch (error) {
+    console.error('Error checking eggs:', error);
+  }
+};
+
+// Hatch an egg and create a new critter
+const hatchEgg = async (userId, token, eggId) => {
+  try {
+    const response = await fetch(`/api/eggs/${eggId}/hatch`, {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+
+    if (response.ok) {
+      const result = await response.json();
+      soundEngine.play('hatch');
+      animationEngine.createBigSparkles();
+
+      // Update creature state with the new critter
+      setCreature(prev => ({
+        ...prev,
+        id: result.critter.id,
+        name: result.critter.name,
+        type: result.critter.type,
+        happiness: result.critter.happiness,
+        energy: result.critter.energy,
+        magic: result.critter.magic,
+        level: result.critter.level,
+        xp: result.critter.xp,
+        gear: result.critter.gear || {},
+        skills: result.critter.skills || [],
+        emoji: getCritterEmoji(result.critter.type)
+      }));
+
+      setCurrentSpeechBubble(`🎉 A ${result.critter.name} has hatched! 🎉`);
+    }
+  } catch (error) {
+    console.error('Error hatching egg:', error);
+  }
+};
+
+// Add a new egg to the user's collection
+const addEgg = async () => {
+  const storedUser = localStorage.getItem('user');
+  if (!storedUser) return;
+
+  try {
+    const userData = JSON.parse(storedUser);
+
+    // Get available critter types from data file
+    const response = await fetch('/data/critters.json');
+    const critters = await response.json();
+
+    // Randomly select a critter type based on rarity
+    let selectedCritter;
+    const rarities = ['common', 'rare', 'epic', 'legendary', 'mythic'];
+    const randomRarityIndex = Math.floor(Math.random() * 5); // More common eggs
+
+    for (const critter of critters) {
+      if (critter.rarity === rarities[randomRarityIndex]) {
+        selectedCritter = critter;
+        break;
+      }
+    }
+
+    if (!selectedCritter) return;
+
+    const eggResponse = await fetch(`/api/users/${userData.userId}/eggs`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${userData.token}` },
+      body: JSON.stringify({
+        type: selectedCritter.id,
+        hatchTime: new Date(Date.now() + (5 * 60 * 1000)) // 5 minutes from now
+      })
+    });
+
+    if (eggResponse.ok) {
+      const egg = await eggResponse.json();
+      soundEngine.play('new_egg');
+      animationEngine.createSparkles();
+
+      setCreature(prev => ({
+        ...prev,
+        eggs: [...prev.eggs, { id: egg.id, type: selectedCritter.id }]
+      }));
+
+      setCurrentSpeechBubble(`🥚 You found a ${selectedCritter.name} egg! 🥚`);
+    }
+  } catch (error) {
+    console.error('Error adding egg:', error);
+  }
+};
+
+// Merge two critters to create an evolution
+const mergeCritters = async () => {
+  const storedUser = localStorage.getItem('user');
+  if (!storedUser) return;
+
+  try {
+    const userData = JSON.parse(storedUser);
+
+    // Get all user's critters
+    const response = await fetch(`/api/users/${userData.userId}/critters`, {
+      headers: { 'Authorization': `Bearer ${userData.token}` }
+    });
+
+    if (response.ok) {
+      const critters = await response.json();
+
+      // Find duplicates of the current creature type
+      const duplicates = critters.filter(c => c.type === creature.type && !c.merged);
+
+      if (duplicates.length >= 2) {
+        // Merge two duplicates to evolve the creature
+        const [critter1, critter2] = duplicates.slice(0, 2);
+
+        const mergeResponse = await fetch(`/api/critters/merge`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${userData.token}` },
+          body: JSON.stringify({
+            critter1Id: critter1.id,
+            critter2Id: critter2.id
+          })
+        });
+
+        if (mergeResponse.ok) {
+          const evolvedCritter = await mergeResponse.json();
+          soundEngine.play('evolve');
+          animationEngine.createBigSparkles();
+
+          setCreature(prev => ({
+            ...prev,
+            id: evolvedCritter.id,
+            name: evolvedCritter.name,
+            type: evolvedCritter.type,
+            happiness: evolvedCritter.happiness,
+            energy: evolvedCritter.energy,
+            magic: evolvedCritter.magic,
+            level: evolvedCritter.level,
+            xp: evolvedCritter.xp,
+            gear: evolvedCritter.gear || {},
+            skills: evolvedCritter.skills || [],
+            emoji: getCritterEmoji(evolvedCritter.type)
+          }));
+
+          setCurrentSpeechBubble(`🌟 Your ${evolvedCritter.name} has evolved! 🌟`);
+        }
+      } else {
+        setCurrentSpeechBubble("You need at least 2 of the same critters to merge!");
+      }
+    }
+  } catch (error) {
+    console.error('Error merging critters:', error);
   }
 };
 

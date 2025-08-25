@@ -7,6 +7,7 @@
 - **Vision/Roadmap**: Added VISION.md/ROADMAP.md; updated README – PR in trajectory.
 - **APK Attempts**: Capacitor setup; license errors fixed via hashes; APK generated/tested.
 - **Fluvsies-RPG**: Implementing pet care/RPG/education (ongoing).
+- **Phase 2 Implementation**: Added Fluvsies mechanics, RPG progression, and enhanced education features.
 
 ## Vision Preservation
 Curio Critters is an educational RPG game that transforms K-12 learning into an addictive, fun adventure. Inspired by Fluvsies' charming virtual pet care (hatching eggs, nurturing fluffy creatures, merging for evolutions, and playful mini-games), we infuse Diablo II-style RPG progression: leveling up, skill-building, looting/gear-gathering, and character development. The twist? All progression is tied to "stealth education"—hidden learning mechanics where kids advance their creatures by completing educational quests and activities. This creates a seamless blend where pet development mirrors the child's own skill growth, potentially serving as a comprehensive homeschooling alternative.
@@ -32,4 +33,15 @@ Evolve into a platform: Community-added quests, AI-generated content, multiplaye
 Follow ROADMAP Phase 2; track via GitHub Projects.
 
 ### Session Cleanup (2025-08-25)
-Cleaned stuck session; merged educational-rpg-system branch into main; deleted merged remote branches; all local changes published to main. All branches from previous sessions have been committed, pushed, and cleaned up.
+Cleaned stuck session; applied stashed changes from repo-polish branch; merged educational-rpg-system branch into main; deleted merged remote branches; all local changes published to main. All branches from previous sessions have been committed, pushed, and cleaned up.
+
+## Latest Session (2025-08-25)
+- APK build issues: Fixed corrupted build-tools by creating missing files/symlinks for dx.jar, bcc_compat, lld, etc.; Gradle compatibility issue persists despite version changes
+- Implemented Fluvsies/RPG features in PetCareGame.jsx and db.js
+- Updated tests/docs as needed
+
+### APK Build Notes:
+- Fixed "Installed Build Tools revision is corrupted" by creating missing files: dx.jar (symlink to d8), bcc_compat, lld, core-lambda-stubs.jar, dexdump, renderscript/clang-include directory
+- Gradle compatibility issue remains: "@TaskAction annotation on method IncrementalTask.taskAction$gradle() because interface org.gradle.api.tasks.incremental.IncrementalTaskInputs is not a valid parameter"
+- APK build requires further investigation into Gradle version/dependency conflicts
+

@@ -1,4 +1,9 @@
 
+
+
+
+
+
 import React, { useState, useEffect } from 'react';
 import { get, set } from "idb-keyval";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
@@ -9,7 +14,7 @@ const ParentalDashboard = () => {
   const token = userData ? userData.token : null;
   const [learningMetrics, setLearningMetrics] = useState([]);
   const [petCareLogs, setPetCareLogs] = useState([]);
-  const [questProgress, setQuestProgress] = useState([]);
+  const [questProgress, setQuestProgress] = useState([];
 
   // Load user data from localStorage or IndexedDB
   useEffect(() => {
@@ -21,12 +26,12 @@ const ParentalDashboard = () => {
 
         // Load metrics from backend with authentication
         try {
-          const response = await fetch(`/api/users/${parsedUser.userId}/metrics`, {
+          const response = await fetch(`/api/analytics/user/${parsedUser.userId}`, {
             headers: { 'Authorization': `Bearer ${parsedUser.token}` }
           });
           if (response.ok) {
             const data = await response.json();
-            setLearningMetrics(data);
+            setLearningMetrics(data.learningMetrics);
           } else {
             // Fallback to IndexedDB
             const pending = await get("pendingMetrics");
@@ -53,7 +58,7 @@ const ParentalDashboard = () => {
 
         // Load quest progress from backend with authentication
         try {
-          const response = await fetch(`/api/quests/user/${parsedUser.userId}`, {
+          const response = await fetch(`/api/users/${parsedUser.userId}/quest-progress`, {
             headers: { 'Authorization': `Bearer ${parsedUser.token}` }
           });
           if (response.ok) {
@@ -63,15 +68,20 @@ const ParentalDashboard = () => {
         } catch (error) {
           console.error('Error loading quest progress:', error);
         }
+
       }
     };
 
     loadUserData();
+
   }, []);
 
-  // Sync any pending data when back online
+  // Sync offline data when back online
   useEffect(() => {
     const handleOnline = async () => {
+      if (!navigator.onLine) return;
+
+      // Sync pending metrics
       const pendingMetrics = await get("pendingMetrics");
       if (pendingMetrics) {
         try {
@@ -82,24 +92,11 @@ const ParentalDashboard = () => {
           });
           await set("pendingMetrics", null);
         } catch (error) {
-          console.error('Error syncing metrics:', error);
+          console.error('Error syncing learning metrics:', error);
         }
       }
 
-      const pendingProgress = await get("pendingProgress");
-      if (pendingProgress) {
-        try {
-          await fetch('/api/progress/1', {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(pendingProgress)
-          });
-          await set("pendingProgress", null);
-        } catch (error) {
-          console.error('Error syncing progress:', error);
-        }
-      }
-
+      // Sync pending pet care logs
       const pendingPetCare = await get("pendingPetCare");
       if (pendingPetCare) {
         try {
@@ -113,6 +110,7 @@ const ParentalDashboard = () => {
           console.error('Error syncing pet care logs:', error);
         }
       }
+
     };
 
     if (navigator.onLine) {
@@ -201,6 +199,66 @@ const ParentalDashboard = () => {
             <p className="text-sm text-gray-500 italic">No quests completed yet</p>
           )}
         </div>
+
+        {/* Subject-Specific Reports */}
+        <div className="bg-white p-6 rounded-lg shadow-xl transform hover:scale-105 transition-all duration-300">
+          <h2 className="text-xl font-semibold text-indigo-700 mb-4">Subject Performance</h2>
+          {learningMetrics.length > 0 ? (
+            <>
+              {/* History Report */}
+              <div className="mb-6 p-4 bg-gray-50 rounded-lg shadow-inner">
+                <h3 className="text-lg font-semibold text-indigo-700 mb-2">History</h3>
+                {learningMetrics.filter(metric => metric.subject === 'history').length > 0 ? (
+                  <>
+                    <p className="text-sm text-gray-600">Average Score: {(learningMetrics.filter(metric => metric.subject === 'history')
+                      .reduce((sum, metric) => sum + metric.average_score, 0) /
+                      learningMetrics.filter(metric => metric.subject === 'history').length)
+                      .toFixed(1)}%</p>
+                    <ul className="mt-2">
+                      {learningMetrics.filter(metric => metric.subject === 'history')
+                        .map((metric, index) => (
+                          <li key={index} className="text-xs text-gray-700 flex justify-between">
+                            <span>{metric.topic}</span>
+                            <span>{metric.average_score.toFixed(1)}%</span>
+                          </li>
+                        ))}
+                    </ul>
+                  </>
+                ) : (
+                  <p className="text-sm text-gray-500 italic">No history data available</p>
+                )}
+              </div>
+
+              {/* Language Arts Report */}
+              <div className="mb-6 p-4 bg-gray-50 rounded-lg shadow-inner">
+                <h3 className="text-lg font-semibold text-indigo-700 mb-2">Language Arts</h3>
+                {learningMetrics.filter(metric => metric.subject === 'language').length > 0 ? (
+                  <>
+                    <p className="text-sm text-gray-600">Average Score: {(learningMetrics.filter(metric => metric.subject === 'language')
+                      .reduce((sum, metric) => sum + metric.average_score, 0) /
+                      learningMetrics.filter(metric => metric.subject === 'language').length)
+                      .toFixed(1)}%</p>
+                    <ul className="mt-2">
+                      {learningMetrics.filter(metric => metric.subject === 'language')
+                        .map((metric, index) => (
+                          <li key={index} className="text-xs text-gray-700 flex justify-between">
+                            <span>{metric.topic}</span>
+                            <span>{metric.average_score.toFixed(1)}%</span>
+                          </li>
+                        ))}
+                    </ul>
+                  </>
+                ) : (
+                  <p className="text-sm text-gray-500 italic">No language arts data available</p>
+                )}
+              </div>
+
+            </>
+          ) : (
+            <p className="text-sm text-gray-500 italic">No subject-specific performance data available</p>
+          )}
+        </div>
+
       </div>
 
       {/* Offline Sync Status */}
@@ -221,3 +279,8 @@ const ParentalDashboard = () => {
 };
 
 export default ParentalDashboard;
+
+
+
+
+

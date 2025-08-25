@@ -1,5 +1,9 @@
 
 
+
+
+
+
 const express = require('express');
 const router = express.Router();
 const { getLearningMetricsForUser, getUserById } = require('../db');
@@ -45,6 +49,15 @@ router.get('/user/:id', async (req, res) => {
       averageScore /= metrics.length;
     }
 
+    // Group by subject for better reporting
+    const subjects = {};
+    metrics.forEach(metric => {
+      if (!subjects[metric.subject]) {
+        subjects[metric.subject] = [];
+      }
+      subjects[metric.subject].push(metric);
+    });
+
     res.json({
       userId: req.params.id,
       username: user.username,
@@ -53,7 +66,8 @@ router.get('/user/:id', async (req, res) => {
       overallPerformance: {
         totalTopics,
         averageScore: parseFloat(averageScore.toFixed(2))
-      }
+      },
+      subjectBreakdown: subjects
     });
   } catch (error) {
     console.error('Error getting analytics:', error);
@@ -62,3 +76,8 @@ router.get('/user/:id', async (req, res) => {
 });
 
 module.exports = router;
+
+
+
+
+
