@@ -5,6 +5,8 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsi
 
 const ParentalDashboard = () => {
   const [userData, setUserData] = useState(null);
+  const userId = userData ? userData.userId : null;
+  const token = userData ? userData.token : null;
   const [learningMetrics, setLearningMetrics] = useState([]);
   const [petCareLogs, setPetCareLogs] = useState([]);
   const [questProgress, setQuestProgress] = useState([]);
@@ -54,12 +56,13 @@ const ParentalDashboard = () => {
           const response = await fetch(`/api/quests/user/${parsedUser.userId}`, {
             headers: { 'Authorization': `Bearer ${parsedUser.token}` }
           });
-        if (response.ok) {
-          const data = await response.json();
-          setQuestProgress(data);
+          if (response.ok) {
+            const data = await response.json();
+            setQuestProgress(data);
+          }
+        } catch (error) {
+          console.error('Error loading quest progress:', error);
         }
-      } catch (error) {
-        console.error('Error loading quest progress:', error);
       }
     };
 
@@ -96,7 +99,25 @@ const ParentalDashboard = () => {
           console.error('Error syncing progress:', error);
         }
       }
+
+      const pendingPetCare = await get("pendingPetCare");
+      if (pendingPetCare) {
+        try {
+          await fetch('/api/users/1/pet-care-logs', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(pendingPetCare)
+          });
+          await set("pendingPetCare", null);
+        } catch (error) {
+          console.error('Error syncing pet care logs:', error);
+        }
+      }
     };
+
+    if (navigator.onLine) {
+      handleOnline();
+    }
 
     window.addEventListener('online', handleOnline);
 
@@ -105,16 +126,18 @@ const ParentalDashboard = () => {
     };
   }, []);
 
+  // Render loading state while data is being loaded
   if (!userData) {
     return (
-      <div className="parental-dashboard min-h-screen bg-gradient-to-br from-indigo-600 via-purple-500 to-pink-400 flex items-center justify-center">
-        <h2 className="text-2xl font-bold text-white">Loading parental dashboard...</h2>
+      <div className="loading-container flex items-center justify-center min-h-screen bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
+        <div className="loader ease-linear rounded-full border-8 border-t-8 border-gray-200 h-32 w-32"></div>
       </div>
     );
   }
 
   return (
-    <div className="parental-dashboard min-h-screen bg-gradient-to-br from-indigo-600 via-purple-500 to-pink-400 p-8">
+    <div className="dashboard-container p-10 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 min-h-screen">
+      {/* Dashboard Header */}
       <div className="dashboard-header mb-8">
         <h1 className="text-3xl font-bold text-white">Parental Dashboard</h1>
         <p className="text-lg text-indigo-200 mt-2">Welcome, {userData.username}'s Parent!</p>
@@ -141,19 +164,21 @@ const ParentalDashboard = () => {
           </div>
         </div>
 
-        {/* Pet Care Activity Card */}
+        {/* Pet Care Logs Card */}
         <div className="bg-white p-6 rounded-lg shadow-xl transform hover:scale-105 transition-all duration-300">
           <h2 className="text-xl font-semibold text-indigo-700 mb-4">Pet Care Activity</h2>
-          <ul className="space-y-3 max-h-64 overflow-y-auto">
+          <ul className="pet-care-logs h-64 overflow-y-auto pr-2">
             {petCareLogs.length > 0 ? (
               petCareLogs.map((log, index) => (
-                <li key={index} className="flex items-center justify-between">
-                  <span className="text-sm text-gray-700">{log.action}</span>
-                  <span className="text-xs text-gray-500">{new Date(log.timestamp).toLocaleString()}</span>
+                <li key={index} className="flex items-center justify-between py-2 border-b border-gray-100 mb-3 last:border-b-0">
+                  <div>
+                    <p className="text-sm text-gray-700">{new Date(log.timestamp).toLocaleString()}</p>
+                    <p className="text-xs text-indigo-600 font-semibold">{log.activity} with {log.petName}</p>
+                  </div>
                 </li>
               ))
             ) : (
-              <p className="text-sm text-gray-500">No pet care activities recorded yet.</p>
+              <p className="text-sm text-gray-500 italic">No pet care activities yet</p>
             )}
           </ul>
         </div>
@@ -161,63 +186,20 @@ const ParentalDashboard = () => {
         {/* Quest Progress Card */}
         <div className="bg-white p-6 rounded-lg shadow-xl transform hover:scale-105 transition-all duration-300">
           <h2 className="text-xl font-semibold text-indigo-700 mb-4">Quest Progress</h2>
-          <ul className="space-y-3 max-h-64 overflow-y-auto">
-            {questProgress.length > 0 ? (
-              questProgress.map((quest, index) => (
-                <li key={index} className="flex items-center justify-between">
-                  <span className="text-sm text-gray-700">{quest.quest_id}</span>
-                  <span className={`text-xs ${quest.completed ? 'text-green-600' : 'text-red-500'} font-semibold`}>
-                    {quest.completed ? 'Completed ✓' : 'In Progress'}
-                  </span>
-                </li>
-              ))
-            ) : (
-              <p className="text-sm text-gray-500">No quests completed yet.</p>
-            )}
-          </ul>
-        </div>
-      </div>
-
-      {/* Summary Section */}
-      <div className="summary-section mt-12 bg-white p-8 rounded-lg shadow-xl">
-        <h2 className="text-2xl font-semibold text-indigo-700 mb-6">Learning Summary</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {/* Overall Progress */}
-          <div className="progress-card bg-indigo-50 p-4 rounded-lg shadow-inner">
-            <h3 className="text-lg font-semibold text-indigo-700">Overall Progress</h3>
-            <p className="text-2xl font-bold mt-2 text-indigo-600">85%</p>
-            <div className="mt-4">
-              <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
-                <div className="h-full bg-gradient-to-r from-indigo-500 to-purple-500" style={{ width: '85%' }}></div>
+          {questProgress.length > 0 ? (
+            questProgress.map((quest, index) => (
+              <div key={index} className="mb-4 p-3 bg-gray-50 rounded-lg shadow-inner">
+                <p className="text-sm font-semibold text-indigo-700">{quest.name}</p>
+                <progress
+                  className="w-full h-2 mt-1 bg-gray-200 rounded"
+                  value={quest.progress}
+                  max="100"
+                ></progress>
               </div>
-            </div>
-          </div>
-
-          {/* Strengths */}
-          <div className="progress-card bg-indigo-50 p-4 rounded-lg shadow-inner">
-            <h3 className="text-lg font-semibold text-indigo-700">Strengths</h3>
-            <ul className="mt-2 space-y-1">
-              {learningMetrics.slice(0, 3).map((metric, index) => (
-                <li key={index} className="flex items-center">
-                  <span className="text-sm text-gray-700">{metric.topic}</span>
-                  <span className="ml-auto text-xs font-semibold text-green-600">⭐ {metric.average_score.toFixed(1)}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Areas for Improvement */}
-          <div className="progress-card bg-indigo-50 p-4 rounded-lg shadow-inner">
-            <h3 className="text-lg font-semibold text-indigo-700">Areas to Improve</h3>
-            <ul className="mt-2 space-y-1">
-              {learningMetrics.slice(-3).map((metric, index) => (
-                <li key={index} className="flex items-center">
-                  <span className="text-sm text-gray-700">{metric.topic}</span>
-                  <span className="ml-auto text-xs font-semibold text-red-500">⚠️ {metric.average_score.toFixed(1)}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
+            ))
+          ) : (
+            <p className="text-sm text-gray-500 italic">No quests completed yet</p>
+          )}
         </div>
       </div>
 
