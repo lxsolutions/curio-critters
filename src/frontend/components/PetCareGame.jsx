@@ -123,6 +123,57 @@ const PetCareGame = () => {
     }
   }, []);
 
+  // Voice command initialization
+  useEffect(() => {
+    initVoiceCommands();
+  }, []);
+
+  const initVoiceCommands = () => {
+    if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+      const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+
+      recognition.continuous = false;
+      recognition.interimResults = false;
+      recognition.lang = 'en-US';
+      recognition.maxAlternatives = 1;
+
+      recognition.onresult = (event) => {
+        const command = event.results[0][0].transcript.toLowerCase();
+        console.log('Voice command detected:', command);
+
+        switch(command) {
+          case 'feed':
+            handleFeedPet();
+            break;
+          case 'play':
+            handlePlayWithPet();
+            break;
+          case 'hatch egg':
+            hatchEgg(activeCritter);
+            break;
+          case 'merge critters':
+            showMergeModal();
+            break;
+          default:
+            setCurrentSpeechBubble(`I didn't understand "${command}"`);
+        }
+      };
+
+      recognition.onerror = (event) => {
+        console.error('Voice recognition error:', event.error);
+      };
+
+      // Start listening for voice commands
+      document.addEventListener('click', () => {
+        if (!recognition.aborted && !recognition.started) {
+          recognition.start();
+        }
+      });
+    } else {
+      console.warn('Speech Recognition API not supported in this browser');
+    }
+  };
+
   const handleAnswerSelection = async (isCorrect) => {
     setCurrentSpeechBubble(isCorrect ? "🎉 Correct!" : "❌ Wrong answer");
 

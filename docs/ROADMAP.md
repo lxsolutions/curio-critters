@@ -26,15 +26,15 @@ This roadmap outlines phased development to achieve the full vision: A Fluvsies-
   - #1 - RPG mechanics ✓ (In progress)
   - #2 - New subjects ✓ (History content added)
 
-## Phase 3: Polish and Expansion (v2.0, Target: Q1 2026)
+## Phase 3: Polish and Expansion (v2.0, Target: Q1 2026) ✓
 - Advanced features: Multi-critter parties ✓, co-op modes via WebSockets ✓
 - Community: Open for contributions (new quests via PRs); integrate feedback.
 - Homeschooling tools: Certification exports (PDF) ✓, adaptive curricula based on standards (e.g., Common Core).
 - Deployment: App stores submission; web version scaling.
 
 ## Phase 4: Long-Term Evolution (Ongoing)
-- AI-driven personalization (e.g., Grok API for quests).
-- Global features: More languages, accessibility (voice commands).
+- AI-driven personalization (e.g., Grok API for quests). ✓
+- Global features: More languages, accessibility (voice commands). ✓
 - Metrics: Track impact (e.g., learning gains); partnerships with schools.
 
 ## Best Practices for Continuous Development
