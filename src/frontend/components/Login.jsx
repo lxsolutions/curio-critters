@@ -7,7 +7,7 @@ const Login = () => {
   const [grade, setGrade] = useState('1');
   const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     // Simple validation
     if (!username.trim()) {
@@ -15,11 +15,34 @@ const Login = () => {
       return;
     }
 
-    // Store user info in localStorage for now
-    localStorage.setItem('user', JSON.stringify({ username, grade }));
+    try {
+      // Send login request to backend
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, grade })
+      });
 
-    // Redirect to pet care game
-    navigate('/pet-care');
+      if (response.ok) {
+        const data = await response.json();
+        // Store JWT token and user info in localStorage
+        localStorage.setItem('user', JSON.stringify({
+          username,
+          grade,
+          token: data.token,
+          userId: data.userId
+        }));
+
+        // Redirect to pet care game
+        navigate('/pet-care');
+      } else {
+        const errorData = await response.json();
+        alert(`Login failed: ${errorData.error || 'Invalid credentials'}`);
+      }
+    } catch (error) {
+      console.error('Error during login:', error);
+      alert('Network error. Please try again.');
+    }
   };
 
   return (
@@ -62,10 +85,20 @@ const Login = () => {
 
           <button
             type="submit"
-            className="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            className="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 mb-4"
           >
             Start Adventure!
           </button>
+
+          {/* Parental access link */}
+          <div className="text-center mt-6">
+            <a
+              href="/parental-dashboard"
+              className="text-sm text-white hover:text-indigo-200 transition-all underline"
+            >
+              Parent/Guardian? Access dashboard here
+            </a>
+          </div>
         </form>
       </div>
     </div>

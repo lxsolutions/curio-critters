@@ -6,7 +6,7 @@ require('dotenv').config();
 const { db } = require('./db');
 
 // Routes
-const authRoutes = require('./routes/auth');
+const { router: authRoutes, authenticateJWT } = require('./routes/auth');
 const questRoutes = require('./routes/quests');
 const userRoutes = require('./routes/users');
 const progressRoutes = require('./routes/progress');

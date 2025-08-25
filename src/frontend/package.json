@@ -9,6 +9,8 @@
     "test": "jest"
   },
   "dependencies": {
+    "framer-motion": "^12.23.12",
+    "howler.js": "^2.1.2",
     "idb-keyval": "^6.2.2",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
