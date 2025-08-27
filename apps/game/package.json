@@ -1,0 +1,33 @@
+
+{
+  "name": "@curio-critters/game",
+  "version": "1.0.0",
+  "description": "Phaser 3 PWA game for K-3 math learning",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "vitest",
+    "lint": "eslint src --ext .ts",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "phaser": "^3.70.0",
+    "idb-keyval": "^6.2.2",
+    "i18next": "^23.0.0",
+    "i18next-browser-languagedetector": "^7.2.0",
+    "@curio-critters/algo-spaced": "*",
+    "@curio-critters/curriculum": "*"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "eslint": "^8.45.0",
+    "typescript": "^5.0.2",
+    "vite": "^5.0.0",
+    "vite-plugin-pwa": "^0.17.4",
+    "vitest": "^1.0.0",
+    "@types/node": "^20.0.0"
+  }
+}

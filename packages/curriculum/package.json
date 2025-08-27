@@ -1,0 +1,29 @@
+
+
+
+{
+  "name": "@curio-critters/curriculum",
+  "version": "1.0.0",
+  "description": "K-3 math curriculum with fact families and standards",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest",
+    "lint": "eslint src --ext .ts",
+    "validate": "node scripts/validate.js"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "ajv": "^8.12.0",
+    "eslint": "^8.45.0",
+    "typescript": "^5.0.2",
+    "vitest": "^1.0.0",
+    "yaml": "^2.3.4"
+  }
+}
+
+

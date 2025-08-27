@@ -1,0 +1,25 @@
+
+
+{
+  "name": "@curio-critters/algo-spaced",
+  "version": "1.0.0",
+  "description": "Adaptive spaced repetition engine for math facts",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest",
+    "lint": "eslint src --ext .ts",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "eslint": "^8.45.0",
+    "typescript": "^5.0.2",
+    "vitest": "^1.0.0"
+  }
+}
+
