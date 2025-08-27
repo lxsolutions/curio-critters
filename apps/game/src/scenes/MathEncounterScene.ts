@@ -2,6 +2,8 @@
 import { Scene } from 'phaser';
 import { StorageManager } from '../utils/StorageManager';
 import { I18nManager } from '../utils/I18nManager';
+import { GameSessionManager, type GameSessionConfig } from '../utils/GameSessionManager.js';
+import { loadCurriculum } from '@curio-critters/curriculum';
 
 interface MathProblem {
   question: string;
@@ -22,6 +24,10 @@ export class MathEncounterScene extends Scene {
   private timerText!: Phaser.GameObjects.Text;
   private questionText!: Phaser.GameObjects.Text;
   private optionButtons: Phaser.GameObjects.Sprite[] = [];
+  private sessionManager!: GameSessionManager;
+  private currentSession: any[] = [];
+  private currentProblemIndex: number = 0;
+  private responseStartTime: number = 0;
 
   constructor() {
     super({ key: 'MathEncounterScene' });
@@ -32,18 +38,59 @@ export class MathEncounterScene extends Scene {
     this.progress = data.progress;
   }
 
-  create() {
+  async create() {
     // Background
     this.add.rectangle(512, 384, 1024, 768, 0x4f46e5);
+    
+    // Initialize session manager
+    this.sessionManager = new GameSessionManager();
+    
+    // Load curriculum and initialize adaptive session
+    await this.initializeAdaptiveSession();
     
     // Create UI
     this.createUI();
     
-    // Generate first problem
+    // Generate first problem from adaptive session
     this.generateProblem();
     
     // Start timer
     this.startTimer();
+  }
+
+  private async initializeAdaptiveSession() {
+    try {
+      // Load curriculum
+      const curriculum = await loadCurriculum();
+      
+      // Configure session based on difficulty
+      const config: GameSessionConfig = {
+        timeboxMinutes: 3,
+        maxItems: 10,
+        minDifficulty: 1,
+        maxDifficulty: this.getDifficultyLevel()
+      };
+      
+      // Initialize adaptive session
+      this.currentSession = await this.sessionManager.initializeSession(curriculum, config);
+      
+      if (this.currentSession.length === 0) {
+        console.warn('No math items found for session. Using fallback generation.');
+        // Fallback to manual generation if no adaptive items
+      }
+    } catch (error) {
+      console.error('Failed to initialize adaptive session:', error);
+      // Fallback to manual generation
+    }
+  }
+
+  private getDifficultyLevel(): number {
+    switch (this.difficulty) {
+      case 'easy': return 1;
+      case 'medium': return 2;
+      case 'hard': return 3;
+      default: return 1;
+    }
   }
 
   private createUI() {
@@ -79,9 +126,49 @@ export class MathEncounterScene extends Scene {
     
     // Create option buttons
     this.createOptionButtons();
+    
+    // Record start time for response time measurement
+    this.responseStartTime = Date.now();
   }
 
   private generateMathProblem(): MathProblem {
+    // Use adaptive session if available, otherwise fallback to manual generation
+    if (this.currentSession && this.currentSession.length > 0 && this.currentProblemIndex < this.currentSession.length) {
+      return this.generateFromAdaptiveSession();
+    } else {
+      return this.generateManualProblem();
+    }
+  }
+
+  private generateFromAdaptiveSession(): MathProblem {
+    const mathItem = this.currentSession[this.currentProblemIndex];
+    this.currentProblemIndex++;
+    
+    let question: string;
+    let answer: number;
+    
+    switch (mathItem.type) {
+      case 'addition':
+        question = `${mathItem.a} + ${mathItem.b} = ?`;
+        answer = mathItem.a + mathItem.b;
+        break;
+      case 'subtraction':
+        question = `${mathItem.a} - ${mathItem.b} = ?`;
+        answer = mathItem.a - mathItem.b;
+        break;
+      default:
+        // Fallback to addition
+        question = `${mathItem.a} + ${mathItem.b} = ?`;
+        answer = mathItem.a + mathItem.b;
+    }
+    
+    const factId = mathItem.id;
+    const options = this.generateOptions(answer);
+    
+    return { question, answer, options, factId, operation: mathItem.type as 'addition' | 'subtraction' };
+  }
+
+  private generateManualProblem(): MathProblem {
     let a: number, b: number, answer: number;
     let operation: 'addition' | 'subtraction' = Math.random() > 0.5 ? 'addition' : 'subtraction';
     
@@ -169,18 +256,53 @@ export class MathEncounterScene extends Scene {
   }
 
   private async checkAnswer(selectedAnswer: number) {
+    // Calculate response time
+    const responseTimeMs = Date.now() - this.responseStartTime;
+    
     if (selectedAnswer === this.currentProblem.answer) {
-      // Correct answer
-      this.handleCorrectAnswer();
+      // Correct answer - use adaptive rating
+      await this.handleAdaptiveAnswer(true, responseTimeMs);
     } else {
       // Incorrect answer
-      this.handleIncorrectAnswer();
+      await this.handleAdaptiveAnswer(false, responseTimeMs);
     }
     
     // Generate new problem after a short delay
     this.time.delayedCall(1000, () => {
       this.generateProblem();
     });
+  }
+
+  private async handleAdaptiveAnswer(isCorrect: boolean, responseTimeMs: number) {
+    // Calculate rating based on correctness and response time
+    let rating = isCorrect ? 3 : 0; // Base rating
+    
+    // Adjust rating based on response time (faster = better rating)
+    if (isCorrect && responseTimeMs < 3000) {
+      rating = 4; // Very good
+    } else if (isCorrect && responseTimeMs < 5000) {
+      rating = 3; // Good
+    } else if (isCorrect) {
+      rating = 2; // Barely correct
+    }
+    
+    // Update adaptive algorithm
+    try {
+      await this.sessionManager.processAnswer(
+        this.currentProblem.factId,
+        rating,
+        responseTimeMs
+      );
+    } catch (error) {
+      console.error('Failed to update adaptive algorithm:', error);
+    }
+    
+    // Update game progress
+    if (isCorrect) {
+      this.handleCorrectAnswer();
+    } else {
+      this.handleIncorrectAnswer();
+    }
   }
 
   private async handleCorrectAnswer() {

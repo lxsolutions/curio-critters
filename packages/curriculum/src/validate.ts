@@ -16,7 +16,11 @@ const schema = JSON.parse(readFileSync(schemaPath, 'utf8'));
 // Load curriculum data
 const dataPath = join(fileURLToPath(import.meta.url), '../../data/k3-math.yaml');
 const yamlData = readFileSync(dataPath, 'utf8');
-const curriculumData = yaml.parse(yamlData);
+const curriculumData = yaml.parse(yamlData) as {
+  items: Array<{ id: string; type: string; a?: number[]; b?: number[] }>;
+  grade_band: string;
+  domain: string;
+};
 
 // Validate against schema
 const validate = ajv.compile(schema);
