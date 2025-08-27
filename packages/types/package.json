@@ -1,0 +1,22 @@
+
+{
+  "name": "@curio-critters/types",
+  "version": "1.0.0",
+  "description": "Shared TypeScript types for Curio Critters",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "type-check": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "keywords": [
+    "types",
+    "shared",
+    "curio-critters"
+  ],
+  "author": "Curio Critters Team",
+  "license": "MIT"
+}

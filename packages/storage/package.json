@@ -1,0 +1,27 @@
+
+
+{
+  "name": "@curio-critters/storage",
+  "version": "1.0.0",
+  "description": "IndexedDB storage for Curio Critters game data",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@curio-critters/types": "*"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "keywords": [
+    "indexeddb",
+    "storage",
+    "local-storage"
+  ],
+  "author": "Curio Critters Team",
+  "license": "MIT"
+}
+
