@@ -1,0 +1,81 @@
+
+
+grade_band: K-3
+domain: arithmetic
+objectives:
+  - id: make-10
+    label: "Make 10 strategies"
+    description: "Practice addition facts that make 10"
+  - id: within-10
+    label: "Addition and subtraction within 10"
+    description: "Basic facts up to 10"
+  - id: within-20
+    label: "Addition and subtraction within 20"
+    description: "Facts up to 20, no carrying"
+  - id: doubles
+    label: "Doubles facts"
+    description: "Adding a number to itself"
+
+items:
+  # Addition within 10 (no carry)
+  - id: add_0_10_no_carry
+    type: add
+    a: [0,1,2,3,4,5,6,7,8,9,10]
+    b: [0,1,2,3,4,5,6,7,8,9,10]
+    constraints:
+      excludeCarry: true
+      maxSum: 10
+    tags: ["within-10", "no-carry", "strategy:make-10"]
+    difficulty: 1
+
+  # Subtraction within 10
+  - id: sub_within_10
+    type: sub
+    a: [1,2,3,4,5,6,7,8,9,10]
+    b: [0,1,2,3,4,5,6,7,8,9]
+    constraints:
+      minSum: 0
+    tags: ["within-10", "subtraction"]
+    difficulty: 1
+
+  # Addition within 20 (no carry)
+  - id: add_0_20_no_carry
+    type: add
+    a: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
+    b: [0,1,2,3,4,5,6,7,8,9,10]
+    constraints:
+      excludeCarry: true
+      maxSum: 20
+    tags: ["within-20", "no-carry"]
+    difficulty: 2
+
+  # Subtraction within 20
+  - id: sub_within_20
+    type: sub
+    a: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
+    b: [0,1,2,3,4,5,6,7,8,9,10]
+    constraints:
+      minSum: 0
+    tags: ["within-20", "subtraction"]
+    difficulty: 2
+
+  # Doubles facts
+  - id: doubles_facts
+    type: add
+    a: [1,2,3,4,5,6,7,8,9,10]
+    b: [1,2,3,4,5,6,7,8,9,10]
+    constraints:
+      excludeCarry: true
+    tags: ["doubles", "within-20"]
+    difficulty: 2
+
+  # Make 10 strategies
+  - id: make_10_pairs
+    type: add
+    a: [1,2,3,4,5,6,7,8,9]
+    b: [9,8,7,6,5,4,3,2,1]
+    constraints:
+      maxSum: 10
+    tags: ["make-10", "within-10", "strategy:make-10"]
+    difficulty: 3
+

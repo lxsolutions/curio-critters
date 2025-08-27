@@ -12,7 +12,7 @@
     "build": "tsc",
     "test": "vitest",
     "lint": "eslint src --ext .ts",
-    "validate": "node scripts/validate.js"
+    "validate": "tsx src/validate.ts"
   },
   "dependencies": {},
   "devDependencies": {
