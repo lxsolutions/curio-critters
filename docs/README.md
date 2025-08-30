@@ -5,6 +5,18 @@
 
 Curio Critters is an educational RPG game that makes K-12 learning addictive and fun. The game integrates Diablo II-style progression, Fluvsies-inspired pet care, stealth learning frameworks, and epic adventures covering core subjects.
 
+## Monorepo Structure
+
+```
+src/
+  frontend/   # React + Vite + TailwindCSS PWA frontend
+  backend/    # Node/Express + Prisma + SQLite backend
+content/      # Normalized educational content packs (YAML format)
+docs/         # Design documents and roadmap
+archive/      # Non-canonical game implementations (archived)
+```
+
+
 ## Features
 
 - **Pet Care**: Nurture cute critters through feeding, playing, and training
@@ -49,6 +61,20 @@ Curio Critters is an educational RPG game that makes K-12 learning addictive and
    node db.js
    ```
 
+### Quickstart
+
+```bash
+# Clone and install dependencies
+git clone https://github.com/lxsolutions/curio-critters.git
+cd curio-critters
+npm install -g pnpm  # Recommended for dependency management
+pnpm install --filter frontend --filter backend
+
+# Start both services (use separate terminal windows)
+cd src/backend && npm start  # Backend on port 56456
+cd src/frontend && npm run dev --port 50390  # Frontend on port 50390
+```
+
 ### Running the Application
 
 1. Start the backend server:
@@ -84,7 +110,9 @@ Curio Critters is an educational RPG game that makes K-12 learning addictive and
 The app is optimized for tablet testing and can be accessed via WiFi.
 
 #### Local HTTP Server Access
-1. Start the frontend server on port 50390 as shown above
+1. Start both servers:
+   - Backend: `cd src/backend && npm start` (port 56456)
+   - Frontend: `cd src/frontend && npm run dev --port 50390` (port 50390)
 2. Get your local IP address:
    ```bash
    hostname -I | awk '{print $1}'

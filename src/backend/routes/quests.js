@@ -1,18 +1,13 @@
 
 
-
-
-
-
-
 const express = require('express');
 const router = express.Router();
-const Quest = require('../models/Quest');
+const { getAllQuests, getQuestById, addQuest } = require('../db');
 
 // Get all available quests
 router.get('/', async (req, res) => {
   try {
-    const quests = await Quest.find().sort({ createdAt: -1 });
+    const quests = getAllQuests();
     res.json(quests);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -22,7 +17,7 @@ router.get('/', async (req, res) => {
 // Get a single quest by ID
 router.get('/:id', async (req, res) => {
   try {
-    const quest = await Quest.findById(req.params.id);
+    const quest = getQuestById(req.params.id);
     if (!quest) {
       return res.status(404).json({ error: 'Quest not found' });
     }
@@ -35,8 +30,7 @@ router.get('/:id', async (req, res) => {
 // Create a new quest
 router.post('/', async (req, res) => {
   try {
-    const newQuest = new Quest(req.body);
-    await newQuest.save();
+    const newQuest = addQuest(req.body);
     res.status(201).json(newQuest);
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -44,8 +38,4 @@ router.post('/', async (req, res) => {
 });
 
 module.exports = router;
-
-
-
-
 

@@ -8,6 +8,7 @@ node_modules/
 # Build directories
 dist/
 build/
+*.zip
 
 # Logs
 logs
@@ -18,6 +19,9 @@ pnpm-debug.log*
 
 # Dependency directories
 jspm_packages/
+
+# Archive directories (non-canonical implementations)
+archive/
 
 # Mobile build directories
 .android/
