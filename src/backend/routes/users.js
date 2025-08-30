@@ -1,8 +1,20 @@
 
 
+
 const express = require('express');
 const router = express.Router();
-const { getUserByUsername, createUser, getUserById, updateUserProgress, logLearningMetric, getLearningMetricsForUser } = require('../db');
+const { getUserByUsername, createUser, getUserById, updateUserProgress, logLearningMetric, getLearningMetricsForUser, getAllUsers } = require('../db');
+
+// Get all users
+router.get('/', async (req, res) => {
+  try {
+    const users = getAllUsers();
+    res.json(users);
+  } catch (error) {
+    console.error('Error getting users:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
 
 // Create a new user
 router.post('/', async (req, res) => {
@@ -74,4 +86,5 @@ router.get('/:id/metrics', async (req, res) => {
 });
 
 module.exports = router;
+
 

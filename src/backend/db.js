@@ -14,7 +14,7 @@ require('dotenv').config();
 let db;
 
 // Use PostgreSQL if configured, otherwise fallback to SQLite for local development
-if (process.env.DATABASE_URL) {
+if (process.env.DATABASE_URL && !process.env.DATABASE_URL.startsWith('sqlite://')) {
   // Production: Connect to PostgreSQL
   const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
@@ -115,6 +115,21 @@ db.exec(`
     critter_id INTEGER,
     FOREIGN KEY (user_id) REFERENCES users(id),
     FOREIGN KEY (critter_id) REFERENCES critters(id)
+  )
+`);
+
+db.exec(`
+  CREATE TABLE IF NOT EXISTS quests (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title TEXT NOT NULL,
+    description TEXT NOT NULL,
+    location TEXT,
+    subject TEXT, -- e.g., 'math', 'science', 'reading', 'history', 'art'
+    difficulty TEXT, -- e.g., 'easy', 'medium', 'hard'
+    xp_reward INTEGER NOT NULL,
+    loot TEXT, -- JSON array of loot items
+    active_for TIMESTAMP,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
   )
 `);
 
@@ -223,6 +238,43 @@ function getUnhatchedEggsForUser(userId) {
   return stmt.all(userId);
 }
 
+// User helper functions
+function getAllUsers() {
+  const stmt = db.prepare('SELECT * FROM users ORDER BY created_at DESC');
+  return stmt.all();
+}
+
+// Quest helper functions
+function getAllQuests() {
+  const stmt = db.prepare('SELECT * FROM quests ORDER BY created_at DESC');
+  return stmt.all();
+}
+
+function getQuestById(id) {
+  const stmt = db.prepare('SELECT * FROM quests WHERE id = ?');
+  return stmt.get(id);
+}
+
+function addQuest(questData) {
+  const stmt = db.prepare(`INSERT INTO quests (
+    title, description, location, subject, difficulty,
+    xp_reward, loot, active_for
+  ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`);
+
+  const info = stmt.run(
+    questData.title,
+    questData.description,
+    questData.location,
+    questData.subject,
+    questData.difficulty,
+    questData.xpReward,
+    JSON.stringify(questData.loot || []),
+    questData.activeFor
+  );
+
+  return getQuestById(info.lastInsertRowid);
+}
+
 module.exports = {
   db,
   getUserByUsername,
@@ -242,7 +294,15 @@ module.exports = {
   addEgg,
   getEggById,
   hatchEgg,
-  getUnhatchedEggsForUser
+  getUnhatchedEggsForUser,
+
+  // Quest functions
+  getAllQuests,
+  getQuestById,
+  addQuest,
+
+  // Additional user function
+  getAllUsers
 };
 
 
